@@ -45,7 +45,7 @@ class Counter:
             # Check the pattern by invoke shell
             result = subprocess.run(
                 [
-                    "java -cp ./checker/target/APIChecker-0.0.1-SNAPSHOT.jar checker.maple.server.Evaluator "
+                    "java -cp ./eval/APIChecker-0.0.1-SNAPSHOT.jar checker.maple.server.Evaluator "
                     + self.hash
                     + " "
                     + pattern_path
