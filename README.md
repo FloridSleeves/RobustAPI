@@ -1,6 +1,6 @@
 # RobustAPI
 
-The official repo for the arxiv preprint [Can ChatGPT replace StackOverflow? A Study on Robustness and Reliability of Large Language Model Code Generation](https://arxiv.org/pdf/2308.10335.pdf).
+The official repo for the paper [Can ChatGPT replace StackOverflow? A Study on Robustness and Reliability of Large Language Model Code Generation].
 
 ![Alt text](image.png)
 
@@ -43,15 +43,3 @@ We acknowledge ICSE'18 paper [ExampleCheck](https://tianyi-zhang.github.io/files
 # Results of Evaluation
 The code responses are in `results/`. Each model has a directory, in which every json file corresponds to the response from the large language model to the Stack Overflow questions. The numbering follows the same numbering in `dataset/question.jsonl`.
 
-# Citation
-Please cite the paper and star this repo if you use this dataset or find it interesting. Feel free to contact lizhong@ucsd.edu or open an issue if you have any questions.
-```
-@misc{zhong2023chatgpt,
-      title={Can ChatGPT replace StackOverflow? A Study on Robustness and Reliability of Large Language Model Code Generation}, 
-      author={Li Zhong and Zilong Wang},
-      year={2023},
-      eprint={2308.10335},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
-}
-```
