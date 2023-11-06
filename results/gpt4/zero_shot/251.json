@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m3622rsUXFifkTBIVCmifDEqiPcU",
+    "object": "chat.completion",
+    "created": 1691686002,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\n// Java side\npublic native void readInputStream(InputStream is);\n\n// C++ side\nextern \"C\"\nJNIEXPORT void JNICALL\nJava_com_example_myapp_MyClass_readInputStream(JNIEnv *env, jobject obj, jobject is) {\n    jclass is_class = env->GetObjectClass(is);\n    jmethodID read_mid = env->GetMethodID(is_class, \"read\", \"([B)I\");\n\n    jbyteArray buffer = env->NewByteArray(1024);\n    jint bytesRead;\n\n    while ((bytesRead = env->CallIntMethod(is, read_mid, buffer)) != -1) {\n        jbyte *bytes = env->GetByteArrayElements(buffer, NULL);\n        // Now you have a char* (bytes) with bytesRead number of elements\n        // Do something with bytes\n\n        env->ReleaseByteArrayElements(buffer, bytes, 0);\n    }\n\n    env->DeleteLocalRef(buffer);\n}\n```\n\n<<<explanation>>>: In the Java side, you declare a native method that takes an InputStream as an argument. In the C++ side, you implement this method. You first get the class of the InputStream and the method ID of the read method. Then you create a byte array to serve as a buffer. You read from the InputStream into the buffer until there are no more bytes to read (read method returns -1). For each read, you get the elements of the byte array, which gives you a pointer to the bytes (char* in C++). After you're done with the bytes, you release the byte array elements. Finally, you delete the local reference to the buffer to avoid memory leak."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 345,
+        "total_tokens": 445
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to move data from java InputStream to a char * in c++ with jni?: :How can I move the data stored in a java InputStream to a char * in c++ using JNI?Thanks,Carlos.\nPlease using this api: InputStream.read.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCWVjwuDjE4k6BNzvfn95QPdX5PC",
+    "object": "chat.completion",
+    "created": 1691960567,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: protected Long doInBackground(URL...urls) {\n    for (int i = 0; i < urls.length; i++) {\n        url = urls[i];\n        try {\n            URLConnection conn = url.openConnection();\n            conn.connect();\n            totalSize = conn.getContentLength();\n            BufferedInputStream bis = new BufferedInputStream(url.openStream());\n            FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + \"/forvo_temp.mp3\");\n            BufferedOutputStream bos = new BufferedOutputStream(fos,1024);\n            byte [] data = new byte[1024];\n            int x=0; int c=0;\n            while((x=bis.read(data,0,1024))>=0){\n                bos.write(data,0,x);\n                c += x;\n                publishProgress(c);\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n    return 0L; // Don't know what to do with this\n}\n\nprotected void onProgressUpdate(Integer...args) {\n    pd = ProgressDialog.show(context, \"Downloading...\", \"Downloading...\", true, false);\n    pd.setProgress((int) ((args[0] / (float) totalSize) * 100));\n}\n\n<<<explanation>>>: In order to monitor the download progress, you can use the read() method of the InputStream class. This method reads the next byte of data from the input stream. By updating the progress bar in the onProgressUpdate() method with the current progress, you can display the download progress in real-time."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 494,
+        "completion_tokens": 318,
+        "total_tokens": 812
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Monitoring BufferedInputStream download progress: :I'm trying to download a file using an AsyncTask on Android. I want to display a ProgressDialog which should have a progress bar to show the status of the download. I'm using the onProgressUpdate() function for that and implemented a call to publishProgress() in my doInBackground() function. However, the progress dialog only pops up after downloading the file. My code:protected Long doInBackground(URL...urls) {    for (int i = 0; i < urls.length; i++) {        url = urls[i];        try {            URLConnection conn = url.openConnection();            conn.connect();            totalSize = conn.getContentLength();            BufferedInputStream bis = new BufferedInputStream(url.openStream());            FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + \"/forvo_temp.mp3\");            BufferedOutputStream bos = new BufferedOutputStream(fos,1024);            byte [] data = new byte[1024];            int x=0; int c=0;            while((x=bis.read(data,0,1024))>=0){                bos.write(data,0,x);                c += 1024;                publishProgress(c);            }        } catch (Exception e) {            e.printStackTrace();        }    }    return 0L; // Don't know what to do with this}protected void onProgressUpdate(Integer...args) {    pd = ProgressDialog.show(context, \"Downloading...\", \"Downloading...\", true, false);    pd.setProgress(args[0] / totalSize);}I guess the whole file is downloaded when I call new BufferedInputStream(url.openStream()). How can I monitor the download progress?\nPlease using this api: InputStream.read.\nAnswer:"
+}

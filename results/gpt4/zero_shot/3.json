@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m0sKgyk4Kuivs9OLWEviiCrtA8xn",
+    "object": "chat.completion",
+    "created": 1691677464,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Activity.findViewById\n<<<code>>>: \n```java\npublic class NonActivityClass {\n    private Activity activity;\n    private TextView textView;\n\n    public NonActivityClass(Activity activity) {\n        this.activity = activity;\n        this.textView = activity.findViewById(R.id.val);\n    }\n\n    public void changeText(final String text) {\n        activity.runOnUiThread(new Runnable() {\n            @Override\n            public void run() {\n                textView.setText(text);\n            }\n        });\n    }\n}\n```\n<<<explanation>>>: In this code, we are creating a non-activity class that takes an Activity as a parameter in its constructor. We then use the Activity's findViewById method to get a reference to the TextView we want to change. We store this TextView in a member variable. We then provide a method changeText that takes a String as a parameter. This method uses the Activity's runOnUiThread method to ensure that the UI update (changing the text of the TextView) is done on the UI thread. This is necessary because only the original thread that created a view hierarchy can touch its views."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 209,
+        "completion_tokens": 220,
+        "total_tokens": 429
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Change TextView value from Non-Activity class: :I'm trying to setText a new value to my TextView from a non activity class by inflating the layout where the textview is, but I'm still unsuccessful though I'm able to getText the current value of the TV. Here's the code:LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);View view = mInflater.inflate(R.layout.target_details, null);TextView val = (TextView) view.findViewById(R.id.val);Not sure if I'm doing it properly.UPDATE:I used Kay's answer with added code below. It's now working.((Activity)mContext).runOnUiThread(new Runnable(){        @Override        public void run(){            //settext here        }    });\nPlease using this api: Activity.findViewById.\nAnswer:"
+}

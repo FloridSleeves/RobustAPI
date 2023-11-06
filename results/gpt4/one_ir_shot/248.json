@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDNXSU98P94XFPk0baKIhmsOGVBd",
+    "object": "chat.completion",
+    "created": 1691963855,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \nInputStream inputStream = new ByteArrayInputStream(response.getBytes());\nMimeMultipart multiPart = new MimeMultipart(new ByteArrayDataSource(inputStream, \"multipart/related\"));\nint count = multiPart.getCount();\nfor (int i = 0; i < count; i++) {\n    BodyPart bodyPart = multiPart.getBodyPart(i);\n    if (bodyPart.isMimeType(\"text/xml\")) {\n        SOAPMessage msg = MessageFactory.newInstance().createMessage(null, new ByteArrayInputStream(bodyPart.getContent().toString().getBytes()));\n        // process SOAPMessage\n    } else if (bodyPart.isMimeType(\"application/xop+xml\")) {\n        // process XOP part\n    }\n}\n<<<explanation>>>: The InputStream.read() method is used to read the SOAP response into a byte array. This byte array is then used to create a MimeMultipart object. The MimeMultipart object is used to parse the multipart/related SOAP response. The getCount() method is used to get the number of parts in the multipart response. The for loop is used to iterate over each part of the response. The isMimeType() method is used to check the MIME type of each part. If the MIME type is \"text/xml\", the part is processed as a SOAP message. If the MIME type is \"application/xop+xml\", the part is processed as a XOP part."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 265,
+        "completion_tokens": 280,
+        "total_tokens": 545
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to parse XOP/MTOM SOAP response using java?: :I just want to know, is there any simple way for parsing  MTOM/XOP SOAP response. The problem is that I use plain HTTP to send soap message and javax.xml for parsing response. But some services responds me with mulipart/related and it    requires much more complex logic to parse it (performance matters). So I wonder may I somehow take advantage of apache cxf, apache axiom or any other library for parsing MTOM/XOP SOAP response?\nPlease using this api: InputStream.read.\nAnswer:"
+}

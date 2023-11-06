@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nEXrVFdtwISm7ez390sIld0aNNhu",
+    "object": "chat.completion",
+    "created": 1691968339,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: List.get\n<<<code>>>: \npublic class Node {\n    int id;\n    Node prev;\n    Node next;\n}\n\nArrayList<Node> list = new ArrayList<>();\n// Assume nodes are added to the list\n\n// To move a node with a certain ID to the end of the list\nNode node = list.get(5); // Get the node with ID 5\nif (node != null) {\n    // Remove the node from its current position\n    if (node.prev != null) {\n        node.prev.next = node.next;\n    }\n    if (node.next != null) {\n        node.next.prev = node.prev;\n    }\n\n    // Add the node to the end of the list\n    node.prev = list.get(list.size() - 1);\n    node.next = null;\n    list.get(list.size() - 1).next = node;\n    list.add(node);\n}\n<<<explanation>>>: The get() method of the List interface returns the element at the specified position in this list. In this case, we are using it to access a node in the ArrayList in O(1) time. We then adjust the previous and next pointers of the node and its neighbors to remove it from its current position, and add it to the end of the list. This allows us to move a node to the end of the list in constant time."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 321,
+        "completion_tokens": 280,
+        "total_tokens": 601
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Arraylist mapping to linkedlist nodes: :I want to be able to access a certain node in my Doubly Linked List in O(1) time. I know that if i traverse the list to find a certain node it would take O(n) time so I want to map the nodes to an array list where I can access the nodes in O(1) time.I'm really unsure how I would do this mapping. I would like to see an example of how this can be done.Edit:I would like to be able to access any node in the linked list so I can move the nodes around in O(1) time.Example: Move node with ID 5 to end of list in O(1) time. Edit 2: I uploaded a picture example of what I'm trying to accomplish\nPlease using this api: List.get.\nAnswer:"
+}

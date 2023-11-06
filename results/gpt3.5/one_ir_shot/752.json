@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDNZv0acDtGgKwSVOkdpKgtovew1",
+    "object": "chat.completion",
+    "created": 1691963857,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: response.setContentType(\"text/html;charset=UTF-8\");\nPrintWriter out = response.getWriter();\nString firstname = request.getParameter(\"firstname\");\nString lastname = request.getParameter(\"lastname\");\nString address = request.getParameter(\"address\");\nif (PersonalInfo.ViewPersonal(firstname, lastname, address)) {\n    out.write(\"<html><body>\");\n    out.write(\"<h1>Personal Information</h1>\");\n    out.write(\"<p>First Name: \" + firstname + \"</p>\");\n    out.write(\"<p>Last Name: \" + lastname + \"</p>\");\n    out.write(\"<p>Address: \" + address + \"</p>\");\n    out.write(\"</body></html>\");\n}\nout.close();\n\n<<<explanation>>>: The PrintWriter.write() method is used to write a string to the output stream. In this case, we are using it to format and print the retrieved personal information from the database. We are creating an HTML page and writing the information as HTML elements."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 529,
+        "completion_tokens": 200,
+        "total_tokens": 729
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How can I print the firstname, lastname and address from database?: :This question already exists:                                                            I have retrieved information from a database, but how do I format it properly? Perhaps using html [duplicate]Closed 7 years ago.I've tried to retrieve and print the firstname, lastname and address from a database and then display it. I have the servlet below, can someone please help me, thanks :) Will I have to use html at all? It is not printing firstname.PersonalInfoOut.javaimport java.io.*;import javax.servlet.*;import javax.servlet.http.*;import java.sql.*;public class PersonalInfoOutput extends HttpServlet {    protected void doPost(HttpServletRequest request, HttpServletResponse response)            throws ServletException, IOException {        response.setContentType(\"text/html;charset=UTF-8\");        PrintWriter out = response.getWriter();        String firstname = request.getParameter(\"firstname\");        String lastname = request.getParameter(\"lastname\");        String address = request.getParameter(\"address\");        if(PersonalInfo.ViewPersonal(firstname, lastname, address))        out.println(firstname);        }    }PersonalInfo.java import java.sql.*;public class PersonalInfo {     public static boolean ViewPersonal(String firstname, String lastname, String address)    {        boolean st = false;        try {             Class.forName(\"com.mysql.jdbc.Driver\").newInstance();             Connection con = DriverManager.getConnection(\"jdbc:mysql://localhost:3306/payroll_system\", \"root\", \"\");             PreparedStatement ps = con.prepareStatement(\"select FirstName, LastName, Address from payroll_system.employee_info where employeeID = 1234\");             ps.setString(1, firstname);            ps.setString(2, lastname);            ps.setString(3, address);             ResultSet rs = ps.executeQuery();             st = rs.next();          }catch(Exception e)          {              e.printStackTrace();          }             return st;                 } } \nPlease using this api: PrintWriter.write.\nAnswer:"
+}

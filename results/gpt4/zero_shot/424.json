@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m4dSIalTsmR8M8Y37OoXVVlMTJEk",
+    "object": "chat.completion",
+    "created": 1691691918,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nimport java.util.Iterator;\nimport java.util.NoSuchElementException;\n\npublic class EvenIterator implements Iterator<Integer> {\n    private Iterator<Integer> iterator;\n    private Integer nextEven;\n\n    public EvenIterator(Iterator<Integer> iterator) {\n        this.iterator = iterator;\n        advanceIterator();\n    }\n\n    @Override\n    public boolean hasNext() {\n        return nextEven != null;\n    }\n\n    @Override\n    public Integer next() {\n        if (nextEven == null) {\n            throw new NoSuchElementException();\n        }\n        Integer toReturn = nextEven;\n        advanceIterator();\n        return toReturn;\n    }\n\n    private void advanceIterator() {\n        nextEven = null;\n        while (iterator.hasNext()) {\n            Integer next = iterator.next();\n            if (next % 2 == 0) {\n                nextEven = next;\n                break;\n            }\n        }\n    }\n}\n```\n<<<explanation>>>: This code defines a new class `EvenIterator` that implements the `Iterator` interface. The `EvenIterator` takes an existing iterator over integers as an argument in its constructor. It uses this iterator to find the next even number (if one exists) and stores it in the `nextEven` variable. The `hasNext` method checks if there is a next even number, and the `next` method returns the next even number and advances the iterator to the next even number. The `advanceIterator` method is used to find the next even number and store it in `nextEven`. If there are no more even numbers, `nextEven` is set to `null`."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 149,
+        "completion_tokens": 333,
+        "total_tokens": 482
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to return an iterator over even numbers, given an iterator over a list of integers?: :I was asked this question in a java interview. I am given an iterator for a list of integers. I need to write a function that returns takes this iterator as argument and returns the iterator for even numbers only. I was told, I cannot modify the original list of numbers. Hence, removing odd numbers from the list is not the solution. Please advise. Thanks.\nPlease using this api: Iterator.next.\nAnswer:"
+}

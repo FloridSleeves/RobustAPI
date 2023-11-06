@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFj9vr1xJ5nOtL5YfRPS1HF9KCqr",
+    "object": "chat.completion",
+    "created": 1691972883,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: String mykey = \"secret\";\nString test = \"test\";\ntry {\n    Mac mac = Mac.getInstance(\"HmacSHA1\");\n    SecretKeySpec secret = new SecretKeySpec(mykey.getBytes(),\"HmacSHA1\");\n    mac.init(secret);\n    byte[] digest = mac.doFinal(test.getBytes());\n    StringBuilder hash = new StringBuilder();\n    for (byte b : digest) {\n        hash.append(String.format(\"%02x\", b));\n    }\n    System.out.println(hash.toString());\n} catch (Exception e) {\n    System.out.println(e.getMessage());\n}\n<<<explanation>>>: The getBytes() method is used to convert a string into a sequence of bytes and returns an array of bytes. The Mac class provides the functionality of a \"Message Authentication Code\" (MAC) algorithm. The SecretKeySpec class specifies a secret key in a provider-independent fashion. The doFinal() method processes the given array of bytes and finishes the MAC operation. The resulting bytes are then converted to a hexadecimal string."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 320,
+        "completion_tokens": 210,
+        "total_tokens": 530
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: java equivalent to php's hmac-SHA1: :I'm looking for a java equivalent to this php call:hash_hmac('sha1', \"test\", \"secret\")I tried this, using java.crypto.Mac, but the two do not agree:String mykey = \"secret\";String test = \"test\";try {    Mac mac = Mac.getInstance(\"HmacSHA1\");    SecretKeySpec secret = new SecretKeySpec(mykey.getBytes(),\"HmacSHA1\");    mac.init(secret);    byte[] digest = mac.doFinal(test.getBytes());    String enc = new String(digest);    System.out.println(enc);  } catch (Exception e) {    System.out.println(e.getMessage());}The outputs with key = \"secret\" and test = \"test\" do not seem to match.\nPlease using this api: String.getBytes.\nAnswer:"
+}

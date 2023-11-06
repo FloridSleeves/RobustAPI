@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m9xOz8ca6Ep5vA4A5vXuE6sUv2hA",
+    "object": "chat.completion",
+    "created": 1691712374,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \npublic void initInventory() throws FileNotFoundException, IOException {\n    BufferedReader readInventory=new BufferedReader(new FileReader(\"E:\\\\Semester 3\\\\PointOfSale2\\\\Inventory.csv\"));\n    String line=readInventory.readLine();\n    StringTokenizer nextItem;\n    while(line!=null){\n        nextItem=new StringTokenizer(line, \",\");\n        while(nextItem.hasMoreTokens()){\n            try {\n                int productID=Integer.parseInt(nextItem.nextToken()); \n                int quantity=Integer.parseInt(nextItem.nextToken());\n                Inventory inventory=new Inventory(productID, quantity);\n                inStock.add(inventory);\n                line=readInventory.readLine();\n            } catch (NumberFormatException e) {\n                System.out.println(\"Number format exception occurred. Please check the data in the CSV file.\");\n            }\n        }\n    }\n    readInventory.close();\n}\n<<<explanation>>>: The NumberFormatException occurs when you try to parse a String that is not a number into an integer. To solve this, you can add a try-catch block around the parsing code to catch the NumberFormatException. In the catch block, you can print an error message to let the user know that a number format exception occurred. This way, if there is a string that cannot be converted to a number in the CSV file, the program will not crash and will instead print an error message."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 287,
+        "completion_tokens": 267,
+        "total_tokens": 554
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Reading csv file resulting in number format exception: :I am writing a csv file using csvwriter and then calling its method writeAll.After writing i am reading the same file using buffered reader which is resulting in number format exception.How can i solve it?public static void writeInventoryToUpdate(List<String[]> data)throws IOException {    String csv = \"E:\\\\Semester 3\\\\PointOfSale2\\\\Inventory.csv\";    CSVWriter writer = new CSVWriter(new FileWriter(csv));    writer.writeAll(data);    writer.close();        }public void initInventory() throws FileNotFoundException, IOException {    BufferedReader readInventory=new BufferedReader(new FileReader(\"E:\\\\Semester 3\\\\PointOfSale2\\\\Inventory.csv\"));    String line=readInventory.readLine();    StringTokenizer nextItem;    while(line!=null){        nextItem=new StringTokenizer(line, \",\");        while(nextItem.hasMoreTokens()){            int productID=Integer.parseInt(nextItem.nextToken()); //Exception occuring here            int quantity=Integer.parseInt(nextItem.nextToken());            Inventory inventory=new Inventory(productID, quantity);            inStock.add(inventory);            line=readInventory.readLine();        }    }    readInventory.close();}\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

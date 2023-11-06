@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m7mgkI9Dy1UmOpHrHtnM4EiqXqwY",
+    "object": "chat.completion",
+    "created": 1691704022,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: SQLiteDatabase.query\n<<<code>>>: \n```java\npublic UserInfo get_user_by_id(String id, String password) {\n    SQLiteDatabase db = this.getReadableDatabase();\n    UserInfo userInfo = null;\n    Cursor cursor = db.query(TABLE_NAME, new String[]{COLUMN_APP_ID, COLUMN_USER_NAME, COLUMN_PASSWORD}, COLUMN_APP_ID + \"=? AND \" + COLUMN_PASSWORD + \"=?\", new String[]{id, password}, null, null, null);\n    while (cursor.moveToNext()) {\n        userInfo = new UserInfo(cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID)), cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME)), cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD)));\n    }\n    return userInfo;\n}\n```\n<<<explanation>>>: In the SQLiteDatabase.query method, you can specify multiple columns to retrieve from the database by adding them to the String array that is the second parameter. In this case, we are retrieving the user's id, username, and password. We are also adding an additional condition to the WHERE clause of the query to check if the password matches the one provided. If a user with the given id and password exists in the database, a UserInfo object is created with the retrieved data and returned. If no such user exists, the method will return null."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 218,
+        "completion_tokens": 253,
+        "total_tokens": 471
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: retrieve more than one field from SQLite database and compare with these field: :i want compare user name and password from database if exists than it success if not than throws error  i use SQLiteOpenHelper to don a task i can get one field from database now how can i retrieve multiple fields public UserInfo get_user_by_id(String id) {        SQLiteDatabase db = this.getReadableDatabase();        UserInfo userInfo = null;        Cursor cursor = db.query(TABLE_NAME, new String[]{COLUMN_APP_ID}, COLUMN_APP_ID + \"=?\", new String[]{id + \"\"}, null, null, null);           while (cursor.moveToNext()) {               //userInfo.setAppId(cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID)));               userInfo = new UserInfo(cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID)));           }Please help me thanks in advance \nPlease using this api: SQLiteDatabase.query.\nAnswer:"
+}

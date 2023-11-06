@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxMgrRUrVhHjBoCyIveZjPiKogrL",
+    "object": "chat.completion",
+    "created": 1691663970,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes()\n<<<code>>>: \n```java\nimport java.io.IOException;\nimport java.io.OutputStream;\nimport java.net.ServerSocket;\nimport java.net.Socket;\n\npublic class JavaServer {\n    public static void main(String[] args) {\n        try {\n            ServerSocket serverSocket = new ServerSocket(6000);\n            System.out.println(\"Waiting for connection...\");\n            Socket socket = serverSocket.accept();\n            System.out.println(\"Connection established.\");\n\n            // Send cross-domain-policy XML\n            String crossDomainPolicy = \"<?xml version=\\\"1.0\\\"?>\\n\" +\n                    \"<!DOCTYPE cross-domain-policy SYSTEM \\\"/xml/dtds/cross-domain-policy.dtd\\\">\\n\" +\n                    \"<cross-domain-policy>\\n\" +\n                    \"    <allow-access-from domain=\\\"*\\\" to-ports=\\\"*\\\" />\\n\" +\n                    \"</cross-domain-policy>\\n\";\n            OutputStream outputStream = socket.getOutputStream();\n            outputStream.write(crossDomainPolicy.getBytes());\n            outputStream.flush();\n\n            // Close the socket\n            socket.close();\n            serverSocket.close();\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n<<<explanation>>>: \nThis code sets up a Java server that listens for connections on port 6000. Once a connection is established, it sends a cross-domain-policy XML to the client using the `String.getBytes()` method to convert the XML string into bytes. The `OutputStream` is used to send the bytes over the socket connection. After sending the XML, the socket is closed to end the connection."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 227,
+        "completion_tokens": 317,
+        "total_tokens": 544
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Socket Connection from live Flash to local java: :I'm trying to get a live flash that lives on a webserver to talk to a local java server, that will live on the clients PC. I'm trying to achieve this with a socket connection. (port 6000)Now, at first flash was able to connect, but it just sends <policy-file-request/>. After this nothing happens.Now, some people at Kirupa suggested to send an cross-domain-policy xml as soon as any connection is established from the java side. http://www.kirupa.com/forum/showthread.php?t=301625However, my java server just throws the following:End Exception: java.net.SocketException: Software caused connection abort: recv failedI've already spend a great amount of time on this subject, and was wondering if anyone here knows what to do?\nPlease using this api: String.getBytes.\nAnswer:"
+}

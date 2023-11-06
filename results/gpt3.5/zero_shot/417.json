@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvcDOwhdEytnFS44CIXxEZO2R7pZ",
+    "object": "chat.completion",
+    "created": 1691657245,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next()\n<<<code>>>: \nDatabase db = session.getDatabase(\"\",\"C:\\\\Projects\\\\NotesToJava\\\\sample.nsf\");\nDocumentCollection dc = db.getAllDocuments();\nDocument doc = dc.getFirstDocument();\nwhile (doc != null) {\n    RichTextItem body = (RichTextItem) doc.getFirstItem(\"Body\");\n    if (body.getEmbeddedObjects() != null) {\n        Iterator<EmbeddedObject> iterator = body.getEmbeddedObjects().iterator();\n        while (iterator.hasNext()) {\n            EmbeddedObject attachment = iterator.next();\n            System.out.println(\"Found attachment: \" + attachment.getName() + \" in \" + doc.getItemValueString(\"Subject\"));\n        }\n    }\n    doc = dc.getNextDocument();\n}\n<<<explanation>>>: In the given code snippet, we first retrieve the RichTextItem named \"Body\" from each document. Then, we check if there are any embedded objects (attachments) in the RichTextItem. If there are, we create an iterator to iterate through each attachment. Using the Iterator.next() method, we can retrieve each attachment and print its name along with the subject of the document."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 211,
+        "completion_tokens": 233,
+        "total_tokens": 444
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How do I get all the attachments from a .nsf(lotus notes) file using java: :Steps followed : Took a back of my lotus notes as sample.nsfAnd then tried to read the attachments from the sample.nsfCode snippet :Database db = session.getDatabase(\"\",\"C:\\\\Projects\\\\NotesToJava\\\\sample.nsf\");DocumentCollection dc = db.getAllDocuments();Document doc = dc.getFirstDocument();while (doc != null) {    RichTextItem body = (RichTextItem) doc.getFirstItem(\"Body\");    if (body.getEmbeddedObject(\"Request.xlsx\") != null)         System.out.println(\"Found BPM_Dev_Access_Request.xlsx in \" + doc.getItemValueString(\"Subject\"));    doc = dc.getNextDocument();}\nPlease using this api: Iterator.next.\nAnswer:"
+}

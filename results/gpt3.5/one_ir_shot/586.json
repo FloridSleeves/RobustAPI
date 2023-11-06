@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD91U9gOtaXw9HiOcSphmnXcxplc",
+    "object": "chat.completion",
+    "created": 1691962955,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: JsonElement.getAsString\n<<<code>>>: Gson gson = new GsonBuilder()\n    .registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {\n        DateFormat df1 = new SimpleDateFormat(\"yyyy-MM-dd\");\n        DateFormat df2 = new SimpleDateFormat(\"dd/MM/yyyy\");\n        DateFormat df3 = new SimpleDateFormat(\"yyyy-MM-dd'T'HH:mm:ssXXX\");\n\n        @Override\n        public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {\n            String dateString = json.getAsString();\n            try {\n                return df1.parse(dateString);\n            } catch (ParseException e1) {\n                try {\n                    return df2.parse(dateString);\n                } catch (ParseException e2) {\n                    try {\n                        return df3.parse(dateString);\n                    } catch (ParseException e3) {\n                        throw new JsonParseException(\"Unparseable date: \" + dateString);\n                    }\n                }\n            }\n        }\n    })\n    .create();\n<<<explanation>>>: In this code, we are creating a custom deserializer for the Date class using Gson's registerTypeAdapter method. Inside the deserialize method, we are checking the format of the date string and parsing it accordingly using different date formats. If none of the formats match, we throw a JsonParseException. This allows us to handle different date formats on a per field basis."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 330,
+        "completion_tokens": 278,
+        "total_tokens": 608
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: deserialize two different date formats with GSON: :Im consuming a clients JSON API using googles GSON lib to handle serialisation/deserialization.This is proving to be problematic as within the API's json entities there are a number of date formats scattered about the API.Some examples of this are as follows...\"2014-02-09\"\"15/10/1976\"\"2014-02-09T07:32:41+00:00\"I have no control over the API as it developerd by the client and is already being consumed by other parties.It seems that I can setup GSON to work with a single date format but I cant get it parse the dates on a per field basis.I would have expected GOSN to provide an annotation for this but I cant seem to find one.Any ideas on ho to set this up anyone?\nPlease using this api: JsonElement.getAsString.\nAnswer:"
+}

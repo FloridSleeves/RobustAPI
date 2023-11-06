@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCg6gfL08mmPbNzngWpNCFmgqW5p",
+    "object": "chat.completion",
+    "created": 1691961162,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: public class ExampleServlet extends HttpServlet{\n    @Override\n    protected void doPost(HttpServletRequest req, HttpServletResponse resp)\n            throws ServletException, IOException {\n        BufferedReader reader = req.getReader();\n        StringBuilder sb = new StringBuilder();\n        String line;\n        while ((line = reader.readLine()) != null) {\n            sb.append(line);\n        }\n        String json_str = sb.toString();\n        resp.setContentType(\"application/json\");\n        PrintWriter out = resp.getWriter();\n        out.print(json_str);\n    }\n}\n<<<explanation>>>: In the doPost method, we read the request body line by line using a BufferedReader and append it to a StringBuilder. The resulting string is the JSON string sent in the POST request. We then set the response content type to \"application/json\" and write the JSON string to the response body using a PrintWriter."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 578,
+        "completion_tokens": 174,
+        "total_tokens": 752
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Read JSON message from HTTP POST request in Java: :I am new to Java and to client- server programming.I am using embedded Jetty, and I'm trying to send a JSON string to some address (http://localhost:7070/json) and then to display the JSON string in that address.I tried the following code but all I get is null.Embedded Jetty code:public static void main(String[] args) throws Exception {    Server server = new Server(7070);    ServletContextHandler handler = new ServletContextHandler(server, \"/json\");    handler.addServlet(ExampleServlet.class, \"/\");    server.start();}Client side function for sending the Http POST:public static void sendHttp(){    HttpClient httpClient = HttpClientBuilder.create().build(); //Use this instead     try {        HttpPost request = new HttpPost(\"http://localhost:7070/json\");        JSONObject object = new JSONObject();        try {            object.put(\"name\", \"MyName\");            object.put(\"age\", \"26\");        } catch (Exception ex) {            System.out.println(\"Error: \" + ex.getMessage());        }        String message = object.toString();        request.setEntity(new StringEntity(message, \"UTF8\"));        request.setHeader(\"Content-type\", \"application/json\");        HttpResponse response = httpClient.execute(request);        // handle response here...    }catch (Exception ex) {        // handle exception here    } finally {    }}And Servlet functions:public class ExampleServlet extends HttpServlet{    @Override    protected void doGet(HttpServletRequest req, HttpServletResponse resp)            throws ServletException, IOException {        //System.out.println(\"test get\\n\");        doPost(req, resp);    }    @Override    protected void doPost(HttpServletRequest req, HttpServletResponse resp)            throws ServletException, IOException {        //System.out.println(\"test post\\n\");        PrintWriter out = resp.getWriter();        String json_str = req.getParameter(\"name\");        out.print(json_str);    }}I call the sendHttp() method from a test class, after running the embedded Jetty server code (if that matters).\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

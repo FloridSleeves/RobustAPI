@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzwx0OAXuRxe0sRQOftFN8KLpXcv",
+    "object": "chat.completion",
+    "created": 1691673907,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Spring LDAP\n<<<code>>>: You can use the Spring LDAP library to connect to an LDAP server and retrieve data for autocompletion. Here is an example of how you can do it:\n\n1. Add the Spring LDAP dependency to your project:\n   <dependency>\n       <groupId>org.springframework.ldap</groupId>\n       <artifactId>spring-ldap-core</artifactId>\n       <version>2.3.3.RELEASE</version>\n   </dependency>\n\n2. Create a class to handle LDAP operations:\n   import org.springframework.ldap.core.LdapTemplate;\n   import org.springframework.ldap.core.AttributesMapper;\n   import javax.naming.directory.Attributes;\n\n   public class LdapService {\n       private LdapTemplate ldapTemplate;\n\n       public LdapService(LdapTemplate ldapTemplate) {\n           this.ldapTemplate = ldapTemplate;\n       }\n\n       public List<String> search(String filter) {\n           return ldapTemplate.search(\"\", filter, (AttributesMapper<String>) attrs -> (String) attrs.get(\"cn\").get());\n       }\n   }\n\n3. Configure the LDAP connection in your Spring configuration file:\n   <ldap:context-source\n       url=\"ldap://localhost:389\"\n       base=\"dc=example,dc=com\"\n       username=\"cn=admin,dc=example,dc=com\"\n       password=\"password\" />\n\n   <bean id=\"ldapTemplate\" class=\"org.springframework.ldap.core.LdapTemplate\">\n       <constructor-arg ref=\"contextSource\" />\n   </bean>\n\n4. Use the LdapService in your controller to retrieve autocompletion suggestions:\n   @Autowired\n   private LdapService ldapService;\n\n   @RequestMapping(\"/autocomplete\")\n   @ResponseBody\n   public List<String> autocomplete(@RequestParam(\"term\") String term) {\n       return ldapService.search(term);\n   }\n\n5. Implement the autocomplete feature in your HTML using jQuery UI:\n   <script>\n       $(function() {\n           $(\"#inputField\").autocomplete({\n               source: \"/autocomplete\",\n               minLength: 2\n           });\n       });\n   </script>\n\n<<<explanation>>>: This code demonstrates how to use Spring LDAP to connect to an LDAP server and retrieve autocompletion suggestions for a text field. The LdapService class handles the LDAP operations, and the autocomplete() method in the controller returns the suggestions based on the user's input. The jQuery UI autocomplete feature is used to display the suggestions in the HTML input field."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 353,
+        "completion_tokens": 494,
+        "total_tokens": 847
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Spring 3, ldap and Query autocomplete text field: :I would like to have an autocompliting input (text) field on my Spring 3 form. The suggested values should come from ldap. I should use JQuery for this, but so far that's all I know. I have found some examples with data txt.files, but not ldap.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

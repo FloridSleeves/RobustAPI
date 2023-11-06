@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzyZo3EWPQETCqPdC1aVQgtLOZrW",
+    "object": "chat.completion",
+    "created": 1691674007,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: try { \n    PrintWriter out = new PrintWriter(new FileWriter(\"D:/log.txt\"));\n    out.print(result);\n    out.close();\n} catch (IOException e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: The issue is that PrintWriter's println() method automatically flushes the stream, but print() does not. To ensure that all the data is written to the file, you need to manually flush the stream by calling the flush() method or closing the PrintWriter. In the provided code, I have used the close() method to automatically flush and close the stream."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 357,
+        "completion_tokens": 125,
+        "total_tokens": 482
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Printwriter to write into a file: :Why can't I write a big amount of data via PrintWriter?String result = acquireLengthyData();PrintWriter out = new PrintWriter(\"D:/log.txt\");out.println(result);where result.lenght() = 189718. But some data were missing in log.txt. Why? How can I write to the file correctly?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

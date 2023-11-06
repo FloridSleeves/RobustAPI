@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzxTAbQw8VzYDd193bGAkvoNbrnW",
+    "object": "chat.completion",
+    "created": 1691673939,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: try { \n    output.write(msg);\n    output.newLine();\n    output.flush();\n} catch (IOException e) { \n    System.err.println(\"Unable to write message because of an unhandled IOException: \" + e.getMessage()); \n}\n<<<explanation>>>: The issue is that you are not adding a line break after writing the message to the BufferedWriter. You can use the newLine() method to add a line break and then flush the output to ensure that the message is sent immediately."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 679,
+        "completion_tokens": 109,
+        "total_tokens": 788
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Sending commands to a console application?: :I want to verify something, because in my head it makes sense, but in Java, it doesn't work.I am trying to run another Jar file through my application. A Minecraft server, to be precise. I have all the basics down (using ProcessBuilder, executing with arguments, waiting for an exit code, etc.), but there is one thing that I cannot figure out. Sending commands to the application. Here part of my CommandLineSender class:public class CommandLineSender extends Thread {    private BufferedWriter output;    private InputStream source;  // Set to System.in when creating the object    private boolean stopRequested;    public CommandLineSender(Process sendTo, InputStream source) {        this.output = new BufferedWriter(new OutputStreamWriter(sendTo.getOutputStream()));        this.source = source;        System.out.println(\"Source InputStream initiated: \" + source.toString());        this.stopRequested = false;    }    @Override    public void run() {        System.out.println(\"Run called.\");        Scanner cmdScanner = new Scanner(source);        while (cmdScanner.hasNextLine() && !stopRequested) {            System.out.println(\"Has next line\");            String msg = cmdScanner.nextLine();            write(msg);            System.out.println(\"Wrote: \" + msg);        }        // Close the scanner and BufferedWriter        System.out.println(\"Closed.\");    }    // Other various methods    protected void write(String msg) {        try {            output.write(msg);        } catch (IOException e) {            System.err.println(\"Unable to write message because of an unhandled IOException: \" + e.getMessage());        }    }The output I get is this:(Default Minecraft server output)help  // My commandHas next lineWrote: helpThis may not matter, but I am executing my server with these arguments:java -Xmx1024M -Xms1024M -jar (path to server jar) noguiThank you for your time.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

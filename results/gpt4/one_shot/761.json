@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mERFU8gVyYiK2s6zrwjopRniGHqM",
+    "object": "chat.completion",
+    "created": 1691729601,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Commons FileUpload Streaming API\n<<<code>>>: \nFileItemFactory factory = new DiskFileItemFactory();\nServletFileUpload upload = new ServletFileUpload(factory);\nFileItemIterator iterator = upload.getItemIterator(request);\nwhile (iterator.hasNext()) {\n    FileItemStream item = iterator.next();\n    InputStream stream = item.openStream();\n    if (!item.isFormField()) {\n        String fileName = item.getName();\n        String fileExtension = fileName.substring(fileName.lastIndexOf('.'));\n        File file = new File(\"directory/\" + fileName);\n        try (FileOutputStream fos = new FileOutputStream(file)) {\n            IOUtils.copy(stream, fos);\n        }\n    }\n}\n<<<explanation>>>: The Commons FileUpload Streaming API allows you to handle file uploads in a streaming manner, which can be more efficient for large files. The `FileItemIterator` gives you access to each uploaded file in turn. You can get the file name (and from that, the extension) from the `FileItemStream`. To write the file to a directory, you can create a `FileOutputStream` for the destination file and copy the contents of the upload stream to it. The \"Process the input stream\" comment is referring to this copying process."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 380,
+        "completion_tokens": 247,
+        "total_tokens": 627
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: how to upload a file using commons file upload streaming api: :I am following the example provided in the commons file upload site about streaming API. I am stuck trying to figure out how to get the file extension of the uploaded file, how to write the file to a directory and the worst part is where the person who wrote the example comments // Process the input stream... It leaves me wondering if it's something so trivial that I'm the only one  who doesn't know how to. \nPlease using this api: PrintWriter.write.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxZ1JS0fI0BpdkU6O03qMp4L76PB",
+    "object": "chat.completion",
+    "created": 1691664735,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\nimport java.io.BufferedReader;\nimport java.io.BufferedWriter;\nimport java.io.FileReader;\nimport java.io.FileWriter;\nimport java.io.IOException;\nimport java.util.StringTokenizer;\n\npublic class FileManipulation {\n    public static void main(String[] args) {\n        String filePath = \"data.txt\";\n        String searchString = \"ccc\";\n        String appendString = \"ddd\";\n        \n        try {\n            BufferedReader reader = new BufferedReader(new FileReader(filePath));\n            BufferedWriter writer = new BufferedWriter(new FileWriter(\"temp.txt\"));\n            \n            String line;\n            while ((line = reader.readLine()) != null) {\n                StringTokenizer tokenizer = new StringTokenizer(line);\n                StringBuilder newLine = new StringBuilder();\n                \n                while (tokenizer.hasMoreTokens()) {\n                    String token = tokenizer.nextToken();\n                    newLine.append(token);\n                    \n                    if (token.equals(searchString)) {\n                        newLine.append(appendString);\n                    }\n                    \n                    if (tokenizer.hasMoreTokens()) {\n                        newLine.append(\" \");\n                    }\n                }\n                \n                writer.write(newLine.toString());\n                writer.newLine();\n            }\n            \n            reader.close();\n            writer.close();\n            \n            // Rename temp file to original file\n            // Uncomment the following lines if you want to replace the original file\n            // File originalFile = new File(filePath);\n            // File tempFile = new File(\"temp.txt\");\n            // tempFile.renameTo(originalFile);\n            \n            System.out.println(\"File manipulation completed successfully.\");\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nThis code reads the content of the \"data.txt\" file line by line and uses the `StringTokenizer` class to split each line into tokens. It then checks if the token matches the search string (\"ccc\" in this case) and appends the specified string (\"ddd\" in this case) to it. The modified line is written to a temporary file called \"temp.txt\". You can uncomment the lines to replace the original file with the modified file if desired."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 230,
+        "completion_tokens": 414,
+        "total_tokens": 644
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Add a specific string at the end of a line of file in JAVA: :My question is, I guess, pretty simple : Given one data.txt file, how to add some String in a line, line by line in java? I don't want to delete the content, but simply add some string at the end of the line. Could you please show me a simple code for doing it? Ex, given data.txt file: aaa bbb ccceee fff gggResult after running the java program:aaa bbb ccc dddeee fff ggg hhhAdditional question : is there a simple way to \"insert\" in the line line of a given file some String? If yes, how to do it too?Result:aaa 111 bbb ccceee fff 222 gggThank you in advance for your help.\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

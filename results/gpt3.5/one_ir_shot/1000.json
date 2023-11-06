@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDigwdZV9S6bQ0cskDno4h7lFRN7",
+    "object": "chat.completion",
+    "created": 1691965166,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: public static String encodeXML(String key, String data) {\n    String result = \"\";\n    try {\n        Mac mac = Mac.getInstance(\"HmacSHA256\");\n        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(\"UTF-8\"), \"HmacSHA256\");\n        mac.init(secretKeySpec);\n        byte[] hmacBytes = mac.doFinal(data.getBytes(\"UTF-8\"));\n        result = Base64.getEncoder().encodeToString(hmacBytes);\n    } catch (NoSuchAlgorithmException | InvalidKeyException | UnsupportedEncodingException e) {\n        log.error(\"exception occurred when encoding HmacSHA256 hash\");\n    }\n    return result;\n}\n<<<explanation>>>: In the Java code, the getBytes() method is used to convert the key and data strings into byte arrays using the UTF-8 encoding. The resulting byte arrays are then used in the Mac initialization and doFinal methods. The Base64.getEncoder().encodeToString() method is used to encode the resulting HMAC bytes into a Base64 string. This should give you the same result as the PHP code."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 355,
+        "completion_tokens": 224,
+        "total_tokens": 579
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: php base64_encode hash_hmac and java gives different results: :I saw some same questions in stack-overflow but it doesn't help me.I have this php code$signature=base64_encode(hash_hmac(\"sha256\", trim($xmlReq), $signature_key, True));I want to write java equivalent to that and this is my java code.public static String encodeXML(String key, String data) {    String result = \"\";    try {        Mac mac = Mac.getInstance(\"HmacSHA256\");        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(\"UTF-8\"), \"HmacSHA256\");        mac.init(secretKeySpec);        result = Base64.encodeBase64String(mac.doFinal(data.getBytes(\"UTF-8\")));    } catch (NoSuchAlgorithmException | InvalidKeyException | UnsupportedEncodingException e) {        log.error(\"exception occured when encording HmacSHA256 hash\");    }    return result;}but they give different results. someone help. \nPlease using this api: String.getBytes.\nAnswer:"
+}

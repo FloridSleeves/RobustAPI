@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lv4egcmAcUR0Sl2F5jqq6ns23y9N",
+    "object": "chat.completion",
+    "created": 1691655164,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```\nprivate String removeUTF8BOM(String s) {\n    byte[] bom = new byte[3];\n    try {\n        InputStream inputStream = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));\n        inputStream.read(bom);\n        if (bom[0] == (byte) 0xEF && bom[1] == (byte) 0xBB && bom[2] == (byte) 0xBF) {\n            byte[] bytesWithoutBom = new byte[inputStream.available()];\n            inputStream.read(bytesWithoutBom);\n            return new String(bytesWithoutBom, StandardCharsets.UTF_8);\n        }\n    } catch (IOException e) {\n        e.printStackTrace();\n    }\n    return s;\n}\n```\n<<<explanation>>>: \nIn this code, we create a ByteArrayInputStream from the input string `s` using the UTF-8 encoding. We then read the first 3 bytes from the input stream and check if they match the UTF-8 BOM (0xEF, 0xBB, 0xBF). If they do, we read the remaining bytes from the input stream and create a new string without the BOM using the UTF-8 encoding. If the BOM is not present, we simply return the input string as is."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 251,
+        "completion_tokens": 269,
+        "total_tokens": 520
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Removing the BOM character with Java: :This question already has answers here:                                                            Byte order mark screws up file reading in Java                                (11 answers)                            Closed 8 years ago.I am trying to read files using FileReader and write them into a separate file.These files are UTF-8 encoded, but unfortuantely some of them still contain a BOM.The relevant code I tried is this:private final String UTF8_BOM = \"\\uFEFF\"; private String removeUTF8BOM(String s)    {        if (s.startsWith(UTF8_BOM))        {            s=s.replace(UTF8_BOM, \"\");        }        return s;    }    line=removeUTF8BOM(line);But for some reason the BOM is not removed. Is there any other way I can do this with FileReader? I know that there is the BOMInputStream that should work, but I'd rather find a solution using FileReader.\nPlease using this api: InputStream.read.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mA5UmMaPstGDN41Kd4evi1PyBBeN",
+    "object": "chat.completion",
+    "created": 1691712876,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\nString txt=\"19951010    19951011     Red City, WI                 Description\";\nStringTokenizer st = new StringTokenizer(txt, \"\\t\");\nString date1 = st.nextToken();\nst.nextToken(); // Skip the second date\nString cityState = st.nextToken();\nString state = cityState.substring(cityState.indexOf(\",\") + 2);\nSystem.out.println(\"Date: \" + date1);\nSystem.out.println(\"State: \" + state);\n```\n<<<explanation>>>: The StringTokenizer class in Java is used to break a string into tokens. In this case, we are using it to break the string into tokens based on the tab character. The nextToken() method is used to get the next token from the string. We first get the first date, then skip the second date by calling nextToken() without storing the result, and then get the city and state. The state is then extracted from the city and state string by finding the comma, skipping two characters (the comma and the space after it), and taking the rest of the string."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 441,
+        "completion_tokens": 227,
+        "total_tokens": 668
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java regex of string: :I want to parse strings to get fields from them. The format of the string (which come from a dataset) is as so (the -> represents a tab, and the * represents a space):Date(yyyymmdd)->Date(yyyymmdd)->*City,*State*-->DescriptionI am only interested in the 1st date and the State. I tried regex like this:String txt=\"19951010    19951011     Red City, WI                 Description\";    String re1=\"(\\\\d+)\";    // Integer Number 1    String re2=\".*?\";   // Non-greedy match on filler    String re3=\"(?:[a-z][a-z]+)\";   // Uninteresting: word    String re4=\".*?\";   // Non-greedy match on filler    String re5=\"(?:[a-z][a-z]+)\";   // Uninteresting: word    String re6=\".*?\";   // Non-greedy match on filler    String re7=\"((?:[a-z][a-z]+))\"; // Word 1    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);    Matcher m = p.matcher(txt);    if (m.find())    {        String int1=m.group(1);        String word1=m.group(2);        System.out.print(\"(\"+int1.toString()+\")\"+\"(\"+word1.toString()+\")\"+\"\\n\");    }It works fine id the city has two words (Red City) then the State is extracted properly, but if the City only has one word it does not work. I can't figure it out, I don't need to use regex and am open to any other suggestions. Thanks.\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

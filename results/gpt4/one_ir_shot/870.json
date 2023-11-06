@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFXt6gkzEU7lnxr60vrA5DA7MbWX",
+    "object": "chat.completion",
+    "created": 1691972185,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: SQLiteDatabase.query\n<<<code>>>: public UserInfo get_user_by_id(String id) {\n    SQLiteDatabase db = this.getReadableDatabase();\n    UserInfo userInfo = null;\n    String[] columns = new String[]{COLUMN_APP_ID, COLUMN_USER_NAME, COLUMN_PASSWORD};\n    Cursor cursor = db.query(TABLE_NAME, columns, COLUMN_APP_ID + \"=?\", new String[]{id + \"\"}, null, null, null);\n    while (cursor.moveToNext()) {\n        userInfo = new UserInfo();\n        userInfo.setAppId(cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID)));\n        userInfo.setUserName(cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME)));\n        userInfo.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD)));\n    }\n    return userInfo;\n}\n<<<explanation>>>: The SQLiteDatabase.query() method is used to retrieve data from the database. In this case, we are retrieving multiple fields (app id, user name, and password) from the database. The query() method returns a Cursor object, which can be used to navigate through the result set. The getString() method of the Cursor object is used to retrieve the value of the specified column."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 319,
+        "completion_tokens": 224,
+        "total_tokens": 543
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: retrieve more than one field from SQLite database and compare with these field: :i want compare user name and password from database if exists than it success if not than throws error  i use SQLiteOpenHelper to don a task i can get one field from database now how can i retrieve multiple fields public UserInfo get_user_by_id(String id) {        SQLiteDatabase db = this.getReadableDatabase();        UserInfo userInfo = null;        Cursor cursor = db.query(TABLE_NAME, new String[]{COLUMN_APP_ID}, COLUMN_APP_ID + \"=?\", new String[]{id + \"\"}, null, null, null);           while (cursor.moveToNext()) {               //userInfo.setAppId(cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID)));               userInfo = new UserInfo(cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID)));           }Please help me thanks in advance \nPlease using this api: SQLiteDatabase.query.\nAnswer:"
+}

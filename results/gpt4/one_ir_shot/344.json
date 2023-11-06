@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDh3E6wSREonGWYINbZy2sz0FeNi",
+    "object": "chat.completion",
+    "created": 1691965065,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: import static org.mockito.Mockito.when;\nimport static org.testng.Assert.assertTrue;\nimport java.util.ArrayList;\nimport java.util.Iterator;\nimport java.util.List;\nimport org.mockito.Mockito;\nimport org.testng.annotations.Test;\n\npublic class ListTest{\n  @Test\n  public void test() {\n    List<String> mockList = Mockito.mock(List.class);\n    Iterator<String> mockIterator = Mockito.mock(Iterator.class);\n    when(mockList.iterator()).thenReturn(mockIterator);\n    when(mockIterator.hasNext()).thenReturn(true, false);\n    when(mockIterator.next()).thenReturn(\"A\");\n    boolean flag = false;\n    for(String s : mockList) {\n        flag = true;\n    }\n    assertTrue(flag);\n  }\n}\n<<<explanation>>>: In this code, we are mocking a List and an Iterator. We set the expectation that when the iterator() method is called on the mockList, it should return the mockIterator. Then we set the expectation that when the hasNext() method is called on the mockIterator, it should return true once and then false. This simulates the behavior of an iterator that has one element. We also set the expectation that when the next() method is called on the mockIterator, it should return \"A\". This simulates the behavior of an iterator that returns \"A\" as its only element. In the for-each loop, we iterate over the mockList. Since the mockList's iterator is the mockIterator and it has one element, the loop should be executed once, setting the flag to true. Finally, we assert that the flag is true, which verifies that the loop was executed."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 428,
+        "completion_tokens": 336,
+        "total_tokens": 764
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Testing Java enhanced for behavior with Mockito: :I want to test a java method that has an enhanced for on it using Mockito. The problem is that when I don't know how to set the expectations for the enhanced for to work. The following code was gotten from an unanswered question in the mockito google group: import static org.mockito.Mockito.when;import static org.testng.Assert.assertTrue;import java.util.ArrayList;import java.util.Iterator;import java.util.List;import org.mockito.Mockito;import org.testng.annotations.Test;public class ListTest{  @Test  public void test()  {    List<String> mockList = Mockito.mock(List.class);    Iterator<String> mockIterator = Mockito.mock(Iterator.class);    when(mockList.iterator()).thenReturn(mockIter);    when(mockIter.hasNext()).thenReturn(true).thenReturn(false);    when(mockIter.next()).thenReturn(\"A\");    boolean flag = false;    for(String s : mockList) {        flag = true;    }    assertTrue(flag);  }} The code inside the for loop never gets executed. Setting expectations for an iterator doesn't work, because the java enhanced for doesn't use the list iterator internally. Setting expectations for List.get() method doesn't either since the enhanced for implementation doesn't seem to call the get() method of the list either. Any help will be much appreciated.\nPlease using this api: Iterator.next.\nAnswer:"
+}

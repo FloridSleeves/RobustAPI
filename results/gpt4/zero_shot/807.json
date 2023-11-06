@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m7Mrm4XuwIE1ImaY1xTtfLAUSmyz",
+    "object": "chat.completion",
+    "created": 1691702421,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\nBLOB retBLOB = BLOB.createTemporary(conn, true, BLOB.DURATION_SESSION);\nretBLOB.open(BLOB.MODE_READWRITE);\nOutputStream bOut = retBLOB.setBinaryStream(0L);\nZipOutputStream zipOut = new ZipOutputStream(bOut);\nPrintWriter out = new PrintWriter(new OutputStreamWriter(zipOut, \"UTF-8\"));\nout.write('\\ufeff');\nzipOut.putNextEntry(new ZipEntry(\"filename.csv\"));\nwhile (rs.next()){\n    out.print(\"\\\"\" + rs.getString(i) + \"\\\"\");\n    out.print(\",\");\n}\nout.flush();\nzipOut.closeEntry();\nzipOut.close();\nretBLOB.close();\nreturn retBLOB;\n```\n<<<explanation>>>: The code uses PrintWriter.write to add a UTF-8 BOM to the beginning of the file. The PrintWriter is initialized with an OutputStreamWriter that is set to use \"UTF-8\" encoding. The '\\ufeff' character is the Unicode representation of the UTF-8 BOM. The rest of the code is the same as the original, it fetches records from the ResultSet object and writes them to the CSV file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 258,
+        "completion_tokens": 243,
+        "total_tokens": 501
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to add a UTF-8 BOM in Java?: :I have a Java stored procedure which fetches record from the table using Resultset object and creates a CS Vfile.BLOB retBLOB = BLOB.createTemporary(conn, true, BLOB.DURATION_SESSION);retBLOB.open(BLOB.MODE_READWRITE);OutputStream bOut = retBLOB.setBinaryStream(0L);ZipOutputStream zipOut = new ZipOutputStream(bOut);PrintStream out = new PrintStream(zipOut,false,\"UTF-8\");out.write('\\ufeff');out.flush();zipOut.putNextEntry(new ZipEntry(\"filename.csv\"));while (rs.next()){    out.print(\"\\\"\" + rs.getString(i) + \"\\\"\");    out.print(\",\");}out.flush();zipOut.closeEntry();zipOut.close();retBLOB.close();return retBLOB;But the generated CSV file doesn't show the correct German character. Oracle database also has a NLS_CHARACTERSET value of UTF8.Please suggest.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

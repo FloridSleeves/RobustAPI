@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxCE5u06EDXnTXy3myh1Qw8xheev",
+    "object": "chat.completion",
+    "created": 1691663322,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: SortedMap.firstKey\n<<<code>>>: \nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.SortedMap;\nimport java.util.TreeMap;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<Integer> list = new ArrayList<>();\n        list.add(10);\n        list.add(20);\n        list.add(20);\n        list.add(30);\n        list.add(40);\n        list.add(20);\n        list.add(50);\n\n        SortedMap<Integer, List<Integer>> map = new TreeMap<>();\n        for (int i = 0; i < list.size(); i++) {\n            int value = list.get(i);\n            if (map.containsKey(value)) {\n                map.get(value).add(i);\n            } else {\n                List<Integer> indices = new ArrayList<>();\n                indices.add(i);\n                map.put(value, indices);\n            }\n        }\n\n        int maxKey = map.lastKey();\n        List<Integer> maxIndices = map.get(maxKey);\n\n        System.out.println(\"Max value: \" + maxKey);\n        System.out.println(\"Indices: \" + maxIndices);\n    }\n}\n<<<explanation>>>: \nTo collect multiple maximum values from a List, you can use a SortedMap to store the values as keys and their corresponding indices as values. First, iterate through the List and check if the value already exists in the SortedMap. If it does, add the current index to the corresponding list of indices. If it doesn't, create a new list with the current index and put it in the SortedMap with the value as the key.\n\nAfter iterating through the List, the lastKey() method of the SortedMap will give you the maximum value. You can then retrieve the list of indices associated with this maximum value using the get() method."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 118,
+        "completion_tokens": 369,
+        "total_tokens": 487
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How do I collect multiple maximum values from a List: :How to get max from an ArrayList that has more than one max? For example, if an ArrrayList contains max = 20 stored at index 2, 3 and 6, how do you get all that indicies?\nPlease using this api: SortedMap.firstKey.\nAnswer:"
+}

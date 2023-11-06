@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m6dlUZ3vvPzCJNqUNIRgIBfT4SNd",
+    "object": "chat.completion",
+    "created": 1691699625,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\npublic ArrayList<String> fetchtable(String value){\n    try {\n        makeConnection();\n        String str1=\"Select * from \"+ value;\n        ResultSet rs = st.executeQuery(str1);\n        rsmd = rs.getMetaData();\n        NumOfCol= rsmd.getColumnCount();\n        PrintWriter writer = new PrintWriter(\"ColumnDescriptions.txt\", \"UTF-8\");\n        for(int i=1;i<=NumOfCol;i++)\n        {\n            ColumnName = rsmd.getColumnName(i);\n            String columnDescription = rsmd.getColumnLabel(i);\n            System.out.println(ColumnName + \": \" + columnDescription);\n            columns.add(ColumnName);\n            writer.write(ColumnName + \": \" + columnDescription + \"\\n\");\n        }\n        writer.close();\n    }catch(Exception ae){\n        ae.printStackTrace();\n    }\n    return columns;\n}\n```\n<<<explanation>>>: In this code, we are using the PrintWriter.write API to write the column name and its description to a text file named \"ColumnDescriptions.txt\". The PrintWriter is initialized with the file name and the character encoding (UTF-8). For each column, we get the column name and its description using the ResultSetMetaData's getColumnName and getColumnLabel methods, respectively. We then write this information to the file using the PrintWriter's write method. After all columns have been processed, we close the PrintWriter using its close method."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 250,
+        "completion_tokens": 288,
+        "total_tokens": 538
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I retrieve a column description from MS ACCESS database using Java: :I am trying to retrieve column descriptions for MS Access columns using I am able to retrieve all columns of database like field name, data type.I need description column data using Java.Kindly give some suggestion or guidance.Note: I used this code to get column namepublic ArrayList<String> fetchtable(String value){           try    {       makeConnection();       String str1=\"Select * from \"+ value;       ResultSet rs = st.executeQuery(str1);       rsmd = rs.getMetaData();       NumOfCol= rsmd.getColumnCount();       for(int i=1;i<=NumOfCol;i++)       {          ColumnName = rsmd.getColumnName(i);          System.out.println(ColumnName);          columns.add(ColumnName);        }               //System.out.println(\"Columns Valuessss is:\" +columns);                 }catch(Exception ae){            ae.printStackTrace();        }        return columns;    }\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

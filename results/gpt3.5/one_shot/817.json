@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzxm22reOrXFKHKWshU8hKbdeK5D",
+    "object": "chat.completion",
+    "created": 1691673958,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: try { \n    out.println(User + \" is \" + str);\n} catch (Exception e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: The issue in your code is that you are using the `write` method of `PrintWriter` to write the output to the file. The `write` method does not automatically append a new line character at the end of the string. So, you need to manually add the new line character `\\r\\n` after writing each line to the file. Alternatively, you can use the `println` method of `PrintWriter` which automatically appends a new line character."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 476,
+        "completion_tokens": 137,
+        "total_tokens": 613
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: My Java code always give false value but my API got it true?: :I have problem with my code.Here is a picThe result is always false.but in my APIboth results are true.Here part of my Java code. Any help?public class Main {    public static void main(String[] args) throws IOException {        BufferedReader br = new BufferedReader(new FileReader(\"in.txt\"));        PrintWriter out = new PrintWriter(new FileWriter(\"result.txt\"), true);             String User;        while ((User = br.readLine()) != null){            URL url = new URL(\"http://mysecretweb.com/r/migrate.php?name=\"+User);            URLConnection connection = url.openConnection();            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));            boolean result = Boolean.valueOf(reader.readLine());            String str = Boolean.toString(result);            System.out.println(User+\" is \"+str);            out.write(User+\" is \"+str);            out.write(\"\\r\\n\");                           }        }    }\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

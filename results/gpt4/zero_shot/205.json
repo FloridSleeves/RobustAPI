@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2heNsIpj3a1qlaF6D7INXuWKs0o",
+    "object": "chat.completion",
+    "created": 1691684490,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\nInputStream payload = new ByteArrayInputStream(payloadArray);\nCipher encryptCipher = Cipher.getInstance(\"AES\", \"SunJCE\");\nencryptCipher.init(Cipher.ENCRYPT_MODE, key, IV);\nInputStream encryptStream = new CipherInputStream(payload, encryptCipher);\nCipher decryptCipher = Cipher.getInstance(\"AES\", \"SunJCE\");\ndecryptCipher.init(Cipher.DECRYPT_MODE, key, IV);\nInputStream decryptStream = new CipherInputStream(encryptStream, decryptCipher);\n\nbyte[] plainText = new byte[decryptStream.available()];\nint bytesRead = decryptStream.read(plainText);\n```\n<<<explanation>>>: The InputStream.read method is used to read some number of bytes from the input stream and store them into the buffer array. In this case, it is used to read the decrypted data from the CipherInputStream into the byte array 'plainText'. The number of bytes actually read is returned as an integer. If no byte is available because the end of the stream has been reached, the value -1 is returned. This method blocks until input data is available, the end of the stream is detected, or an exception is thrown."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 274,
+        "completion_tokens": 238,
+        "total_tokens": 512
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Decrypting a CipherInputStream results in an empty stream: :I seem to be have an issue with JCE. I create an CipherInputStream using an encrypting JCE cipher which I then use to create another CipherInputStream using a different decrypting JCE cipher.When I try to read then second stream all I get is empty data. I found no documentation forbidding the above behavior. Does anyone know what the problem is?This is the code which I am running, at the end plainText is empty (the same issue persists regardless of what SecurityProvider I use).InputStream payload = new ByteArrayInputStream(payloadArray);Cipher encryptCipher = Cipher.getInstance(\"AES\", \"SunJCE\");encryptCipher.init(Cipher.ENCRYPT_MODE, key, IV);InputStream encryptStream = new CipherInputStream(payload, encryptCipher);Cipher decryptCipher = Cipher.getInstance(\"AES\", \"SunJCE\");decryptCipher.init(Cipher.DECRYPT_MODE, key, IV);InputStream decryptStream = new CipherInputStream(encryptStream, decryptCipher);byte[] plainText = IOUtisl.toByteArray(decryptStream);Thanks!\nPlease using this api: InputStream.read.\nAnswer:"
+}

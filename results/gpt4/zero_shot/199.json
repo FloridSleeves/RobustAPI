@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2e1ypKeMVAKfUiF55dqbh1Zlk2F",
+    "object": "chat.completion",
+    "created": 1691684265,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\nimport com.jcraft.jsch.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        try {\n            JSch jsch = new JSch();\n            Session session = jsch.getSession(\"username\", \"hostname\", 22);\n            session.setPassword(\"password\");\n            session.setConfig(\"StrictHostKeyChecking\", \"no\");\n            session.connect();\n\n            ChannelExec channel = (ChannelExec) session.openChannel(\"exec\");\n            channel.setCommand(\"your command\");\n\n            InputStream in = channel.getInputStream();\n            channel.connect();\n\n            byte[] tmp = new byte[1024];\n            while (true) {\n                while (in.available() > 0) {\n                    int i = in.read(tmp, 0, 1024);\n                    if (i < 0) break;\n                    System.out.print(new String(tmp, 0, i));\n                }\n                if (channel.isClosed()) {\n                    System.out.println(\"Exit status: \" + channel.getExitStatus());\n                    break;\n                }\n                Thread.sleep(1000);\n            }\n            channel.disconnect();\n            session.disconnect();\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nIn this code, we first establish a connection to the remote server using JSch's `getSession` method. We then open an \"exec\" channel to execute commands. We set the command we want to run with `setCommand`.\n\nWe then get the input stream from the channel, which will contain the output of the command. We connect to the channel and start reading from the input stream in a loop. We read up to 1024 bytes at a time from the stream and print them out. \n\nThe loop continues until the channel is closed, at which point we print out the exit status of the command. We then disconnect from the channel and the session. \n\nThe `InputStream.read` method is used to read bytes from the input stream into a byte array. It returns the number of bytes actually read, or -1 if the end of the stream is reached."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 129,
+        "completion_tokens": 436,
+        "total_tokens": 565
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Run a command over SSH with JSch: :I'm trying to run a command over SSH with JSch, but JSch has virtually no documentation and the examples I've found are terrible. For example, this one doesn't show code for handling the output stream. And, this one uses an ugly hack to know when to stop reading from the output stream.\nPlease using this api: InputStream.read.\nAnswer:"
+}

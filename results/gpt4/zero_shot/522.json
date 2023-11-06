@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m5MSki3QePmrv7WVvDuWIK7xGpNa",
+    "object": "chat.completion",
+    "created": 1691694708,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\npublic static Map<Object, Object> groupByAttributes(List<Person> data, List<Function<Person, Object>> attributeGetters) {\n    if (attributeGetters.isEmpty()) {\n        return Collections.emptyMap();\n    }\n\n    Iterator<Function<Person, Object>> iterator = attributeGetters.iterator();\n    Function<Person, Object> firstAttributeGetter = iterator.next();\n    Collector<Person, ?, Map<Object, Object>> collector = Collectors.groupingBy(firstAttributeGetter, Collectors.toList());\n\n    while (iterator.hasNext()) {\n        Function<Person, Object> nextAttributeGetter = iterator.next();\n        collector = Collectors.groupingBy(nextAttributeGetter, collector);\n    }\n\n    return data.stream().collect(collector);\n}\n```\n<<<explanation>>>: This function takes a list of persons and a list of attribute getters (functions that take a person and return an attribute value). It uses the Iterator.next API to iterate over the attribute getters. For each attribute getter, it creates a new GroupBy collector that groups by the attribute and uses the previous collector as the downstream collector. This effectively creates a chain of GroupBy collectors. The result is a nested map where the keys are attribute values and the values are either maps (for intermediate attributes) or lists of persons (for the last attribute)."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 179,
+        "completion_tokens": 273,
+        "total_tokens": 452
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Manually chain GroupBy collectors: :I want to group a list of person's. A person have some attributes like name, country, town, zipcode, etc. I wrote the static code, which works very well:Object groupedData = data.stream().collect(groupingBy(Person::getName, Collectors.groupingBy(Person::getCountry, Collectors.groupingBy(Person::getTown))));But the problem is, that is it not dynamic. Sometimes I want to just group by name and town, sometimes by a attributes. How can I do this? Non Java 8 solutions are welcome as well.\nPlease using this api: Iterator.next.\nAnswer:"
+}

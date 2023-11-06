@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFui8O3TRkICNFywJoumLrNnWnBd",
+    "object": "chat.completion",
+    "created": 1691973600,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: String secret = \"key\";\nString message = \"The quick brown fox jumps over the lazy dog\";\n\nMac sha256_HMAC = Mac.getInstance(\"HmacSHA256\");\nSecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(\"UTF-8\"), \"HmacSHA256\");\nsha256_HMAC.init(secret_key);\n\nbyte[] bytes = sha256_HMAC.doFinal(message.getBytes(\"UTF-8\"));\n\nStringBuilder hash = new StringBuilder();\nfor (byte b : bytes) {\n    String hex = Integer.toHexString(0xff & b);\n    if (hex.length() == 1) hash.append('0');\n    hash.append(hex);\n}\n\nSystem.out.println(hash.toString());\n<<<explanation>>>: This code uses the getBytes() method of the String class to convert the secret key and the message into byte arrays, which are then used to initialize the SecretKeySpec and to compute the HMAC. The resulting byte array is then converted to a hexadecimal string. The getBytes() method is used instead of the Charset.encode() method because it is simpler and more straightforward."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 473,
+        "completion_tokens": 222,
+        "total_tokens": 695
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: HMAC-SHA256 Algorithm for signature calculation: :I am trying to create a signature using the HMAC-SHA256 algorithm and this is my code.I am using US ASCII encoding.final Charset asciiCs = Charset.forName(\"US-ASCII\");final Mac sha256_HMAC = Mac.getInstance(\"HmacSHA256\");final SecretKeySpec secret_key = new javax.crypto.spec.SecretKeySpec(asciiCs.encode(\"key\").array(), \"HmacSHA256\");sha256_HMAC.init(secret_key);final byte[] mac_data = sha256_HMAC.doFinal(asciiCs.encode(\"The quick brown fox jumps over the lazy dog\").array());String result = \"\";for (final byte element : mac_data){    result += Integer.toString((element & 0xff) + 0x100, 16).substring(1);}System.out.println(\"Result:[\" + result + \"]\");The result that I am getting from the above code is:f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8This is same as to that of shown in the wikiHMAC_SHA256(\"key\", \"The quick brown fox jumps over the lazy dog\") = 0x f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8except for the 0x.I am looking for ideas/comments if I am doing everything right or may be I can improve my code.\nPlease using this api: String.getBytes.\nAnswer:"
+}

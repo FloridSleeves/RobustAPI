@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCk76Jt8IKseINXyT74GnRkXs4VZ",
+    "object": "chat.completion",
+    "created": 1691961411,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: public class NestedIterator implements Iterator<Integer> {\n    private Stack<Iterator> stack;\n\n    public NestedIterator(List<NestedInteger> nestedList) {\n        stack = new Stack<>();\n        stack.push(nestedList.iterator());\n    }\n\n    @Override\n    public Integer next() {\n        if (!hasNext()) {\n            throw new NoSuchElementException();\n        }\n        return (Integer) stack.peek().next();\n    }\n\n    @Override\n    public boolean hasNext() {\n        while (!stack.isEmpty()) {\n            if (!stack.peek().hasNext()) {\n                stack.pop();\n            } else {\n                Object element = stack.peek().next();\n                if (element instanceof Integer) {\n                    return true;\n                } else {\n                    stack.push(((List<NestedInteger>) element).iterator());\n                }\n            }\n        }\n        return false;\n    }\n}\n<<<explanation>>>: In this code, we create a class called NestedIterator that implements the Iterator interface. We use a stack to keep track of the nested iterators. The hasNext() method checks if there is a next element by iterating through the nested iterators and pushing them onto the stack. The next() method returns the next element by calling the next() method of the top iterator on the stack."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 253,
+        "completion_tokens": 259,
+        "total_tokens": 512
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Generator functions equivalent in Java: :I would like to implement an Iterator in Java that behaves somewhat like the following generator function in Python:def iterator(array):   for x in array:      if x!= None:        for y in x:          if y!= None:            for z in y:              if z!= None:                yield zx on the java side can be multi-dimensional array or some form of nested collection. I am not sure how this would work. Ideas?\nPlease using this api: Iterator.next.\nAnswer:"
+}

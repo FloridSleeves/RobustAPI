@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m1hHGpDdpzMQSxdOfv7e3nDMIwRx",
+    "object": "chat.completion",
+    "created": 1691680623,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n\n<<<code>>>: \n\nSERVER SIDE\n```java\npublic void sendResponse(String response){\n    DataOutputStream dos = new DataOutputStream(mClientSocket.getOutputStream());\n    byte[] bytes = response.getBytes(\"UTF-8\");\n    dos.writeInt(bytes.length);\n    dos.write(bytes);\n    dos.flush();\n}\n```\n\nCLIENT SIDE\n```java\nDataInputStream dis = new DataInputStream(mSocket.getInputStream());\nint length = dis.readInt(); // read length of incoming message\nif(length>0) {\n    byte[] messageByte = new byte[length];\n    dis.readFully(messageByte, 0, messageByte.length); // read the message\n    String response = new String(messageByte);\n    Data data = new Gson().fromJson(response, Data.class);\n}\n```\n\n<<<explanation>>>: \n\nIn the server side, we are using `DataOutputStream.write` to send the response. First, we convert the response string to bytes and then write the length of the byte array to the output stream. This is followed by writing the actual byte array. This ensures that the entire response is sent as a single unit.\n\nOn the client side, we use `DataInputStream` to read the incoming message. We first read the length of the incoming message, then read the message itself into a byte array of the appropriate size. This ensures that we read the entire message, even if it is very large. After that, we convert the byte array back to a string and parse it as JSON. This should prevent the `JsonSyntaxException` you were seeing, as the entire JSON string will be read."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 302,
+        "completion_tokens": 326,
+        "total_tokens": 628
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: TCP Server-Client large json: :I currently have a TCP server (java desktop application) and client (android application) connected.I can send json string from client to server and from server to client, my issue is sometimes i need to send from the server a large string which gets cut.This is my code:SERVER SIDE public void sendResponse(String response){  PrintWriter writer = new PrintWriter(BufferedWriter(                       new OutputStreamWriter(mClientSocket.getOutputStream())), true);  if(writer != null && !writer.checkError()){     writer.println(response);     writer.flush();  }}CLIENT SIDEBufferedReader input = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));String response;while((response = input.readLine()) != null && mRun){    Data data = new Gson().fromJson(response, Data.class);    //when i try to convert the response to Data object using Gson    //it gives me a com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Unterminated array at line 1 column 106498}as you can see the error on client side happens because the string was to large so it got cut off, can someone please tell me what to do in this case?thanks in advance.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

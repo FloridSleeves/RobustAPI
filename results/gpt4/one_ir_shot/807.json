@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFJUudrih3KgHlxx3zaUlWS1r6FZ",
+    "object": "chat.completion",
+    "created": 1691971292,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: BLOB retBLOB = BLOB.createTemporary(conn, true, BLOB.DURATION_SESSION);\nretBLOB.open(BLOB.MODE_READWRITE);\nOutputStream bOut = retBLOB.setBinaryStream(0L);\nZipOutputStream zipOut = new ZipOutputStream(bOut);\nPrintWriter out = new PrintWriter(new OutputStreamWriter(zipOut, \"UTF-8\"));\nout.write('\\ufeff');\nzipOut.putNextEntry(new ZipEntry(\"filename.csv\"));\nwhile (rs.next()){\n    out.print(\"\\\"\" + rs.getString(i) + \"\\\"\");\n    out.print(\",\");\n}\nout.flush();\nzipOut.closeEntry();\nzipOut.close();\nretBLOB.close();\nreturn retBLOB;\n<<<explanation>>>: The PrintWriter class in Java is used to write characters in a file in a convenient way. The write() method of PrintWriter class is used to write a single character or a portion of a character array to the stream. In this case, we are using it to write the UTF-8 BOM ('\\ufeff') at the beginning of the file. This should ensure that the German characters are displayed correctly in the generated CSV file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 359,
+        "completion_tokens": 237,
+        "total_tokens": 596
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to add a UTF-8 BOM in Java?: :I have a Java stored procedure which fetches record from the table using Resultset object and creates a CS Vfile.BLOB retBLOB = BLOB.createTemporary(conn, true, BLOB.DURATION_SESSION);retBLOB.open(BLOB.MODE_READWRITE);OutputStream bOut = retBLOB.setBinaryStream(0L);ZipOutputStream zipOut = new ZipOutputStream(bOut);PrintStream out = new PrintStream(zipOut,false,\"UTF-8\");out.write('\\ufeff');out.flush();zipOut.putNextEntry(new ZipEntry(\"filename.csv\"));while (rs.next()){    out.print(\"\\\"\" + rs.getString(i) + \"\\\"\");    out.print(\",\");}out.flush();zipOut.closeEntry();zipOut.close();retBLOB.close();return retBLOB;But the generated CSV file doesn't show the correct German character. Oracle database also has a NLS_CHARACTERSET value of UTF8.Please suggest.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

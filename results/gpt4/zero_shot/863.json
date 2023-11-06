@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m7j7l2se7YSErZzKsNRovDXVbaxR",
+    "object": "chat.completion",
+    "created": 1691703801,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: RandomAccessFile.write\n<<<code>>>: \n```java\nimport java.io.*;\nimport javax.crypto.*;\n\npublic class EncryptedLogger {\n    private static final int BLOCK_SIZE = 16; // AES block size\n    private Cipher cipher;\n    private RandomAccessFile file;\n\n    public EncryptedLogger(String filename, SecretKey key) throws Exception {\n        cipher = Cipher.getInstance(\"AES/ECB/NoPadding\");\n        cipher.init(Cipher.ENCRYPT_MODE, key);\n        file = new RandomAccessFile(filename, \"rw\");\n    }\n\n    public void append(String message) throws Exception {\n        byte[] bytes = message.getBytes();\n        if (bytes.length % BLOCK_SIZE != 0) {\n            throw new IllegalArgumentException(\"Message length must be a multiple of block size\");\n        }\n        byte[] encrypted = cipher.doFinal(bytes);\n        file.seek(file.length());\n        file.write(encrypted);\n    }\n\n    public void close() throws IOException {\n        file.close();\n    }\n}\n```\n<<<explanation>>>: This code creates an `EncryptedLogger` class that uses the `RandomAccessFile.write` method to append encrypted messages to a file. The `Cipher` instance is initialized with the \"AES/ECB/NoPadding\" transformation, which means it uses AES encryption with ECB mode and no padding. The `append` method encrypts the message and writes the encrypted bytes to the end of the file. The `close` method closes the file. Note that the message length must be a multiple of the block size (16 bytes for AES), otherwise an `IllegalArgumentException` is thrown. This is because AES encryption requires the input to be a multiple of the block size, and we're not using any padding to fill up incomplete blocks."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 197,
+        "completion_tokens": 355,
+        "total_tokens": 552
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to append to AES encrypted file: :I'm writing some kind of logger that produces encrypted log-file. Unfortunately, cryptography is not my strong side. Now I can write to file several messages and then close file. Then i can open it, append some messages, close again and after decryption I see padding bytes in the middle of file. Is there any way to work with encrypted file without having to decrypt it every time I want to append some messages?EDIT: little more details. Current implementation utlizes CipherOutputStream. As i understand there's no way to seek using it.Can i use 'NoPadding' option if i will control that output data size is divisible by block size?\nPlease using this api: RandomAccessFile.write.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2KfRuIYWIFX8fp550eVZ63FKIwf",
+    "object": "chat.completion",
+    "created": 1691683065,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\nString cmd = \"ffmpeg -i input.vob output.mp4\";\nRuntime rt = Runtime.getRuntime();\nProcess proc = rt.exec(cmd);\nInputStream inputStream = proc.getInputStream();\nInputStream errorStream = proc.getErrorStream();\nbyte[] buffer = new byte[1000];\nwhile (isRunning(proc)) {\n    while (inputStream.available() > 0) {\n        int len = inputStream.read(buffer);\n        if (len > 0)\n            System.out.write(buffer, 0, len);\n    }\n    while (errorStream.available() > 0) {\n        int len = errorStream.read(buffer);\n        if (len > 0)\n            System.err.write(buffer, 0, len);\n    }\n    Thread.sleep(100);\n}\nproc.waitFor();\n```\n<<<explanation>>>: The InputStream.read API is used to read the output from the child process. The output from the child process is read continuously in a loop until the child process is running. This is done to prevent the output buffer from getting full which can cause the child process to hang. The error output from the child process is also read in a similar way. The parent process then waits for the child process to complete. The isRunning method checks if the child process is still running."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 203,
+        "completion_tokens": 267,
+        "total_tokens": 470
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Child Process will neither complete nor abort in Windows?: :How to make my java parent process wait till child process gets completed. I have tried with runtime.exec and with processBuilder.pb: String cmd = \"ffmpeg -i input.vob output.mp4\" Runtime rt = Runtime.getRuntime();Process proc = rt.exec(cmd); proc.waitFor();This works fine with small input file (say less than 10 Mb). If I give larger input file then program will be hanged. Output file will be partially created and file creation will be hanged and control will not return. Even proc.join(10000); did not give any useful result. Here parent process is terminating before child process (ffmpeg) gets completed.How to overcome this problem?\nPlease using this api: InputStream.read.\nAnswer:"
+}

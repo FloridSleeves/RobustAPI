@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD45WRLHMRfLrIAZbcAZetG7KPo0",
+    "object": "chat.completion",
+    "created": 1691962649,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: InputStream payload = new ByteArrayInputStream(payloadArray);\nCipher encryptCipher = Cipher.getInstance(\"AES\", \"SunJCE\");\nencryptCipher.init(Cipher.ENCRYPT_MODE, key, IV);\nInputStream encryptStream = new CipherInputStream(payload, encryptCipher);\nCipher decryptCipher = Cipher.getInstance(\"AES\", \"SunJCE\");\ndecryptCipher.init(Cipher.DECRYPT_MODE, key, IV);\nInputStream decryptStream = new CipherInputStream(encryptStream, decryptCipher);\nbyte[] plainText = new byte[decryptStream.available()];\nint bytesRead = decryptStream.read(plainText);\n<<<explanation>>>: The read() method of InputStream reads some number of bytes from the input stream and stores them into the buffer array. The number of bytes actually read is returned as an integer. This method blocks until input data is available, the end of the stream is detected, or an exception is thrown. In your case, you need to initialize the plainText array with the size of the available bytes in the decryptStream and then read the bytes into the plainText array."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 375,
+        "completion_tokens": 219,
+        "total_tokens": 594
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Decrypting a CipherInputStream results in an empty stream: :I seem to be have an issue with JCE. I create an CipherInputStream using an encrypting JCE cipher which I then use to create another CipherInputStream using a different decrypting JCE cipher.When I try to read then second stream all I get is empty data. I found no documentation forbidding the above behavior. Does anyone know what the problem is?This is the code which I am running, at the end plainText is empty (the same issue persists regardless of what SecurityProvider I use).InputStream payload = new ByteArrayInputStream(payloadArray);Cipher encryptCipher = Cipher.getInstance(\"AES\", \"SunJCE\");encryptCipher.init(Cipher.ENCRYPT_MODE, key, IV);InputStream encryptStream = new CipherInputStream(payload, encryptCipher);Cipher decryptCipher = Cipher.getInstance(\"AES\", \"SunJCE\");decryptCipher.init(Cipher.DECRYPT_MODE, key, IV);InputStream decryptStream = new CipherInputStream(encryptStream, decryptCipher);byte[] plainText = IOUtisl.toByteArray(decryptStream);Thanks!\nPlease using this api: InputStream.read.\nAnswer:"
+}

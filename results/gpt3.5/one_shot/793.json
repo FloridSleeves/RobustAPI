@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzlVXu5WgE9P1h2jTsgZA7pib6Au",
+    "object": "chat.completion",
+    "created": 1691673197,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: iText PDF Library\n<<<code>>>: try {\n    PdfReader reader = new PdfReader(\"input.pdf\");\n    PrintWriter writer = new PrintWriter(\"output.txt\");\n    \n    for (int i = 1; i <= reader.getNumberOfPages(); i++) {\n        PdfDictionary pageDict = reader.getPageN(i);\n        PdfDictionary resourcesDict = pageDict.getAsDict(PdfName.RESOURCES);\n        PdfDictionary fontDict = resourcesDict.getAsDict(PdfName.FONT);\n        \n        if (fontDict != null) {\n            writer.println(\"Fonts embedded in page \" + i + \":\");\n            \n            for (PdfName fontName : fontDict.getKeys()) {\n                PdfDictionary fontObj = fontDict.getAsDict(fontName);\n                PdfObject fontFile = fontObj.get(PdfName.FONTFILE);\n                \n                if (fontFile != null) {\n                    writer.println(fontName.toString());\n                }\n            }\n        }\n    }\n    \n    writer.close();\n    reader.close();\n} catch (Exception e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: This code uses the iText PDF Library to read an existing PDF file and check if the fonts are embedded. It iterates through each page of the PDF and checks if the FONT dictionary exists in the page's resources. If it does, it then checks if the FONTFILE object exists in the font dictionary, indicating that the font is embedded. The results are written to an output.txt file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 392,
+        "completion_tokens": 296,
+        "total_tokens": 688
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Check if fonts are embedded in an existing PDF?: :How can I check if the fonts are embedded in an existing PDF?That is, read an existing PDF and list out the results in a .txt fileI went through the following example:http://itextpdf.com/examples/iia.php?id=287The above example tries to create a new PDF, but I want to read a PDF file and check if the fonts are embedded or not.I am more of a PHP guy so having a hard time to tweak the code. Any help would be appreciated\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

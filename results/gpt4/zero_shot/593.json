@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m5rQIrfJRQt6osInELU1XjISYx0H",
+    "object": "chat.completion",
+    "created": 1691696628,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: List.get\n<<<code>>>: \n```java\nimport java.util.*;\n\nclass Node {\n    int id;\n    Node prev;\n    Node next;\n}\n\npublic class Main {\n    static ArrayList<Node> arrayList = new ArrayList<>();\n    static Node head, tail;\n\n    public static void main(String[] args) {\n        // Add nodes to the linked list and array list\n        for (int i = 1; i <= 10; i++) {\n            Node node = new Node();\n            node.id = i;\n            arrayList.add(node);\n            if (i == 1) {\n                head = tail = node;\n            } else {\n                tail.next = node;\n                node.prev = tail;\n                tail = node;\n            }\n        }\n\n        // Move node with ID 5 to end of list in O(1) time\n        moveToEnd(5);\n    }\n\n    static void moveToEnd(int id) {\n        Node node = arrayList.get(id - 1); // O(1) time complexity\n\n        // If the node is already at the end, no need to move\n        if (node == tail) {\n            return;\n        }\n\n        // Remove the node from its current position\n        if (node == head) {\n            head = node.next;\n            head.prev = null;\n        } else {\n            node.prev.next = node.next;\n            node.next.prev = node.prev;\n        }\n\n        // Add the node to the end\n        tail.next = node;\n        node.prev = tail;\n        node.next = null;\n        tail = node;\n    }\n}\n```\n<<<explanation>>>: In this code, we are creating a doubly linked list and an ArrayList. The ArrayList is used to map the nodes of the linked list. The 'moveToEnd' function is used to move a node with a specific ID to the end of the list. The 'List.get' method is used to access the node in O(1) time. If the node is not already at the end, it is removed from its current position and added to the end of the list."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 220,
+        "completion_tokens": 428,
+        "total_tokens": 648
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Arraylist mapping to linkedlist nodes: :I want to be able to access a certain node in my Doubly Linked List in O(1) time. I know that if i traverse the list to find a certain node it would take O(n) time so I want to map the nodes to an array list where I can access the nodes in O(1) time.I'm really unsure how I would do this mapping. I would like to see an example of how this can be done.Edit:I would like to be able to access any node in the linked list so I can move the nodes around in O(1) time.Example: Move node with ID 5 to end of list in O(1) time. Edit 2: I uploaded a picture example of what I'm trying to accomplish\nPlease using this api: List.get.\nAnswer:"
+}

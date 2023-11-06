@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD1WS4CWjGNhfRHH6YV9r3ecCCQh",
+    "object": "chat.completion",
+    "created": 1691962490,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \nprivate DOTDataInfo parseFile(InputStream stream) throws IOException{\n    DOTDataInfo info = new DOTDataInfo();\n    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));\n    int binSize = 0;\n    String line;\n    while((line = reader.readLine()) != null){\n        if(line.length() == 0)\n            break;\n        DOTProperty prop = parseProperty(line);\n        info.getProperties().add(prop);\n        if(prop.getName().equals(\"ContentSize\"))\n            binSize = Integer.parseInt(prop.getValue());\n    }\n    reader.close();\n    byte[] content = new byte[binSize];\n    int bytesRead = 0;\n    while(bytesRead < binSize){\n        int result = stream.read(content, bytesRead, binSize - bytesRead);\n        if(result == -1) break;\n        bytesRead += result;\n    }\n    return info;\n}\n<<<explanation>>>: The InputStream.read(byte[] b, int off, int len) method reads up to len bytes of data from the input stream into an array of bytes. An attempt is made to read as many as len bytes, but a smaller number may be read. The number of bytes actually read is returned as an integer. This method blocks until input data is available, end of file is detected, or an exception is thrown. If len is zero, then no bytes are read and 0 is returned; otherwise, there is an attempt to read at least one byte. If no byte is available because the stream is at end of file, the value -1 is returned; otherwise, at least one byte is read and stored into b."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 416,
+        "completion_tokens": 334,
+        "total_tokens": 750
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Reading Strings and Binary from the same FileInputStream: :I have a file that contains some amount of plain text at the start followed by binary content at the end. The size of the binary content is determined by some one of the plain text lines I read.I was using a BufferedReader to read the individual lines, however it exposes no methods to refer to read a byte array. The readUTF for a DataInputStream doesnt read all the way to the end of the line, and the readLine method is deprecated.Using the underlying FileInputStream to read returns empty byte arrays. Any suggestions on how to go about this?private DOTDataInfo parseFile(InputStream stream) throws IOException{DOTDataInfo info = new DOTDataInfo();BufferedReader reader = new BufferedReader(new InputStreamReader(stream));int binSize = 0;String line;while((line = reader.readLine()) != null){    if(line.length() == 0)        break;    DOTProperty prop = parseProperty(line);    info.getProperties().add(prop);    if(prop.getName().equals(\"ContentSize\"))        binSize = Integer.parseInt(prop.getValue());}byte[] content = new byte[binSize];stream.read(content); //Its all empty now. If I use a DataInputStream instead, its got the values from the filereturn info;}\nPlease using this api: InputStream.read.\nAnswer:"
+}

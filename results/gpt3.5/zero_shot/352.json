@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvS3V1uBnqRCcWd2IkneraDgtFGD",
+    "object": "chat.completion",
+    "created": 1691656615,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next()\n\n<<<code>>>: \n```java\nimport java.util.Iterator;\nimport java.util.List;\n\npublic class JoinedIterator<T> implements Iterator<T> {\n    private List<Iterator<T>> iterators;\n    private int currentIteratorIndex;\n\n    public JoinedIterator(List<Iterator<T>> iterators) {\n        this.iterators = iterators;\n        this.currentIteratorIndex = 0;\n    }\n\n    @Override\n    public boolean hasNext() {\n        while (currentIteratorIndex < iterators.size()) {\n            if (iterators.get(currentIteratorIndex).hasNext()) {\n                return true;\n            }\n            currentIteratorIndex++;\n        }\n        return false;\n    }\n\n    @Override\n    public T next() {\n        if (!hasNext()) {\n            throw new NoSuchElementException();\n        }\n        return iterators.get(currentIteratorIndex).next();\n    }\n}\n```\n\n<<<explanation>>>: \nThe code above shows an implementation of a `JoinedIterator` class that joins multiple iterators in Java. It takes a list of iterators as input and iterates through them sequentially. \n\nThe `hasNext()` method checks if there are any elements left in the current iterator. If not, it moves on to the next iterator until it finds one with elements or reaches the end of the list of iterators.\n\nThe `next()` method returns the next element from the current iterator. If there are no more elements in the current iterator, it throws a `NoSuchElementException`.\n\nTo use this `JoinedIterator`, you can create a list of iterators and pass it to the constructor, like this:\n\n```java\nList<Iterator<Integer>> iterators = new ArrayList<>();\niterators.add(list1.iterator());\niterators.add(list2.iterator());\niterators.add(list3.iterator());\n\nIterator<Integer> joinedIterator = new JoinedIterator<>(iterators);\n\nwhile (joinedIterator.hasNext()) {\n    Integer element = joinedIterator.next();\n    // Do something with the element\n}\n```\n\nIn this example, `list1`, `list2`, and `list3` are three different lists of integers. The `JoinedIterator` will iterate through them sequentially, returning elements from `list1` first, then `list2`, and finally `list3`."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 140,
+        "completion_tokens": 445,
+        "total_tokens": 585
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: join multiple iterators in java: :Does anybody know how to join multiple iterators in Java? The solution I found iterate through one iterator first, and then move on to the next one. However, what I want is when next() gets called, it first returns the first element from the first iterator. Next time when next() gets called, it returns the first element from the second iterator, and so on.Thanks\nPlease using this api: Iterator.next.\nAnswer:"
+}

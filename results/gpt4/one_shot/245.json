@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mBsFO6ICestWna950GTWi9ZcaAdM",
+    "object": "chat.completion",
+    "created": 1691719743,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n// Writing boolean array to file\nboolean[] bools = {true, false, true, false, true, false, true, false};\ntry (FileOutputStream fos = new FileOutputStream(\"binaryfile\")) {\n    byte[] bytes = new byte[bools.length / 8 + (bools.length % 8 == 0 ? 0 : 1)];\n    for (int i = 0; i < bools.length; i++) {\n        bytes[i / 8] |= (bools[i] ? 1 : 0) << (7 - i % 8);\n    }\n    fos.write(bytes);\n}\n\n// Reading boolean array from file\ntry (FileInputStream fis = new FileInputStream(\"binaryfile\")) {\n    byte[] bytes = new byte[(bools.length / 8) + (bools.length % 8 == 0 ? 0 : 1)];\n    fis.read(bytes);\n    for (int i = 0; i < bools.length; i++) {\n        bools[i] = (bytes[i / 8] & (1 << (7 - i % 8))) != 0;\n    }\n}\n<<<explanation>>>: The code first writes the boolean array to a file. It does this by converting each boolean to a bit in a byte array, then writing that byte array to a file. When reading the boolean array from the file, it reads the byte array from the file, then converts each bit in the byte array back to a boolean. This is a very efficient way to store and retrieve a boolean array, as it uses only 1/8th of the space that storing the booleans as 't' or 'f' characters would."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 550,
+        "completion_tokens": 362,
+        "total_tokens": 912
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Android InputStream.read() horribly slow:I'm working on an Android app that needs to communicate with a server (running on my PC) which is also written by me. The problem is that InputStream.read() takes an eternity, processing 200kb takes something around 30 seconds. My code: client = new Socket(\"192.168.1.1\", 1235);\nclient.setTcpNoDelay(true);\nclient.setReceiveBufferSize(1048576);\nInputStream is = client.getInputStream();\n\nbyte[] buffer = new byte[1048576];\nint i = 0;\nint length = -1;\n\nwhile (true)\n{\n    int b = is.read();\n    if (b == -1)\n    {\n        success = false;\n        break;\n    }\n    buffer[i] = (byte) b;\n\n    if (i == length)\n        break;\n\n                                    if (i == 3)\n                                    {\n                                                length = buffer[0] | buffer[1] << 8 | buffer[2] << 16 | buffer[3] << 24;\n                                                    \n                                        }\n\n                                        i++;\n\n        }\nPlease using this api: InputStream.read.\nAnswer:<<<api>>>: InputStream.read\n<<<code>>>: final byte[] lengthBuffer = new byte[3];\ntry{\n    int b = is.read(lengthBuffer);\n    // make sure b was 3 and do your length calculation\n    final byte buffer = new byte[length];\n    b = is.read(buffer);\n    // check b and then you have your bytes}\nexcept {System.out.println(\"Something went wrong.\");\")}\n<<<explanation>>>: Why are you reading each byte individually? It looks like you really want to read the first 3 bytes and figure out your length and then read that block. Then you can at least get the optimizations that Inputstream can provide for reading blocks of data rather than one byte at a time. And you are not allocating that mega array like you currently have.\nQuestion: How to convert boolean array to binary and vice versa in Java?: :What is the most efficient way to output a boolean array to (and input from) a file in Java? I was going to use a string with each character being either 't' or 'f' and then I thought, why not take eight time less space?NOTEI actually have no idea which answer is the better method, I've just chosen Peter's because I understand it. Thanks to both answerers!\nPlease using this api: InputStream.read.\nAnswer:"
+}

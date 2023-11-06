@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8nFsZgPMW8Vqsm17AlXm2tSzCEr",
+    "object": "chat.completion",
+    "created": 1691707901,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \nKeyGenerator keyGenerator = KeyGenerator.getInstance(\"Blowfish\");\nSecretKey secretKey = keyGenerator.generateKey();\nCipher cipher = Cipher.getInstance(\"Blowfish\");\ncipher.init(Cipher.ENCRYPT_MODE, secretKey);\nString input = \"password\";\nbyte encrypted[] = cipher.doFinal(input.getBytes());\nString s = new String(encrypted);\nSystem.out.println(s);\n<<<explanation>>>: The reason you are not getting the output in the string format is because the encrypted byte array cannot be directly converted to a string using the String constructor. The encrypted byte array contains bytes that do not map to a valid character in the character set used by the String constructor, resulting in the strange characters you see.\n\nTo print the encrypted byte array in a readable format, you can convert it to a hexadecimal string or a Base64 string. Here is how you can convert it to a Base64 string:\n\n```java\nimport java.util.Base64;\n...\nbyte encrypted[] = cipher.doFinal(input.getBytes());\nString s = Base64.getEncoder().encodeToString(encrypted);\nSystem.out.println(s);\n```\n\nThis will print the encrypted byte array in a Base64 string, which only contains readable characters."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 212,
+        "completion_tokens": 249,
+        "total_tokens": 461
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Why am I not getting the output in the string format?: :In the following snippet I try to print encrypted array  in a simple string format.        KeyGenerator keyGenerator = KeyGenerator.getInstance(\"Blowfish\");        SecretKey secretKey = keyGenerator.generateKey();        Cipher cipher = Cipher.getInstance(\"Blowfish\");         cipher.init(Cipher.ENCRYPT_MODE, secretKey);        String input = \"password\";        byte encrypted[] = cipher.doFinal(input.getBytes());        String s = new String(encrypted);        System.out.println(s);But what I get is `\u2510\u256bY\u00b2\u2593\u00f4\u2534Vh\u00ac\u2219:\u256a\u2321\u00b6 . Why is it ? How can I print it in the proper string format ?\nPlease using this api: String.getBytes.\nAnswer:"
+}

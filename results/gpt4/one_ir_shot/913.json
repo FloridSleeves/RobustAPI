@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFhv6RDl8fBTkyQVXjcI0YntetHA",
+    "object": "chat.completion",
+    "created": 1691972807,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \n// Java\nString json = \"{...}\"; // your JSON string\nbyte[] compressedJson = compress(json.getBytes());\n\n// Javascript\nlet decompressedJson = decompress(compressedJson); // decompress the received data\n\n// Java compress method\npublic static byte[] compress(byte[] data) throws IOException {\n    Deflater deflater = new Deflater();\n    deflater.setInput(data);\n    ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);\n    deflater.finish();\n    byte[] buffer = new byte[1024];\n    while (!deflater.finished()) {\n        int count = deflater.deflate(buffer); // returns the generated code... index\n        outputStream.write(buffer, 0, count);\n    }\n    outputStream.close();\n    byte[] output = outputStream.toByteArray();\n    return output;\n}\n\n// Javascript decompress method\nfunction decompress(bytes) {\n    var inflate = new Zlib.Inflate(bytes);\n    var decompressed = inflate.decompress();\n    return JSON.parse(decompressed);\n}\n<<<explanation>>>: In Java, you can compress a JSON string by converting it to bytes using the getBytes() method, then using the Deflater class to compress the byte array. The compressed data can then be sent to the client.\n\nOn the client side in JavaScript, you can use the Zlib library to decompress the received data. The decompress() method returns a byte array, which can then be parsed back into a JSON object using JSON.parse()."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 279,
+        "completion_tokens": 304,
+        "total_tokens": 583
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to Compress JSON in java and decompression in Javascript: :Closed. This question does not meet Stack Overflow guidelines. It is not currently accepting answers.                                                             Questions concerning problems with code you've written must describe the specific problem \u2014 and include valid code to reproduce it \u2014 in the question itself. See SSCCE.org for guidance.Closed 9 years ago.                        Improve this question                    I have a large amount of data being sent from server to Javascript, which is taking quite a long time to load.I was wondering how I can implement compression at server and decompression in Javascript. I would appreciate any help.\nPlease using this api: String.getBytes.\nAnswer:"
+}

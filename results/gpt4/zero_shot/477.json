@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m52MMqqtwKZUVDUgXv3e7PWDDp1G",
+    "object": "chat.completion",
+    "created": 1691693462,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nimport javax.imageio.*;\nimport javax.imageio.stream.*;\nimport java.awt.image.*;\nimport java.awt.*;\nimport java.io.*;\n\npublic class ImageResizer {\n    public static void main(String[] args) throws IOException {\n        File inputFile = new File(\"input.jpg\");\n        File outputFile = new File(\"output.jpg\");\n\n        ImageInputStream iis = ImageIO.createImageInputStream(inputFile);\n        Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);\n\n        if (readers.hasNext()) {\n            ImageReader reader = readers.next();\n            reader.setInput(iis);\n\n            ImageReadParam param = reader.getDefaultReadParam();\n\n            int imageIndex = 0;\n            BufferedImage source = reader.read(imageIndex, param);\n\n            int w = source.getWidth();\n            int h = source.getHeight();\n            BufferedImage resized = new BufferedImage(w/2, h/2, BufferedImage.TYPE_INT_RGB);\n            Graphics2D g = resized.createGraphics();\n            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);\n            g.drawImage(source, 0, 0, w/2, h/2, 0, 0, w, h, null);\n            g.dispose();\n\n            ImageIO.write(resized, \"jpg\", outputFile);\n        }\n    }\n}\n```\n<<<explanation>>>: This code reads an image from a file using an ImageReader obtained from the ImageIO.getImageReaders method. The ImageReader is set to read from the ImageInputStream created from the input file. The image is then read into a BufferedImage. The size of the image is halved and a new BufferedImage is created to hold the resized image. The original image is drawn into the new BufferedImage using a Graphics2D object, which is set to use bilinear interpolation for better quality. The resized image is then written to the output file. The Iterator.next method is used to get the ImageReader from the Iterator returned by ImageIO.getImageReaders."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 125,
+        "completion_tokens": 412,
+        "total_tokens": 537
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to resize an image in a stream (using minimal RAM)?: :Looking for something like djpeg which uses O(1) RAM to resize by sub sampling, but in java and able to handle jpg, png, gif, bmp, etc. Maybe some implementation already exists.How to resize an image in a stream (using minimal RAM)?\nPlease using this api: Iterator.next.\nAnswer:"
+}

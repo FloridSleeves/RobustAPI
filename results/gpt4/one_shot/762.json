@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mERsFP6dCWbIEnNDsBX4vSshm5ZS",
+    "object": "chat.completion",
+    "created": 1691729640,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \nclass MultiplePrintWriter extends PrintWriter {\n    private PrintWriter[] outs;\n\n    public MultiplePrintWriter(PrintWriter[] outs) {\n        super(outs[0]); // Pass the first PrintWriter to the super class\n        this.outs = outs;\n    }\n\n    @Override\n    public void write(int c) {\n        for (PrintWriter out : outs) {\n            out.write(c);\n        }\n    }\n\n    @Override\n    public void write(char[] buf, int off, int len) {\n        for (PrintWriter out : outs) {\n            out.write(buf, off, len);\n        }\n    }\n\n    @Override\n    public void write(String s, int off, int len) {\n        for (PrintWriter out : outs) {\n            out.write(s, off, len);\n        }\n    }\n}\n<<<explanation>>>: This code creates a MultiplePrintWriter class that extends PrintWriter. It overrides the write methods to write to multiple PrintWriters at once. This way, you can write the same text to multiple files or streams. This is not already implemented in a library, but this solution should work for your needs."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 464,
+        "completion_tokens": 242,
+        "total_tokens": 706
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: PrintWriter to multiple files: :I need to write the same text to multiple files (or streams).Sometimes I need to use Writer, sometimes a PrintWriter, sometimes a OutputStream...One way to do this wold be to extend a PrintWriter to have an array of PrintWriters and overridde each method as follows:class MutiplePrintWriter extends PrintWriter {    private PrintWriter[] outs;    public MutiplePrintWriter(PrintWriter[] outs) { this.out = out; }    public void print(boolean b) { for (PrintWriter out : outs) print(b); }    public void print(char c) { for (PrintWriter out : outs) print(c); }    public void print(char[] s) { for (PrintWriter out : outs) print(s); }    ...}   (and the same for Writer, OutputStream...)Is there a better alternative?Is this already implemented in a library?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

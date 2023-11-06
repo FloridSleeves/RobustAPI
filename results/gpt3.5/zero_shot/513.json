@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvtub3XWmxJZEM92N3yvtj5dDhM8",
+    "object": "chat.completion",
+    "created": 1691658342,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next()\n<<<code>>>: \n```java\npublic class CustomMap {\n    private HashMap<Object, Integer> map;\n\n    public CustomMap() {\n        map = new HashMap<>();\n    }\n\n    public void add(Object obj) {\n        if (map.containsKey(obj)) {\n            map.put(obj, map.get(obj) + 1);\n        } else {\n            map.put(obj, 1);\n        }\n    }\n\n    public Iterator<Object> iterator() {\n        return new CustomIterator();\n    }\n\n    private class CustomIterator implements Iterator<Object> {\n        private Iterator<Object> keyIterator;\n        private int count;\n\n        public CustomIterator() {\n            keyIterator = map.keySet().iterator();\n            count = 0;\n        }\n\n        @Override\n        public boolean hasNext() {\n            return count < map.size();\n        }\n\n        @Override\n        public Object next() {\n            if (count < map.size()) {\n                Object key = keyIterator.next();\n                count++;\n                return key;\n            }\n            return null;\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nIn the given code, a custom iterator is implemented using the `Iterator` interface. The `CustomIterator` class is an inner class of the `CustomMap` class and implements the `Iterator<Object>` interface.\n\nThe `CustomIterator` class has two instance variables: `keyIterator` and `count`. `keyIterator` is used to iterate over the keys of the `map` HashMap, and `count` keeps track of the number of iterations.\n\nIn the `hasNext()` method, `count` is compared with the size of the `map` HashMap to determine if there are more elements to iterate.\n\nIn the `next()` method, if `count` is less than the size of the `map` HashMap, the next key is obtained from `keyIterator` and `count` is incremented. The key is then returned as the next element of the iterator.\n\nTo use the custom iterator, you can call the `iterator()` method on an instance of the `CustomMap` class, and then use the `hasNext()` and `next()` methods of the iterator to iterate over the keys of the map."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 249,
+        "completion_tokens": 449,
+        "total_tokens": 698
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Building a custom iterator: :I am making this class which is a custom Map based off a hash map. I have an add method where if you add an object the object will be the key, and its value will be 1 if the object is not currently in the list. However if you add object that is currently in the list its value will be bumped up by 1. So if I added 10 strings which were all the same, the key would be that string and the value will be 10. I understand in practice when I iterate through the map, there is actually only one object to iterate, however, I am trying to create a inner class that will define an iterator that will iterate the same object however many times its value is. I can do this by simply using for loops to construct an appropriate ArrayList and just create an iterator for that, but that is too inefficient. Is there an easy or more efficient way of doing this?\nPlease using this api: Iterator.next.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDwmxYNhUIzO37S1in1RlF9Yi1lP",
+    "object": "chat.completion",
+    "created": 1691966040,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: FileIO readFile = new FileIO();\nreadFile.openInputFile();\nString pointLine = null;\nPoint2DDemo newPoints = new Point2DDemo();\nStringTokenizer stringSplit = null;\nwhile(readFile.hasInputLine())\n{\n   pointLine = readFile.readInputLine();\n   stringSplit = new StringTokenizer(pointLine);\n   double pointX = Double.parseDouble(stringSplit.nextToken());\n   double pointY = Double.parseDouble(stringSplit.nextToken());\n   newPoints = new Point2DDemo(); // create a new object for each iteration\n   newPoints.putPair(pointX, pointY);\n   Points.add(newPoints);\n}\n<<<explanation>>>: In your code, you are reusing the same object `newPoints` in each iteration of the loop. This means that you are adding the same object reference to the `Points` ArrayList multiple times. To fix this, you need to create a new object for each iteration by adding the line `newPoints = new Point2DDemo();` inside the loop. This will ensure that each element in the ArrayList is a separate object with its own values."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 623,
+        "completion_tokens": 233,
+        "total_tokens": 856
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: filling array list with objects, causing all elements to be the same in list: :This question already has answers here:                                                            Why does my ArrayList contain N copies of the last item added to the list?                                (5 answers)                            Closed 9 years ago.I am trying to fill an arrayList with objects created from reading integers from a text file that represent points (two integers per line).  I'm attempting to do this in a loop.  The ArrayList seems to fill, but when I print it out after, all the elements in each index are the same as the last element added to the ArrayList.  This seems to have something to do with each arrayList index pointing to the object (my newbie guess).  Do I have to create a unique object for each arrayList entry? Is there an easy way to add to this code to do this?public class Point2DDemo extends Point2D<Double>{    ArrayList<Point2DDemo> Points = new ArrayList<Point2DDemo>(7);    /**     * Constructor for objects of class Point2DDemo     */    public Point2DDemo()    {    }    public Point2DDemo(double first, double second)    {        setFirst(first);        setSecond(second);    }    public void putPair(double point1, double point2){        this.setFirst(point1);        this.setSecond(point2);    }    /**     *      *      * @param  y   a sample parameter for a method     * @return     the sum of x and y      */    public void createList()    {        FileIO readFile = new FileIO();        readFile.openInputFile();        String pointLine = null;        Point2DDemo newPoints = new Point2DDemo();        StringTokenizer stringSplit = null;        while(readFile.hasInputLine())        {           pointLine = readFile.readInputLine();           stringSplit = new StringTokenizer(pointLine);           double pointX = Double.parseDouble(stringSplit.nextToken());           double pointY = Double.parseDouble(stringSplit.nextToken());           newPoints.putPair(pointX, pointY);           Points.add(newPoints);        }        for(int i = 0; i < Points.size(); i++)         System.out.println(Points.get(i));         readFile.closeInputFile();    }\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7luVvGVvyHFBTufY6QoTHGHSOBlAr",
+    "object": "chat.completion",
+    "created": 1691653011,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \nTo convert the PublicKey to OpenSSH authorized_keys format, you can use the following code:\n\n```java\nimport java.io.ByteArrayOutputStream;\nimport java.io.DataOutputStream;\nimport java.io.IOException;\nimport java.security.KeyPair;\nimport java.security.KeyPairGenerator;\nimport java.security.PublicKey;\nimport java.security.SecureRandom;\nimport java.util.Base64;\n\npublic class PublicKeyConverter {\n    public static void main(String[] args) throws Exception {\n        KeyPairGenerator kpGen = KeyPairGenerator.getInstance(\"DSA\");\n        kpGen.initialize(1024, new SecureRandom());\n        KeyPair keypair = kpGen.generateKeyPair();\n        PublicKey publicKey = keypair.getPublic();\n\n        String authorizedKeysFormat = convertToAuthorizedKeysFormat(publicKey);\n        System.out.println(authorizedKeysFormat);\n    }\n\n    public static String convertToAuthorizedKeysFormat(PublicKey publicKey) throws IOException {\n        ByteArrayOutputStream out = new ByteArrayOutputStream();\n        DataOutputStream dataOut = new DataOutputStream(out);\n\n        // Write the key type\n        dataOut.writeBytes(\"ssh-dss\");\n\n        // Write the key data\n        byte[] keyBytes = publicKey.getEncoded();\n        dataOut.writeInt(keyBytes.length);\n        dataOut.write(keyBytes);\n\n        // Convert to Base64 and add line breaks\n        String base64Key = Base64.getEncoder().encodeToString(out.toByteArray());\n        StringBuilder authorizedKeysFormat = new StringBuilder();\n        for (int i = 0; i < base64Key.length(); i += 64) {\n            authorizedKeysFormat.append(base64Key, i, Math.min(i + 64, base64Key.length()));\n            authorizedKeysFormat.append(\"\\n\");\n        }\n\n        return authorizedKeysFormat.toString();\n    }\n}\n```\n\n<<<explanation>>>: \nThe code above uses the `DataOutputStream.write` method to write the public key data in the OpenSSH authorized_keys format. It first writes the key type (\"ssh-dss\") and then writes the key data itself. The key data is obtained by calling `publicKey.getEncoded()`.\n\nThe key data is then converted to Base64 using `Base64.getEncoder().encodeToString()` and line breaks are added every 64 characters to match the format of the authorized_keys file.\n\nThe `convertToAuthorizedKeysFormat` method takes a `PublicKey` object as input and returns the public key in the OpenSSH authorized_keys format as a string."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 166,
+        "completion_tokens": 494,
+        "total_tokens": 660
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to do I convert the PublicKey to OpenSSH authorized_keys format: :Here is the code to get the public key. I need to convert the public key to OpenSSH format to add it to the authorized_keys file in Linux. How can I do that?KeyPairGenerator kpGen = KeyPairGenerator.getInstance(\"DSA\", \"BC\");kpGen.initialize(1024, new SecureRandom());KeyPair keypair = kpGen.generateKeyPair();I did use PEMWriter. But it didn't give the output string in proper format.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

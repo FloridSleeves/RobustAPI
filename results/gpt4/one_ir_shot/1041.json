@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nGBiLppqcVEhNlT9L8LpfhcQ9HmB",
+    "object": "chat.completion",
+    "created": 1691974654,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n@RequestMapping(value = \"/something/**\", method = RequestMethod.GET)\n@ResponseBody\npublic TextStory getSomething(HttpServletRequest request) {\n    String uri = request.getRequestURI();\n    StringTokenizer st = new StringTokenizer(uri, \"/\");\n    st.nextToken(); // Skip the \"something\" part\n    List<String> theRestOfPathArr = new ArrayList<>();\n    while (st.hasMoreTokens()) {\n        theRestOfPathArr.add(st.nextToken());\n    }\n    return doSomethingWithStuff(theRestOfPathArr);\n}\n<<<explanation>>>: The StringTokenizer class is used to break a string into tokens. In this case, we are using it to break the URI into parts based on the \"/\" delimiter. The nextToken() method is used to get the next token from the StringTokenizer object. We skip the first token (which is \"something\") and then add the rest of the tokens to a list. This list now contains the rest of the path as separate elements."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 453,
+        "completion_tokens": 200,
+        "total_tokens": 653
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Spring request mapping catching part of uri to PathVariable: :I need something similar to enter link description hereSo my path would be: /something/else/and/some/moreI would like to map it like so:@RequestMapping(value=\"/something/**\", method=RequestMethod.GET)public String handleRequest(String theRestOfPath){ /***/ }Or@RequestMapping(value=\"/something/**\", method=RequestMethod.GET)public String handleRequest(String[] theRestOfPathArr){ /***/ }The thing is ... I would like everything matched by ** to be passed to the method either:1. as a string (theRestOfPath = \"/else/and/some/more\"),2. or as an array (theRestOfPathArr = [\"else\",\"and\",\"some\",\"more\"]).  The number of path variables can vary, so I can't do:@RequestMapping(value=\"/something/{a}/{b}/{c}\", method=RequestMethod.GET)public String handleRequest(String a, String b, String c){ /***/ }Is there a way to do that?Thanks :)  ---EDIT---The solution I ended up with:  @RequestMapping(value = \"/something/**\", method = RequestMethod.GET)@ResponseBodypublic TextStory getSomething(HttpServletRequest request) {    final String URI_PATTERN = \"^.*/something(/.+?)(\\\\.json|\\\\.xml)?$\";    String uri = request.getRequestURI().replaceAll(URI_PATTERN, \"$1\");    return doSomethingWithStuff(uri);}\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

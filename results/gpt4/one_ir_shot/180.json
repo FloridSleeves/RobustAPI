@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCxnp40L0HCwQfMV0HQJdwZ3CjsT",
+    "object": "chat.completion",
+    "created": 1691962259,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \npublic boolean streamContainsString(InputStream inputStream, String searchString) throws IOException {\n    int length = searchString.length();\n    if (length == 0) {\n        return true;\n    }\n    char[] buffer = new char[length];\n    for (int i = 0; i < length; i++) {\n        int data = inputStream.read();\n        if (data == -1) {\n            return false;\n        }\n        buffer[i] = (char) data;\n    }\n    for (int data = inputStream.read(); data != -1; data = inputStream.read()) {\n        if (new String(buffer).contains(searchString)) {\n            return true;\n        }\n        System.arraycopy(buffer, 1, buffer, 0, length - 1);\n        buffer[length - 1] = (char) data;\n    }\n    return new String(buffer).contains(searchString);\n}\n<<<explanation>>>: This code reads the stream into a buffer the same size as the search string. It then checks if the buffer contains the search string. If not, it shifts the buffer one character to the left, reads the next character from the stream into the buffer, and checks again. This continues until the search string is found or the end of the stream is reached. This method does not require loading the entire stream into memory and will return as soon as the search string is found."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 482,
+        "completion_tokens": 289,
+        "total_tokens": 771
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Efficient way to search a stream for a string: :Let's suppose that have a stream of text (or Reader in Java) that I'd like to check for a particular string. The stream of text might be very large so as soon as the search string is found I'd like to return true and also try to avoid storing the entire input in memory.Naively, I might try to do something like this (in Java):public boolean streamContainsString(Reader reader, String searchString) throws IOException {    char[] buffer = new char[1024];    int numCharsRead;    while((numCharsRead = reader.read(buffer)) > 0) {        if ((new String(buffer, 0, numCharsRead)).indexOf(searchString) >= 0)            return true;    }    return false;}Of course this fails to detect the given search string if it occurs on the boundary of the 1k buffer:Search text: \"stackoverflow\"Stream buffer 1: \"abc.........stack\"Stream buffer 2: \"overflow.......xyz\"How can I modify this code so that it correctly finds the given search string across the boundary of the buffer but without loading the entire stream into memory?Edit: Note when searching a stream for a string, we're trying to minimise the number of reads from the stream (to avoid latency in a network/disk) and to keep memory usage constant regardless of the amount of data in the stream. Actual efficiency of the string matching algorithm is secondary but obviously, it would be nice to find a solution that used one of the more efficient of those algorithms.\nPlease using this api: InputStream.read.\nAnswer:"
+}

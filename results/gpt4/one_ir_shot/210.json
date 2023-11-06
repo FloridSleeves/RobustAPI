@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD4vqOwGz9zOXaRvBOplMUc2Pi8K",
+    "object": "chat.completion",
+    "created": 1691962701,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \ntry {\n    InputStream inputStream = new FileInputStream(\"file.txt\");\n    byte[] bom = new byte[3];\n    inputStream.read(bom);\n\n    if (bom[0] != (byte) 0xEF || bom[1] != (byte) 0xBB || bom[2] != (byte) 0xBF) {\n        inputStream.close();\n        inputStream = new FileInputStream(\"file.txt\");\n    }\n\n    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, \"UTF-8\"));\n    String line;\n    while ((line = reader.readLine()) != null) {\n        // process the line\n    }\n    reader.close();\n} catch (IOException e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: This code reads the first three bytes from the file. If these bytes are not the UTF-8 BOM, it closes the InputStream and opens it again. Then it reads the file line by line. If the file starts with a BOM, the BOM will not be part of the first line."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 352,
+        "completion_tokens": 218,
+        "total_tokens": 570
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Removing the BOM character with Java: :This question already has answers here:                                                            Byte order mark screws up file reading in Java                                (11 answers)                            Closed 8 years ago.I am trying to read files using FileReader and write them into a separate file.These files are UTF-8 encoded, but unfortuantely some of them still contain a BOM.The relevant code I tried is this:private final String UTF8_BOM = \"\\uFEFF\"; private String removeUTF8BOM(String s)    {        if (s.startsWith(UTF8_BOM))        {            s=s.replace(UTF8_BOM, \"\");        }        return s;    }    line=removeUTF8BOM(line);But for some reason the BOM is not removed. Is there any other way I can do this with FileReader? I know that there is the BOMInputStream that should work, but I'd rather find a solution using FileReader.\nPlease using this api: InputStream.read.\nAnswer:"
+}

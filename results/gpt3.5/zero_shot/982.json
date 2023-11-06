@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxOcTYLGD9kK72Ayz5SVnzzGZJ16",
+    "object": "chat.completion",
+    "created": 1691664090,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes()\n<<<code>>>: \nTo encrypt the URL, you can use a hashing algorithm like MD5 or SHA-256. Here's an example using MD5:\n\n```java\nimport java.security.MessageDigest;\nimport java.security.NoSuchAlgorithmException;\n\npublic class URLUtils {\n    public static String encryptURL(String url) {\n        try {\n            MessageDigest md = MessageDigest.getInstance(\"MD5\");\n            byte[] hash = md.digest(url.getBytes());\n            \n            StringBuilder sb = new StringBuilder();\n            for (byte b : hash) {\n                sb.append(String.format(\"%02x\", b));\n            }\n            \n            return sb.toString();\n        } catch (NoSuchAlgorithmException e) {\n            e.printStackTrace();\n        }\n        \n        return null;\n    }\n}\n```\n\nYou can use the `encryptURL` method to encrypt your URL before generating the tiny URL.\n\nTo generate a tiny URL, you can use a URL shortening service like Bitly or TinyURL. These services usually provide an API that you can use to shorten the URL programmatically. Here's an example using the TinyURL API:\n\n```java\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.net.HttpURLConnection;\nimport java.net.URL;\n\npublic class URLUtils {\n    public static String shortenURL(String url) {\n        try {\n            URL apiURL = new URL(\"https://api.tinyurl.com/dev/api-create.php?url=\" + url);\n            HttpURLConnection connection = (HttpURLConnection) apiURL.openConnection();\n            connection.setRequestMethod(\"GET\");\n            \n            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));\n            String response = reader.readLine();\n            \n            reader.close();\n            connection.disconnect();\n            \n            return response;\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n        \n        return null;\n    }\n}\n```\n\nYou can use the `shortenURL` method to get the shortened URL from the TinyURL API."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 155,
+        "completion_tokens": 385,
+        "total_tokens": 540
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: java android URL encrypting: :I am working on an application that uploads a file to amazon s3(part of the application). But when I generate the URL of the files, it shows the authentication key, file name and etc. I need to encrypt the URL. Also I am using tiny url to shorten the URL but when I put the curser on the link it shows the real URL. I looked for md5 but I couldn't make it work. Is there any suggestion? \nPlease using this api: String.getBytes.\nAnswer:"
+}

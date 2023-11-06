@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCSg9MUyFCE89tMMBU3G3vZANYzW",
+    "object": "chat.completion",
+    "created": 1691960330,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: ApplicationInfo.loadIcon\n<<<code>>>: \nArrayList<PInfo> res = new ArrayList<PInfo>();\nList<PackageInfo> packs = ctx.getPackageManager().getInstalledPackages(PackageManager.GET_ACTIVITIES);\nfinal PackageItemInfo.DisplayNameComparator comparator = new PackageItemInfo.DisplayNameComparator(ctx.getPackageManager());\nCollections.sort(packs, new Comparator<PackageInfo>() {\n    @Override\n    public int compare(PackageInfo lhs, PackageInfo rhs) {\n        return comparator.compare(lhs.applicationInfo, rhs.applicationInfo);\n    }\n});\nfor (int i = 0; i < packs.size(); i++) {\n    PackageInfo p = packs.get(i);\n    if (p.packageName != null && ctx.getPackageManager().getLaunchIntentForPackage(p.packageName) != null ) {\n        PInfo newInfo = new PInfo();\n        if (p.applicationInfo.loadLabel(ctx.getPackageManager()).toString().length() > 15) {\n            newInfo.appname = p.applicationInfo.loadLabel(ctx.getPackageManager()).toString().substring(0, 15);\n        } else {\n            newInfo.appname = p.applicationInfo.loadLabel(ctx.getPackageManager()).toString();\n        }\n        newInfo.packageName = p.packageName;\n        newInfo.icon = p.applicationInfo.loadIcon(ctx.getPackageManager());\n        res.add(newInfo);\n    }\n}\n<<<explanation>>>: This code gets the list of all installed packages on the device, sorts them by their display name, and then iterates over each package. If the package has a launchable activity, it creates a new PInfo object, sets the app name, package name, and icon, and then adds it to the res ArrayList. The ApplicationInfo.loadIcon method is used to get the icon of the application."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 518,
+        "completion_tokens": 357,
+        "total_tokens": 875
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Getting applications with 2 or more activities: :I'm writing an Launcher app for android.I can get the list of all applications and launch able activities withArrayList<PInfo> res = new ArrayList<PInfo>();List<PackageInfo> packs = ctx.getPackageManager().getInstalledPackages(PackageManager.GET_ACTIVITIES);final PackageItemInfo.DisplayNameComparator comparator = new PackageItemInfo.DisplayNameComparator(ctx.getPackageManager());Collections.sort(packs, new Comparator<PackageInfo>() {    @Override    public int compare(PackageInfo lhs, PackageInfo rhs) {        return comparator.compare(lhs.applicationInfo, rhs.applicationInfo);    }});for (int i = 0; i < packs.size(); i++) {    PackageInfo p = packs.get(i);    if (p.packageName != null && ctx.getPackageManager().getLaunchIntentForPackage(p.packageName) != null ) {        PInfo newInfo = new PInfo();        if (p.applicationInfo.loadLabel(ctx.getPackageManager()).toString().length() > 15) {            newInfo.appname = p.applicationInfo.loadLabel(ctx.getPackageManager()).toString().substring(0, 15);        } else {            newInfo.appname = p.applicationInfo.loadLabel(ctx.getPackageManager()).toString();        }        newInfo.packageName = p.packageName;        newInfo.icon = p.applicationInfo.loadIcon(ctx.getPackageManager());        res.add(newInfo);    }}this.But, the problem is, there is 2 launch able activities included like phone and contacts app.I mean for example samsung included contacts launch able activity and phone launch able activity in same package. But with this code i can only get the contacts application into my view, phone app is missing. how other launchers are handling this? or what am i missing?\nPlease using this api: ApplicationInfo.loadIcon.\nAnswer:"
+}

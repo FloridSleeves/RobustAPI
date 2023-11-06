@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m7TnXqGxECEjBPqIx63sqt8hvwXp",
+    "object": "chat.completion",
+    "created": 1691702851,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n\n<<<code>>>: \n```java\nimport java.io.*;\n\npublic class CustomLogger {\n    private PrintWriter writer;\n\n    public CustomLogger(String fileName) {\n        try {\n            writer = new PrintWriter(new FileOutputStream(new File(fileName), true /* append = true */)); \n        } catch (FileNotFoundException e) {\n            e.printStackTrace();\n        }\n    }\n\n    public void log(String level, String message) {\n        writer.write(level + \": \" + message + \"\\n\");\n        writer.flush();\n    }\n\n    public void close() {\n        writer.close();\n    }\n}\n\n// Usage\npublic class Main {\n    public static void main(String[] args) {\n        CustomLogger logger = new CustomLogger(\"log.txt\");\n        logger.log(\"INFO\", \"This is an info message\");\n        logger.log(\"ERROR\", \"This is an error message\");\n        logger.close();\n    }\n}\n```\n\n<<<explanation>>>: \nIn the code above, we create a `CustomLogger` class that uses `PrintWriter.write` to write log messages to a file. The `CustomLogger` constructor takes a filename as an argument and creates a `PrintWriter` that appends to the specified file. The `log` method takes a level and a message as arguments and writes them to the file in the format `level: message`. The `close` method is used to close the `PrintWriter` when we're done with it. In the `main` method, we create a `CustomLogger`, log a couple of messages at different levels, and then close the logger."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 113,
+        "completion_tokens": 320,
+        "total_tokens": 433
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to specify your own logging messages: :At work, I was asked to find a way of creating a customised logging level system that would output to a .log file. I found a way that works really well, so I thought I'd share. Please see my answer\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nChi707jWLPpMkzRpsWy8nX5UI5X",
+    "object": "chat.completion",
+    "created": 1691961262,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: IntStream from(int n) {\n    return IntStream.iterate(n, m -> m + 1);\n}\n\nIntStream sieve(IntStream s) {\n    Iterator<Integer> iterator = s.iterator();\n    int head = iterator.next();\n    return IntStream.concat(IntStream.of(head), sieve(IntStream.generate(iterator::next).filter(n -> n % head != 0)));\n}\n\nIntStream primes = sieve(from(2));\n<<<explanation>>>: In Java 8 Stream, you can use the Iterator.next method to achieve the equivalent of Scala's Stream.head and Stream.tail. By converting the IntStream to an Iterator, you can call the next method to get the first element of the stream, and then use IntStream.generate to create a new stream starting from the next element. This allows you to avoid the \"stream has already been operated upon or closed\" exception."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 474,
+        "completion_tokens": 186,
+        "total_tokens": 660
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Java 8 Stream, getting head and tail: :Java 8 introduced a Stream class that resembles Scala's Stream, a powerful lazy construct using which it is possible to do something like this very concisely:def from(n: Int): Stream[Int] = n #:: from(n+1)def sieve(s: Stream[Int]): Stream[Int] = {  s.head #:: sieve(s.tail filter (_ % s.head != 0))}val primes = sieve(from(2))primes takeWhile(_ < 1000) print  // prints all primes less than 1000I wondered if it is possible to do this in Java 8, so I wrote something like this:IntStream from(int n) {    return IntStream.iterate(n, m -> m + 1);}IntStream sieve(IntStream s) {    int head = s.findFirst().getAsInt();    return IntStream.concat(IntStream.of(head), sieve(s.skip(1).filter(n -> n % head != 0)));}IntStream primes = sieve(from(2));Fairly simple, but it produces java.lang.IllegalStateException: stream has already been operated upon or closed because both findFirst() and skip() are terminal operations on Stream which can be done only once.I don't really have to use up the stream twice since all I need is the first number in the stream and the rest as another stream, i.e. equivalent of Scala's Stream.head and Stream.tail. Is there a method in Java 8 Stream that I can use to achieve this?Thanks.\nPlease using this api: Iterator.next.\nAnswer:"
+}

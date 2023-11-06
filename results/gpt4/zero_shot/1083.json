@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m9Ry0J4aH8ld9m30JgEK57bCeBem",
+    "object": "chat.completion",
+    "created": 1691710426,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n\n<<<code>>>: \n```java\npublic static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable>{\n    private final static IntWritable one = new IntWritable(1);\n    private Text count = new Text();\n    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {\n        StringTokenizer itr = new StringTokenizer(value.toString());\n        while (itr.hasMoreTokens()) {\n            itr.nextToken(); // Skip over word\n            if(itr.hasMoreTokens()){\n                count.set(itr.nextToken()); // save count as key\n                context.write(count, one);\n            }\n        }\n    }\n}\n```\n\n<<<explanation>>>: The NoSuchElementException is thrown because the StringTokenizer.nextToken() method is called one more time than there are tokens in the string. In your while loop, you are calling itr.nextToken() twice, but only checking if there is at least one token left. This means that if there is an odd number of tokens in the string, the second call to itr.nextToken() will throw a NoSuchElementException. To fix this, you should add a check for itr.hasMoreTokens() before the second call to itr.nextToken(). This will ensure that there is a token left to retrieve, preventing the NoSuchElementException."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 339,
+        "completion_tokens": 250,
+        "total_tokens": 589
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: MapReduce Hadoop StringTokenizer getting NoSuchElementException: :I am trying to use an output file from wordcount as an input file for a MapReduce that will show how many of each count there are (how many words appear once, twice, three times etc).I want to use the count of each word as the key, and 1 as the value, skipping over the words themselves.If the input file is something like this:422  apple 3  fruit 2  gorilla 9  monkey 3  zebra 12The output should be:2 1  3 2  9 1  12 1Using StringTokenizer to break up the file, the nextToken() in the map function below gives NoSuchElementException.public static class TokenizerMapper       extends Mapper<Object, Text, Text, IntWritable>{    private final static IntWritable one = new IntWritable(1);    private Text count = new Text();    public void map(Object key, Text value, Context context                    ) throws IOException, InterruptedException {        StringTokenizer itr = new StringTokenizer(value.toString());        itr.nextToken(); // Skip over first line, which has just one element        while (itr.hasMoreTokens()) {            itr.nextToken(); // Skip over word            count.set(itr.nextToken()); // save count as key            context.write(count, one);        }    }}  I'm not sure why or how to fix it?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

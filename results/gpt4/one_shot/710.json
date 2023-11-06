@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEDombWwWqIzMqZGQTNUnvHcvCPI",
+    "object": "chat.completion",
+    "created": 1691728768,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: FileWriter.write\n<<<code>>>: \nfor(int i=0; i<vc.size(); i++){\n    out.write( (String) vc.get(i));\n    out.write(System.lineSeparator()); // Add this line\n}\nout.close(); // Add this line\n<<<explanation>>>: The problem is that you are not closing the FileWriter after writing to it. The FileWriter buffers its output, and only actually writes to the file when its buffer is full or when you close it. Also, you are not writing a newline character after each line, so all the lines will run together."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 488,
+        "completion_tokens": 122,
+        "total_tokens": 610
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: null result: :Why have I got null in the text file test3.txt after read the elements of vectors correctly?The problem is that the test1.txt consists of the string words, when I printed out the vector elements, it is OK, but when I print these elements vector to another file the other file is still null.import java.io.BufferedReader;import java.io.FileReader;import java.io.FileWriter;import java.io.IOException;import java.util.Vector;public class VectorFile {    public static void main (String args []) throws IOException    {        Vector vc = new Vector();        BufferedReader file = new BufferedReader(new FileReader(\"c://test1.txt\"));        FileWriter out = new FileWriter(\"c://test3.txt\");        String s;        while ((s = file.readLine()) != null) {            vc.add(s);        }        file.close();        System.out.println(vc.size());        for(int i=0; i<vc.size(); i++){            out.write( (String) vc.get(i));            }    }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

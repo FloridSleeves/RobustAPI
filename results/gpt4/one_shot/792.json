@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEcLCtxR0p4LTnljOHsQ28VpsBvR",
+    "object": "chat.completion",
+    "created": 1691730289,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \ntry {\n    PrintWriter writer = new PrintWriter(new FileOutputStream(\"dumpstack.txt\", true));\n    Exception e = new Exception();\n    e.printStackTrace(writer);\n    writer.close();\n} catch (FileNotFoundException e1) {\n    e1.printStackTrace();\n}\n<<<explanation>>>: You can create a new Exception and print its stack trace to a PrintWriter that writes to a file. This will give you the same output as Thread.dumpStack() but it will be written to a file. The 'true' parameter in the FileOutputStream constructor enables the append mode, so the new data will be written to the end of the file rather than starting at the beginning."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 332,
+        "completion_tokens": 139,
+        "total_tokens": 471
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Can I copy thread.dumpstack() output to file: :I am using jdk1.4 so I have to use thread.dumpstack() method to print call stack and I want all the dump into file,Is there any way to do it?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mE8NsmOwyGAPAU553CdhlYcWyGp0",
+    "object": "chat.completion",
+    "created": 1691728431,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \npublic class objectOutput {    \n    static int i=0;    \n    PrintWriter printWriter;    \n    public objectOutput(HttpServletResponse response)  throws IOException {        \n        response.setContentType(\"application/json\");        \n        response.setCharacterEncoding(\"UTF-8\");        \n        printWriter = new PrintWriter(response.getOutputStream(), true);      \n    }    \n    // Using this method to write a Json String    \n    public void writeObject(Object object) throws IOException {        \n        printWriter.write(object.toString());        \n        printWriter.close();        \n        printWriter.flush();           \n    }\n}\n<<<explanation>>>: The ObjectOutputStream is not suitable for sending JSON strings. It is used for sending serialized Java objects. Instead, you should use PrintWriter.write to send the JSON string. Also, you should set the content type to \"application/json\" and the character encoding to \"UTF-8\" to ensure that the client correctly interprets the data."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 445,
+        "completion_tokens": 195,
+        "total_tokens": 640
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: ObjectOutputStream: appending question marks at the beginning of the String: :Server(Java) sends a Json String to a client(TypeScript). On the client I get the following:  Therefore JSON.parse() fails due to question marks being appended. I tried:Setting content type to - \"text/html\"Setting encode to - \"UTF-8\"And nothing seem to remove these.My code:public class objectOutput {    static int i=0;    ObjectOutputStream objectOutputStream;    public objectOutput(HttpServletResponse response)  throws IOException {        response.setContentType(\"application/octet-stream\");        objectOutputStream = new ObjectOutputStream(response.getOutputStream());      }    // Using this method to write a Json String    public void writeObject(Object object) throws IOException {        objectOutputStream.writeObject(object);        objectOutputStream.close();        objectOutputStream.flush();           }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

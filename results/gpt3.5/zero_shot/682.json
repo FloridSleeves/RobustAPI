@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lwKkZdicoGAIOrtBXlSlzIw4G56E",
+    "object": "chat.completion",
+    "created": 1691660006,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \npublic static void writeToLog(Context context, String string) {\n    String text = getTimestamp() + \" \" + string;\n    try {\n        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFile, true)));\n        out.write(text); // Use write() instead of println()\n        out.println(); // Add a new line after writing the text\n        out.close();\n    } catch (IOException e) {\n        Log.d(Constants.APP_NAME, e.toString());\n    }\n}\n\n<<<explanation>>>: The issue is that you are using the println() method of PrintWriter, which automatically adds a new line after each call. This is why only two lines are being saved, as each call to println() overwrites the previous line. To fix this, you can use the write() method of PrintWriter to write the text without adding a new line, and then manually add a new line using println(). This will ensure that each line is appended to the file without overwriting the previous lines."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 280,
+        "completion_tokens": 209,
+        "total_tokens": 489
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Writing String to Text File: :I am saving a log to a .txt file on the sdcard but once there is two lines saved, it overwrites it and starts over?Here is my code: public static String getTimestamp() {    try {        SimpleDateFormat dateFormat = new SimpleDateFormat(\"MMMdd HH:mm:ss\", Locale.getDefault());        String currentTimeStamp = dateFormat.format(new Date()); // Find todays date        return currentTimeStamp;    } catch (Exception e) {        e.printStackTrace();        return null;    }}public static void writeToLog(Context context, String string) {    String text = getTimestamp() + \" \" + string;    // ONLY SAVES TWO LINES    try {        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFile, true)));        out.println(text);        out.close();    } catch (IOException e) {        Log.d(Constants.APP_NAME, e.toString());    }}As soon as you mount /data in recovery, the log files in /sdcard & /data/media/0 show the full log history but not when the device is powered on\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

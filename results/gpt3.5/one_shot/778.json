@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzjyZJi9sR96r3morvfrM9uyyFvx",
+    "object": "chat.completion",
+    "created": 1691673102,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: try { \n    PrintWriter writer = new PrintWriter(\"C:\\\\Users\\\\hp\\\\Desktop\\\\result3.txt\", \"UTF-8\");\n    while (true) {\n        line = r.readLine();\n        if (line == null) {\n            break;\n        }\n        writer.println(line);\n    }\n    writer.close();\n} catch (Exception e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: The problem is that you are creating a new PrintWriter and closing it inside the while loop. This means that each time you write a line, it overwrites the previous line. To fix this, you should move the PrintWriter creation and closing outside the while loop. Additionally, you should use writer.println() instead of writer.write() to write each line to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 633,
+        "completion_tokens": 164,
+        "total_tokens": 797
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: why i cant export all line to text file?: :my code is creating empty text file although  I have tried to use the same code which used to work for small data output text file output should look like this ClassMetrics 3 1 0 3 18 0 0 3 2 0.0000 66 1.0000 0 0.0000 0.5556 0 0   20.6667~ void (): 1~ public gr.spinellis.ckjm.ClassMetrics getMetrics(String arg0): 2~ public void printMetrics(gr.spinellis.ckjm.CkjmOutputHandler arg0):  3but I get an empty text filethis is the source code package javaapplication11;import java.io.*;public class CmdTest {    public static void main(String[] args) throws Exception {        ProcessBuilder builder = new ProcessBuilder(\"cmd.exe\",\"/c\",                \"java -jar C:\\\\Users\\\\hp\\\\Desktop\\\\ckjm-1.99.jar  C:\\\\Users\\\\hp\\\\Desktop\\\\*.class\");        builder.redirectErrorStream(true);        Process p = builder.start();        BufferedReader r = new BufferedReader(new InputStreamReader(                p.getInputStream()));        String line;        while (true) {            line = r.readLine();            if (line == null) {                break;            }            PrintWriter writer = new PrintWriter(\"C:\\\\Users\\\\hp\\\\Desktop\\\\result3.txt\", \"UTF-8\");            // writer.println(\"\\t\\t\\tWMC DIT NOC CBO RFC LCOM Ce NPM\");            System.out.println(line);            writer.write(line);            writer.close();        }    }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

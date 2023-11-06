@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m32cbNcCX2aSLliPCP9ldYlOGQn7",
+    "object": "chat.completion",
+    "created": 1691685790,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\n// Convert boolean array to binary\npublic byte[] booleanArrayToBinary(boolean[] booleanArray) {\n    byte[] binaryArray = new byte[(booleanArray.length + 7) / 8];\n    for (int i = 0; i < booleanArray.length; i++) {\n        if (booleanArray[i]) {\n            binaryArray[i / 8] |= 1 << (7 - i % 8);\n        }\n    }\n    return binaryArray;\n}\n\n// Convert binary to boolean array\npublic boolean[] binaryToBooleanArray(byte[] binaryArray, int booleanArrayLength) {\n    boolean[] booleanArray = new boolean[booleanArrayLength];\n    for (int i = 0; i < booleanArrayLength; i++) {\n        booleanArray[i] = (binaryArray[i / 8] & (1 << (7 - i % 8))) != 0;\n    }\n    return booleanArray;\n}\n\n// Read binary from InputStream\npublic byte[] readBinaryFromInputStream(InputStream inputStream, int length) throws IOException {\n    byte[] binaryArray = new byte[length];\n    int bytesRead = 0;\n    while (bytesRead < length) {\n        int result = inputStream.read(binaryArray, bytesRead, length - bytesRead);\n        if (result == -1) {\n            break;\n        }\n        bytesRead += result;\n    }\n    return binaryArray;\n}\n```\n\n<<<explanation>>>: \nThe `booleanArrayToBinary` method converts a boolean array to a binary array. It iterates over the boolean array and for each true value, it sets the corresponding bit in the binary array.\n\nThe `binaryToBooleanArray` method converts a binary array back to a boolean array. It iterates over the binary array and for each bit that is set, it sets the corresponding value in the boolean array to true.\n\nThe `readBinaryFromInputStream` method reads a binary array from an InputStream. It reads bytes from the InputStream into the binary array until it has read the specified length or there are no more bytes to read. This method uses the `InputStream.read` method to read bytes from the InputStream."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 154,
+        "completion_tokens": 446,
+        "total_tokens": 600
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to convert boolean array to binary and vice versa in Java?: :What is the most efficient way to output a boolean array to (and input from) a file in Java? I was going to use a string with each character being either 't' or 'f' and then I thought, why not take eight time less space?NOTEI actually have no idea which answer is the better method, I've just chosen Peter's because I understand it. Thanks to both answerers!\nPlease using this api: InputStream.read.\nAnswer:"
+}

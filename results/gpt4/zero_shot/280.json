@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m3K8PBGFMXspRlbDmsYiYTNlqhvm",
+    "object": "chat.completion",
+    "created": 1691686876,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nIntStream from(int n) {\n    return IntStream.iterate(n, m -> m + 1);\n}\n\nIntStream sieve(Iterator<Integer> s) {\n    int head = s.next();\n    return IntStream.concat(IntStream.of(head), sieve(s)).filter(n -> n % head != 0);\n}\n\nIntStream primes = sieve(from(2).iterator());\n```\n<<<explanation>>>: The Iterator.next method is used to replace the findFirst() and skip() methods in the original code. This method retrieves the next element in the iteration and advances the iterator. This way, the stream is not consumed twice, avoiding the IllegalStateException. The filter operation is moved to the concat operation to ensure that the head is not filtered out."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 373,
+        "completion_tokens": 165,
+        "total_tokens": 538
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java 8 Stream, getting head and tail: :Java 8 introduced a Stream class that resembles Scala's Stream, a powerful lazy construct using which it is possible to do something like this very concisely:def from(n: Int): Stream[Int] = n #:: from(n+1)def sieve(s: Stream[Int]): Stream[Int] = {  s.head #:: sieve(s.tail filter (_ % s.head != 0))}val primes = sieve(from(2))primes takeWhile(_ < 1000) print  // prints all primes less than 1000I wondered if it is possible to do this in Java 8, so I wrote something like this:IntStream from(int n) {    return IntStream.iterate(n, m -> m + 1);}IntStream sieve(IntStream s) {    int head = s.findFirst().getAsInt();    return IntStream.concat(IntStream.of(head), sieve(s.skip(1).filter(n -> n % head != 0)));}IntStream primes = sieve(from(2));Fairly simple, but it produces java.lang.IllegalStateException: stream has already been operated upon or closed because both findFirst() and skip() are terminal operations on Stream which can be done only once.I don't really have to use up the stream twice since all I need is the first number in the stream and the rest as another stream, i.e. equivalent of Scala's Stream.head and Stream.tail. Is there a method in Java 8 Stream that I can use to achieve this?Thanks.\nPlease using this api: Iterator.next.\nAnswer:"
+}

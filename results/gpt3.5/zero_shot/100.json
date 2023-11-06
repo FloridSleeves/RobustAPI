@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7luZqNtwvEV42tlkUZzYTrV6YgQ71",
+    "object": "chat.completion",
+    "created": 1691653254,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \npublic void sendScreenshot(byte[] buffer) throws IOException {\n    OutputStream os = socket.getOutputStream();\n    DataOutputStream dos = new DataOutputStream(os);\n    dos.writeInt(buffer.length + 1);\n    dos.writeByte(0);\n    dos.write(buffer, 0, buffer.length);\n    dos.flush();\n}\n<<<explanation>>>: In Java, you can use the DataOutputStream class to write data in a specific format. In this case, you can use the writeInt() method to write the length of the message as an integer (4 bytes), writeByte() method to write the command (1 byte), and write() method to write the actual message. Finally, you need to flush the stream to ensure all the data is sent."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 311,
+        "completion_tokens": 160,
+        "total_tokens": 471
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Implementation Prefix Mode: :I'm developing a server-client application.The server is done in Java (PC) and the client in Java. (Android)I'm having trouble with the following implementation:Server grabs bitmap -> raw bytes -> TCP -> Client (Async StreamsNow the byte array is delivered in multiple packets of different lengths in the client. So to handle this properly, I should use the prefix method.To use prefix mode you need to send the length of the message in bytes  as four bytes and then the messageMy codepublic void sendScreenshot(byte[] buffer) throws IOException {    OutputStream os = socket.getOutputStream();    os.write(buffer.length + 1);    os.write((byte) 0);    os.write(buffer, 0, buffer.length);    os.flush();}In VB.net, this is achieved in the following code:Private Sub dat(ByVal dat As String)    Dim nstream As NetworkStream = sock.GetStream()    Dim bit As Byte() = System.Text.Encoding.UTF8.GetBytes(dat)    Dim bw As New BinaryWriter(sock.GetStream())    bw.Write(bit.Length + 1)    bw.Write((byte)command)    bw.Write(bit, 0, bit.length)End SubAny help implementing it in Java is welcome?\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxrMIEY5zgnY8yblY3Kntm2KxBgu",
+    "object": "chat.completion",
+    "created": 1691665872,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \nMap<String, Integer> output = new HashMap<>();\nassert delimiter.length() == 1;\nint count = 0;\nfor(String line: Files.readAllLines(Paths.get(docidFreq), Charset.defaultCharset())) {\n    count++;\n    //skipping header row\n    if (count == 1 ) {\n        continue;\n    }\n    StringTokenizer tokenizer = new StringTokenizer(line, delimiter);\n    String key = tokenizer.nextToken();\n    String value = tokenizer.nextToken();\n    output.put(key, Integer.parseInt(value));\n}\nreturn output;\n\n<<<explanation>>>: The issue with your current code is that you are using the String.split() method to split the line into tokens based on the delimiter \"|\". However, the split() method treats the delimiter as a regular expression, and \"|\" has a special meaning in regular expressions. It is used to match any character, so it is splitting the line on every character.\n\nTo fix this issue, you can use the StringTokenizer class instead. The StringTokenizer class is specifically designed for splitting strings into tokens based on a delimiter. In this case, you can create a new StringTokenizer object with the line and delimiter as parameters. Then, you can use the nextToken() method to get the next token (column A value) and the following nextToken() method to get the next token (column B value).\n\nBy using StringTokenizer, you can ensure that the line is split correctly based on the delimiter \"|\" and the map will contain the correct keys and values."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 261,
+        "completion_tokens": 306,
+        "total_tokens": 567
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java String.split() on numeric strings: :I have a '|' delimited csv file with 2 columns:A    |B87657|587688|832134|4...I want to make a Map by reading this file, taking the column A values as string, and column B values as int.I do (with delimiter = \"|\"):    Map<String, Integer> output = new HashMap<>();    assert delimiter.length() == 1;    int count = 0;    for(String line: Files.readAllLines(Paths.get(docidFreq), Charset.defaultCharset())) {        count++;        //skipping header row        if (count == 1 ) {            continue;        }        String tokens[] = line.split(delimiter);        output.put(tokens[0], Integer.parseInt(tokens[1]));    }    return output;However, the map contains single digit keys and values like (No relation to the sample file lines given above):1:28:59:3...What am I doing wrong?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

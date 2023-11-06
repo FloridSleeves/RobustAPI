@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFAEWVAKYxPkbtGQf7aWAKb5MkUo",
+    "object": "chat.completion",
+    "created": 1691970718,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\n@Override\nprotected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {\n    PrintWriter out = response.getWriter();\n    try {\n        List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);\n        for (FileItem item : items) {\n            if (!item.isFormField()) {\n                // Process form file field (input type=\"file\").\n                String fieldName = item.getFieldName();\n                String fileName = FilenameUtils.getName(item.getName());\n                InputStream fileContent = item.getInputStream();\n                // ... (do your job here)\n                out.write(\"File \" + fileName + \" uploaded successfully.\");\n            }\n        }\n    } catch (FileUploadException e) {\n        throw new ServletException(\"Cannot parse multipart request.\", e);\n    }\n}\n```\n<<<explanation>>>: This code uses the Apache Commons FileUpload library to handle file upload. It creates a PrintWriter object to write the response. The ServletFileUpload.parseRequest(request) method is used to parse the HTTP request into its constituent parts. It then iterates over each part, checking if it is a file (not a form field). If it is a file, it gets the file name and content, and writes a success message to the response."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 209,
+        "completion_tokens": 264,
+        "total_tokens": 473
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Android, upload a file in the tomcat server: :I am looking for code that can quickly upload an image from my android application in tomcat server.At the moment I have not found the java code to place in the tomcat server (servlet)\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

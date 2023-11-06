@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEmsLxr5umBnsvEZrkcSVYnkfpW7",
+    "object": "chat.completion",
+    "created": 1691730942,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \nString header = \"Name,Age,Gender,Country\\n\";\nString footer = \"\\nFooter\";\nString data = \"Tarantino,50,M,USA\\n Carey Mulligan,27,F,UK\\n Gong Li,45,F,China\";\ntry {\n    PrintWriter writer = new PrintWriter(new File(\"test.csv\"));\n    writer.write(header);\n    writer.write(data);\n    writer.write(footer);\n    writer.close();\n} catch (FileNotFoundException e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: The PrintWriter.write method is used to write strings to a file. In this case, we first write the header, then the data, and finally the footer. The \"\\n\" is used to create a new line in the file. After writing, we close the PrintWriter to ensure that all changes are saved and resources are freed."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 439,
+        "completion_tokens": 178,
+        "total_tokens": 617
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Java : Writing CSV in String format to CSV in a file: :A method returns a String in comma separated format. For example, the returned String can be like the one given below.Tarantino,50,M,USA\\n Carey Mulligan,27,F,UK\\n Gong Li,45,F,ChinaI will need to get this String and write it into a CSV file. I'll have to insert a header and a footer for this file as well.For example, when I open the file, the contents for the above data will be Name,Age,Gender,CountryTarantino,50,M,USA    Carey Mulligan,27,F,UKGong Li,45,F,ChinaHow do we do that ? Are there any open source libraries to do this task ? \nPlease using this api: PrintWriter.write.\nAnswer:"
+}

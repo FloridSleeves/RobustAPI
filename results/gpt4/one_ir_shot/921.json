@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFjg3EACW6Z7jHv9K7scE0ydVTXJ",
+    "object": "chat.completion",
+    "created": 1691972916,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \nString baseString = \"yourBaseString\";\nString key = \"yourOAuthConsumerSecret\";\nSecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), \"HmacSHA1\");\n\nMac mac = Mac.getInstance(\"HmacSHA1\");\nmac.init(keySpec);\nbyte[] rawHmac = mac.doFinal(baseString.getBytes());\n\nString result = Base64.getEncoder().encodeToString(rawHmac);\n<<<explanation>>>: The getBytes() method of the String class is used to convert the base string and key into byte arrays. These byte arrays are then used to create a SecretKeySpec object, which is used to initialize a Mac object. The Mac object is then used to compute the HMAC-SHA1 signature of the base string. The raw HMAC is then encoded into a string using Base64 encoding."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 339,
+        "completion_tokens": 172,
+        "total_tokens": 511
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to create OAuth HMAC-SHA1 signature on GAE/J?: :EDIT: java equivalent to php's hmac-SHA1(well hopefully, trying a.t.m.)My understanding is that to create a signature I need a 'base string' and a 'key'. I guess I know how to create the base string, and I assume I'm supposed to use 'OAuth Consumer Secret' that Google have assigned to my app as the key.But what am I supposed to do with these two to obtain the signature? Is there any HMAC-class on GAE/Java?Would it play if I just stored somewhere what OAuth Playground generates for me? Is it how you do it? Or does OAuth signature have some expiration date?(I tried AuthSub before but failed too, even though it looks quite simple. Also OAuth seems like more 'standard' to me, so I'd like to stick with OAuth.)\nPlease using this api: String.getBytes.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m7tgvsZj5WXJRTEJaMpVbauIXcKc",
+    "object": "chat.completion",
+    "created": 1691704456,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: SQLiteDatabase.query\n<<<code>>>: \npublic class MainActivity extends AppCompatActivity {        \n    private TaskDBHelper helper;        \n    private ListAdapter listAdapter;        \n\n    @Override        \n    public void onCreate(Bundle savedInstanceState) {            \n        super.onCreate(savedInstanceState);\n        updateUI();\n    }\n\n    private void updateUI(){                \n        helper = new TaskDBHelper(MainActivity.this);                \n        SQLiteDatabase sqlDB = helper.getReadableDatabase();                \n        Cursor cursor = sqlDB.query(TaskContract.TABLE,                        \n            new String[]{TaskContract.Columns._ID, TaskContract.Columns.TASK},                        \n            null, null, null, null, null);                \n        listAdapter = new SimpleCursorAdapter(                        \n            this,                        \n            R.layout.task_view,                        \n            cursor,                        \n            new String[]{TaskContract.Columns.TASK},                        \n            new int[]{R.id.taskTextView},                        \n            0                \n        );                \n        ListView listView = (ListView) findViewById(R.id.list);                \n        listView.setAdapter(listAdapter);            \n    }        \n}\n<<<explanation>>>: The error was due to the fact that you were trying to declare a method (updateUI) inside another method (onCreate). This is not allowed in Java. The correct way is to declare the updateUI method outside of the onCreate method and then call it inside the onCreate method. The SQLiteDatabase.query API is used to fetch data from your database. In this case, it's fetching data from the TaskContract.TABLE with the columns TaskContract.Columns._ID and TaskContract.Columns.TASK."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 252,
+        "completion_tokens": 309,
+        "total_tokens": 561
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: OnCreate expected semicolon in Android studio: :    public class MainActivity extends AppCompatActivity {        private TaskDBHelper helper;        private ListAdapter listAdapter;        @Override        public void onCreate(Bundle savedInstanceState) {            private void updateUI(){                helper = new TaskDBHelper(MainActivity.this);                SQLiteDatabase sqlDB = helper.getReadableDatabase();                Cursor cursor = sqlDB.query(TaskContract.TABLE,                        new String[]{TaskContract.Columns._ID, TaskContract.Columns.TASK},                        null, null, null, null, null);                listAdapter = new SimpleCursorAdapter(                        this,                        R.layout.task_view,                        cursor,                        new String[]{TaskContract.Columns.TASK},                        new int[]{R.id.taskTextView},                        0                );                ListView listView = (ListView) findViewById(R.id.list);                listView.setAdapter(listAdapter);            }        }}I keep getting a red mark on private void updateUI() where an error message that displays express expected (semicolon).\nPlease using this api: SQLiteDatabase.query.\nAnswer:"
+}

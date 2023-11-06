@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8GrS9UsiE99sYe5ssNDrXjq1lQ0",
+    "object": "chat.completion",
+    "created": 1691705893,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \n```java\nimport javax.crypto.Mac;\nimport javax.crypto.spec.SecretKeySpec;\nimport java.nio.charset.StandardCharsets;\nimport java.util.Base64;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        String baseString = \"yourBaseString\";\n        String secretKey = \"yourSecretKey\";\n\n        Mac mac = Mac.getInstance(\"HmacSHA1\");\n        SecretKeySpec secret = new SecretKeySpec(secretKey.getBytes(), \"HmacSHA1\");\n        mac.init(secret);\n        byte[] digest = mac.doFinal(baseString.getBytes(StandardCharsets.UTF_8));\n        String signature = Base64.getEncoder().encodeToString(digest);\n\n        System.out.println(\"Signature: \" + signature);\n    }\n}\n```\n<<<explanation>>>: In this code, we are using the `Mac` class from `javax.crypto` package to generate HMAC-SHA1 signature. We first get an instance of `Mac` with the algorithm \"HmacSHA1\". Then we create a `SecretKeySpec` with the secret key and the same algorithm. We initialize the `Mac` with the secret key spec. Then we compute the HMAC on input data provided by the base string. The `doFinal` method processes the data and completes the MAC operation. It returns the MAC result in form of byte array. We then encode this byte array into a string using Base64 encoding. This string is the required OAuth HMAC-SHA1 signature. The `getBytes` method is used to convert the base string and the secret key into byte arrays which are required by the `doFinal` and `SecretKeySpec` methods respectively."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 238,
+        "completion_tokens": 340,
+        "total_tokens": 578
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to create OAuth HMAC-SHA1 signature on GAE/J?: :EDIT: java equivalent to php's hmac-SHA1(well hopefully, trying a.t.m.)My understanding is that to create a signature I need a 'base string' and a 'key'. I guess I know how to create the base string, and I assume I'm supposed to use 'OAuth Consumer Secret' that Google have assigned to my app as the key.But what am I supposed to do with these two to obtain the signature? Is there any HMAC-class on GAE/Java?Would it play if I just stored somewhere what OAuth Playground generates for me? Is it how you do it? Or does OAuth signature have some expiration date?(I tried AuthSub before but failed too, even though it looks quite simple. Also OAuth seems like more 'standard' to me, so I'd like to stick with OAuth.)\nPlease using this api: String.getBytes.\nAnswer:"
+}

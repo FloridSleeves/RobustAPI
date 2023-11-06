@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8DAh1lQ2Bs55CpnmG9xNqzNqgnb",
+    "object": "chat.completion",
+    "created": 1691705664,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \n```java\npublic static void prependText(String textToPrepend) {\n    try {\n        RandomAccessFile raf = new RandomAccessFile(\"src/lt/test.txt\", \"rw\");\n        byte[] textBytes = textToPrepend.getBytes();\n        byte[] fileBytes = new byte[(int) raf.length()];\n        raf.read(fileBytes);\n        raf.seek(0);\n        raf.write(textBytes);\n        raf.write(fileBytes);\n        raf.close();\n    } catch (IOException e) {\n        e.printStackTrace();\n    }\n}\n```\n<<<explanation>>>: This code uses the `RandomAccessFile` class to read and write data to a file. The `RandomAccessFile` class allows us to move around a file and read and write at different locations. We first read the entire file into a byte array using the `read` method. Then we move the file pointer back to the start of the file using the `seek` method. We write the text to prepend to the file, and then write the original file contents. The `getBytes` method is used to convert the string to a byte array, which can be written to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 459,
+        "completion_tokens": 253,
+        "total_tokens": 712
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java. How to append text to top of file.txt: :This question already has answers here:                                                            Writing in the beginning of a text file Java                                (6 answers)                            Closed 9 years ago.I need to add text to beggining of text file via Java.For example I have test.txt file with data:PeterJohnAliceI need to add(to top of file):Jennifer It should be:JenniferPeterJohnAliceI have part of code, but It append data to end of file, I need to make It that added text to top of file:    public static void irasymas(String irasymai){        try {         File file = new File(\"src/lt/test.txt\");                if (!file.exists()) {                file.createNewFile();            }            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);            BufferedWriter bw = new BufferedWriter(fw);            bw.write(irasymai+ \"\\r\\n\");            bw.close();}        catch (IOException e) {        e.printStackTrace();                        }    }I have tried this, but this only deletes all data from file and not insert any text:public static void main(String[] args) throws IOException {        BufferedReader reader = null;        BufferedWriter writer = null;        ArrayList list = new ArrayList();        try {            reader = new BufferedReader(new FileReader(\"src/lt/test.txt\"));            String tmp;            while ((tmp = reader.readLine()) != null)                list.add(tmp);            OUtil.closeReader(reader);            list.add(0, \"Start Text\");            list.add(\"End Text\");            writer = new BufferedWriter(new FileWriter(\"src/lt/test.txt\"));            for (int i = 0; i < list.size(); i++)                writer.write(list.get(i) + \"\\r\\n\");        } catch (Exception e) {            e.printStackTrace();        } finally {            OUtil.closeReader(reader);            OUtil.closeWriter(writer);        }    }Thank you for help.\nPlease using this api: String.getBytes.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2cPbNvx2UEPjuxhH6NcKH10LaRd",
+    "object": "chat.completion",
+    "created": 1691684165,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read, OutputStream.write\n\n<<<code>>>: \n```java\nimport java.io.*;\n\npublic class BitReaderWriter {\n    public static void main(String[] args) throws IOException {\n        // Reading bits from a file\n        InputStream inputStream = new FileInputStream(\"input.txt\");\n        int singleByte = inputStream.read();\n        while (singleByte != -1) {\n            String bits = String.format(\"%8s\", Integer.toBinaryString(singleByte)).replace(' ', '0');\n            System.out.println(bits);\n            singleByte = inputStream.read();\n        }\n        inputStream.close();\n\n        // Writing bits to a file\n        OutputStream outputStream = new FileOutputStream(\"output.txt\");\n        String bits = \"10101010\";\n        int singleByteToWrite = Integer.parseInt(bits, 2);\n        outputStream.write(singleByteToWrite);\n        outputStream.close();\n    }\n}\n```\n\n<<<explanation>>>: In the given code, we are using the InputStream.read() method to read a file one byte at a time. Each byte is then converted to a binary string (bits) using the Integer.toBinaryString() method. The String.format() method is used to ensure that each byte is represented by exactly 8 bits.\n\nFor writing bits to a file, we first convert the string of bits to an integer using the Integer.parseInt() method with 2 as the radix to indicate that the string represents a binary number. Then, we use the OutputStream.write() method to write this integer as a byte to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 99,
+        "completion_tokens": 304,
+        "total_tokens": 403
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I read/write bits from/to a file in Java?: :I need to read file stream as bits and then I should be able to write bits to file again. Are there any classes for this purpose?\nPlease using this api: InputStream.read.\nAnswer:"
+}

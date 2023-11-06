@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCaJbHUug1RhOm6cfjGu22PFTANe",
+    "object": "chat.completion",
+    "created": 1691960803,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: InputStream inputStream = new FileInputStream(\"file.xml\");\nStringBuilder stringBuilder = new StringBuilder();\nint data;\nwhile ((data = inputStream.read()) != -1) {\n    stringBuilder.append((char) data);\n}\nString xmlString = stringBuilder.toString();\nString[] xmlDocuments = xmlString.split(\"<DOC>\");\nfor (String xmlDocument : xmlDocuments) {\n    if (xmlDocument.contains(\"<TEXT>\")) {\n        int startIndex = xmlDocument.indexOf(\"<TEXT>\") + \"<TEXT>\".length();\n        int endIndex = xmlDocument.indexOf(\"</TEXT>\");\n        String textValue = xmlDocument.substring(startIndex, endIndex);\n        System.out.println(textValue);\n    }\n}\n<<<explanation>>>: The code reads the XML file using an InputStream and appends the data to a StringBuilder. Then, it splits the XML string into separate documents using the \"<DOC>\" delimiter. For each document, it checks if it contains the \"<TEXT>\" tag and extracts the value between the opening and closing tags. Finally, it prints the text value."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 313,
+        "completion_tokens": 211,
+        "total_tokens": 524
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to parse multiple, consecutive xml files in one document?: :I have a big text file that is a sequence of XML-valid documents that looks something like this:<DOC>   <TEXT> ... </TEXT>    ...</DOC><DOC>    <TEXT> ... </TEXT>    ...</DOC>etc. There is no <?xml version=\"1.0\">, the <DOC></DOC> delimits each separate xml. What's the best way to parse this in Java and get the values under <TEXT> in each <DOC>?If I pass the whole thing to a DocumentBuilder, I get an error saying the document is not well formed. Is there a better solution than simply traversing through, a building a string for each <DOC>?\nPlease using this api: InputStream.read.\nAnswer:"
+}

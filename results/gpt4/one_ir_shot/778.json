@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFCtUc7uXe4GW3rdwufzhtICudVd",
+    "object": "chat.completion",
+    "created": 1691970883,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: package javaapplication11;\nimport java.io.*;\n\npublic class CmdTest {\n    public static void main(String[] args) throws Exception {\n        ProcessBuilder builder = new ProcessBuilder(\"cmd.exe\",\"/c\", \"java -jar C:\\\\Users\\\\hp\\\\Desktop\\\\ckjm-1.99.jar  C:\\\\Users\\\\hp\\\\Desktop\\\\*.class\");\n        builder.redirectErrorStream(true);\n        Process p = builder.start();\n        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));\n        String line;\n        PrintWriter writer = new PrintWriter(\"C:\\\\Users\\\\hp\\\\Desktop\\\\result3.txt\", \"UTF-8\");\n        while ((line = r.readLine()) != null) {\n            System.out.println(line);\n            writer.write(line);\n            writer.write(System.lineSeparator());\n        }\n        writer.close();\n    }\n}\n<<<explanation>>>: The PrintWriter.write() method writes a string to the output stream. In your original code, you were creating a new PrintWriter object and closing it within the while loop for each line of input. This was overwriting the file for each line, resulting in only the last line being written to the file. In the corrected code, the PrintWriter object is created before the loop and closed after the loop, so all lines are written to the same file. The System.lineSeparator() method is used to add a new line after each line of input."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 509,
+        "completion_tokens": 288,
+        "total_tokens": 797
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: why i cant export all line to text file?: :my code is creating empty text file although  I have tried to use the same code which used to work for small data output text file output should look like this ClassMetrics 3 1 0 3 18 0 0 3 2 0.0000 66 1.0000 0 0.0000 0.5556 0 0   20.6667~ void (): 1~ public gr.spinellis.ckjm.ClassMetrics getMetrics(String arg0): 2~ public void printMetrics(gr.spinellis.ckjm.CkjmOutputHandler arg0):  3but I get an empty text filethis is the source code package javaapplication11;import java.io.*;public class CmdTest {    public static void main(String[] args) throws Exception {        ProcessBuilder builder = new ProcessBuilder(\"cmd.exe\",\"/c\",                \"java -jar C:\\\\Users\\\\hp\\\\Desktop\\\\ckjm-1.99.jar  C:\\\\Users\\\\hp\\\\Desktop\\\\*.class\");        builder.redirectErrorStream(true);        Process p = builder.start();        BufferedReader r = new BufferedReader(new InputStreamReader(                p.getInputStream()));        String line;        while (true) {            line = r.readLine();            if (line == null) {                break;            }            PrintWriter writer = new PrintWriter(\"C:\\\\Users\\\\hp\\\\Desktop\\\\result3.txt\", \"UTF-8\");            // writer.println(\"\\t\\t\\tWMC DIT NOC CBO RFC LCOM Ce NPM\");            System.out.println(line);            writer.write(line);            writer.close();        }    }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

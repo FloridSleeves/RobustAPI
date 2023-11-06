@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m1fooYt3WSHnCM9fpRughVETg5wz",
+    "object": "chat.completion",
+    "created": 1691680532,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n\n<<<code>>>: \n```java\n// Create a server socket on device A\nServerSocket serverSocket = new ServerSocket(8888);\nSocket clientSocket = serverSocket.accept();\n\n// Create a DataOutputStream\nDataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());\n\n// Write data to the stream\nString data = \"Hello from device A\";\ndataOutputStream.write(data.getBytes());\n\n// Close the stream and socket\ndataOutputStream.close();\nclientSocket.close();\nserverSocket.close();\n\n// On device B, create a client socket\nSocket socket = new Socket(\"device A's IP address\", 8888);\n\n// Create a DataInputStream\nDataInputStream dataInputStream = new DataInputStream(socket.getInputStream());\n\n// Read data from the stream\nbyte[] dataBytes = new byte[1024];\ndataInputStream.read(dataBytes);\nString receivedData = new String(dataBytes);\n\n// Close the stream and socket\ndataInputStream.close();\nsocket.close();\n```\n\n<<<explanation>>>: \nIn this code, we are using the Java Socket programming to send data from one device to another over WiFi. On device A, we create a server socket that listens on port 8888. When device B connects to this server socket, we accept the connection and create a DataOutputStream. We then write the data we want to send to this stream.\n\nOn device B, we create a client socket that connects to device A's server socket. We then create a DataInputStream and read the data sent from device A. Note that you need to replace \"device A's IP address\" with the actual IP address of device A.\n\nThe DataOutputStream.write method is used to write data to the underlying output stream in a machine-independent way. In this case, it writes the data to the socket's output stream, which is then sent over the network to device B.\n\nPlease note that this is a very basic example and does not include any error handling or robustness features that a real-world application should have. Also, this code needs to be run in a separate thread from the UI thread to avoid blocking the UI."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 151,
+        "completion_tokens": 425,
+        "total_tokens": 576
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to send data to the same application installed on other android device using wifi: :i have an application on my android device like \"A\" and same application installed on the other android device like \"B\", now i want to send data from app \"A\" to app \"B\" using WIFI service. so please suggest me how can i implement this feature.i tried many times to get help from google but all is vain.it is possible from WIFI direct or NFC.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

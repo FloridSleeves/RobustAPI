@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCQdbhlRCvC9MiEXpAaXP38pe99t",
+    "object": "chat.completion",
+    "created": 1691960203,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: response.setHeader(\"Transfer-Encoding\", \"chunked\");\nresponse.setHeader(\"Trailer\", \"SomeTrailer\");\nDataOutputStream outputStream = new DataOutputStream(response.getOutputStream());\noutputStream.writeBytes(\"Some data\");\noutputStream.writeBytes(\"\\r\\n\");\noutputStream.writeBytes(\"0\\r\\n\");\noutputStream.writeBytes(\"SomeTrailer: [value]\\r\\n\");\noutputStream.flush();\noutputStream.close();\n<<<explanation>>>: To send Http trailers/footers in a chunked response from within a Java servlet, you can use the DataOutputStream.write method to write the trailer after writing the data to the output stream. Make sure to set the \"Transfer-Encoding\" header to \"chunked\" and include the trailer field in the response headers. After writing the data, you can write the trailer using the format \"TrailerName: [value]\". Finally, flush and close the output stream."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 301,
+        "completion_tokens": 191,
+        "total_tokens": 492
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How do I send Http trailers/footers in a chunked response from within a java servlet?: :Basically my response headers containTransfer-encoding=chunked,Trailer=[some trailer I want to send say e.g \"SomeTrailer\"]Once I'm done writing the data to the Servlet outputstream, I'm writing the trailer\"SomeTrailer:[value]\", but this is not being parsed by the httpclient correctly. The httpclient considers the whole of inputstream (including the trailer) as a singlechunk.   I've also tried writing the trailer in a response header after the data has been written to the outputstream but without success.Please helpI haven't found any good sources on this. \nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

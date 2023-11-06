@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mETvDYjuSRmHWl4bWMjpCiCrQe0k",
+    "object": "chat.completion",
+    "created": 1691729767,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\n@WebServlet(\"/uploadServlet\")\n@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB\n                 maxFileSize=1024*1024*10,      // 10MB\n                 maxRequestSize=1024*1024*50)   // 50MB\npublic class UploadServlet extends HttpServlet {\n\n    private static final String SAVE_DIR = \"uploadFiles\";\n\n    protected void doPost(HttpServletRequest request,\n            HttpServletResponse response) throws ServletException, IOException {\n        String appPath = request.getServletContext().getRealPath(\"\");\n        String savePath = appPath + File.separator + SAVE_DIR;\n        File fileSaveDir = new File(savePath);\n        if (!fileSaveDir.exists()) {\n            fileSaveDir.mkdir();\n        }\n        for (Part part : request.getParts()) {\n            String fileName = extractFileName(part);\n            part.write(savePath + File.separator + fileName);\n        }\n        request.setAttribute(\"message\", \"Upload has been done successfully!\");\n        getServletContext().getRequestDispatcher(\"/message.jsp\").forward(\n                request, response);\n    }\n\n    private String extractFileName(Part part) {\n        String contentDisp = part.getHeader(\"content-disposition\");\n        String[] items = contentDisp.split(\";\");\n        for (String s : items) {\n            if (s.trim().startsWith(\"filename\")) {\n                return s.substring(s.indexOf(\"=\") + 2, s.length()-1);\n            }\n        }\n        return \"\";\n    }\n}\n```\n<<<explanation>>>: This code creates a servlet that handles file uploads. It uses the `@MultipartConfig` annotation to specify the size limits for the uploaded files. The `doPost` method is overridden to handle the POST request from the client. It gets the file parts from the request, extracts the file name from each part, and writes the file to the server. The `extractFileName` method is a helper method that extracts the file name from the content-disposition header of the file part."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 333,
+        "completion_tokens": 416,
+        "total_tokens": 749
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Android, upload a file in the tomcat server: :I am looking for code that can quickly upload an image from my android application in tomcat server.At the moment I have not found the java code to place in the tomcat server (servlet)\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

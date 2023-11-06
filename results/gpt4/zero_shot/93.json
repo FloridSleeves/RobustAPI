@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m1hwG4tfZoP9pDkKIFrg4eSIiv7H",
+    "object": "chat.completion",
+    "created": 1691680664,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \n```java\nimport java.io.DataOutputStream;\nimport java.io.IOException;\nimport javax.servlet.http.HttpServletResponse;\n\npublic void sendChunkedResponse(HttpServletResponse response, String data, String trailer) {\n    response.setHeader(\"Transfer-encoding\", \"chunked\");\n    response.setHeader(\"Trailer\", \"SomeTrailer\");\n    try {\n        DataOutputStream output = new DataOutputStream(response.getOutputStream());\n        output.writeBytes(data);\n        output.writeBytes(\"\\r\\n\");\n        output.writeBytes(trailer);\n        output.flush();\n    } catch (IOException e) {\n        e.printStackTrace();\n    }\n}\n```\n<<<explanation>>>: In this code, we are using the `DataOutputStream.writeBytes` method to write the data and the trailer to the response output stream. The `writeBytes` method allows us to write a string as a sequence of bytes to the output stream. We first write the data, then a carriage return and newline to signify the end of the data, and finally the trailer. The `flush` method is called to ensure that all data is actually written out to the output stream. Note that this code does not handle chunking the data itself, it simply writes the data and trailer to the output stream. The actual chunking is handled by the servlet container or web server."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 200,
+        "completion_tokens": 270,
+        "total_tokens": 470
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How do I send Http trailers/footers in a chunked response from within a java servlet?: :Basically my response headers containTransfer-encoding=chunked,Trailer=[some trailer I want to send say e.g \"SomeTrailer\"]Once I'm done writing the data to the Servlet outputstream, I'm writing the trailer\"SomeTrailer:[value]\", but this is not being parsed by the httpclient correctly. The httpclient considers the whole of inputstream (including the trailer) as a singlechunk.   I've also tried writing the trailer in a response header after the data has been written to the outputstream but without success.Please helpI haven't found any good sources on this. \nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

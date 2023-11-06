@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDa9DwMBl8WGeKFa210IkL5nVHK0",
+    "object": "chat.completion",
+    "created": 1691964637,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: import javax.crypto.Mac;\nimport javax.crypto.spec.SecretKeySpec;\nimport java.util.Base64;\n\npublic class Main {\n    public static void main(String[] args) {\n        String mykey = \"secret\";\n        String test = \"test\";\n        try {\n            Mac mac = Mac.getInstance(\"HmacSHA1\");\n            SecretKeySpec secret = new SecretKeySpec(mykey.getBytes(), \"HmacSHA1\");\n            mac.init(secret);\n            byte[] digest = mac.doFinal(test.getBytes());\n            String enc = Base64.getEncoder().encodeToString(digest);\n            System.out.println(enc);\n        } catch (Exception e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}\n<<<explanation>>>: In the provided code, the output does not match because the digest is converted to a String using the default character encoding, which may not be compatible with the expected output. To get the equivalent output as the PHP code, you can use Base64 encoding to convert the digest byte array to a String. The Base64 class is part of the java.util package."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 320,
+        "completion_tokens": 225,
+        "total_tokens": 545
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: java equivalent to php's hmac-SHA1: :I'm looking for a java equivalent to this php call:hash_hmac('sha1', \"test\", \"secret\")I tried this, using java.crypto.Mac, but the two do not agree:String mykey = \"secret\";String test = \"test\";try {    Mac mac = Mac.getInstance(\"HmacSHA1\");    SecretKeySpec secret = new SecretKeySpec(mykey.getBytes(),\"HmacSHA1\");    mac.init(secret);    byte[] digest = mac.doFinal(test.getBytes());    String enc = new String(digest);    System.out.println(enc);  } catch (Exception e) {    System.out.println(e.getMessage());}The outputs with key = \"secret\" and test = \"test\" do not seem to match.\nPlease using this api: String.getBytes.\nAnswer:"
+}

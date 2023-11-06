@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDZ394qqJttFEOD8hXCkCqetnVMS",
+    "object": "chat.completion",
+    "created": 1691964569,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: if (response != null) {\n    try {\n        JSONObject object = new JSONObject(response);\n        Iterator<String> enu = object.keys();\n        LinkedHashMap<String, String> locationMap = new LinkedHashMap<>();\n        while(enu.hasNext()) {\n            String key = enu.next();\n            locationMap.put(key, object.getString(key));\n        }\n        callerContext.DisplayLocations(new ArrayList<>(locationMap.values()));\n    } catch (JSONException e) {\n        Toast.makeText(callerContext, callerContext.getResources().getString(R.string.error_message), Toast.LENGTH_LONG).show();\n    }\n}\n<<<explanation>>>: The Iterator.next() method returns the next element in the iteration. In this case, we are using a LinkedHashMap instead of an ArrayList to store the JSON values. A LinkedHashMap maintains the insertion order, which means when you iterate through the keys or values of the LinkedHashMap, they will be in the same order as when they were inserted. This way, you can loop through the JSON object in the same order as when they were inserted."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 442,
+        "completion_tokens": 215,
+        "total_tokens": 657
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to iterate through all the json values in order as when they were inserted?: :In my android app, I get a json value and iterate through them by doing this    if (response != null) {        try {            JSONObject object = new JSONObject(response);            Iterator enu = object.keys();            ArrayList<String> locationList = new ArrayList<String>();            while(enu.hasNext()) {                locationList.add(object.getString((String) enu.next()));            }            callerContext.DisplayLocations(locationList);        } catch (JSONException e) {            Toast.makeText(callerContext, callerContext.getResources().getString(R.string.error_message), Toast.LENGTH_LONG).show();        }    }The problem is the ArrayList if I then iterate through that, the values are in a different order then when I insert then in the php code...How do I loop through the json object in the same order as when they were inserted?Thanks.EDIT:PHP            $data = array();            for ($i = 0; $i < $num_records; $i++) {                array_push($data,                     array(\"id{$i}\" => mysql_result($recordset, $i, 'id')),                     array(\"location{$i}\" => mysql_result($recordset, $i, 'location')),                     array(\"date{$i}\" => mysql_result($recordset, $i, 'date added'))                );            }\nPlease using this api: Iterator.next.\nAnswer:"
+}

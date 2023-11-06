@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDW37Gc3dM0NZCckwoZbSmgxWmER",
+    "object": "chat.completion",
+    "created": 1691964383,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: RandomAccessFile\n<<<code>>>: int n = 4;\nRandomAccessFile inputFile = new RandomAccessFile(\"file.csv\", \"r\");\nlong fileSize = inputFile.length();\nlong chunkSize = fileSize / n;\nlong remainingBytes = fileSize % n;\n\nfor (int i = 0; i < n; i++) {\n    String outputFileName = \"output\" + i + \".csv\";\n    RandomAccessFile outputFile = new RandomAccessFile(outputFileName, \"rw\");\n    \n    long bytesRead = 0;\n    long bytesToRead = chunkSize;\n    if (i == n - 1) {\n        bytesToRead += remainingBytes;\n    }\n    \n    byte[] buffer = new byte[1024];\n    int bytesRead;\n    while ((bytesRead = inputFile.read(buffer)) != -1 && bytesRead < bytesToRead) {\n        outputFile.write(buffer, 0, bytesRead);\n        bytesRead += bytesRead;\n    }\n    \n    outputFile.close();\n}\n\ninputFile.close();\n<<<explanation>>>: The code uses the RandomAccessFile class to read the input file and split it into n output files. It calculates the chunk size and remaining bytes based on the file size and the number of output files. It then iterates over the input file, reading chunks of data and writing them to the corresponding output file. The output file names are generated based on the index of the current iteration."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 302,
+        "completion_tokens": 286,
+        "total_tokens": 588
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Read file and split into multiple files: :I have a file which I would like to read in Java and split this file into n (user input) output files. Here is how I read the file:int n = 4;BufferedReader br = new BufferedReader(new FileReader(\"file.csv\"));try {    String line = br.readLine();    while (line != null) {        line = br.readLine();    }} finally {    br.close();}How do I split the file - file.csv into n files?Note - Since the number of entries in the file are of the order of 100k, I can't store the file content into an array and then split it and save into multiple files.\nPlease using this api: RandomAccessFile.read.\nAnswer:"
+}

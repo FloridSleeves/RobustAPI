@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8epYRz7xk79Tn79aXRzzvhjLx64",
+    "object": "chat.completion",
+    "created": 1691707379,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n\n<<<code>>>: \n```java\nimport java.io.*;\nimport java.net.*;\n\npublic class Server {\n    public static void main(String[] args) throws IOException {\n        ServerSocket serverSocket = new ServerSocket(6000);\n        while (true) {\n            Socket clientSocket = serverSocket.accept();\n            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);\n            String xml = \"<cross-domain-policy><allow-access-from domain=\\\"*\\\" to-ports=\\\"6000\\\" /></cross-domain-policy>\\0\";\n            out.println(xml.getBytes());\n            out.close();\n            clientSocket.close();\n        }\n    }\n}\n```\n\n<<<explanation>>>: This code creates a server that listens on port 6000. When a client connects, it sends a cross-domain policy XML string to the client. The `getBytes()` method is used to convert the XML string to bytes before sending it to the client. This is necessary because the `PrintWriter` class's `println` method requires a byte array as input. The XML string allows any domain to access the server on port 6000. After sending the XML string, the server closes the connection to the client."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 227,
+        "completion_tokens": 240,
+        "total_tokens": 467
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Socket Connection from live Flash to local java: :I'm trying to get a live flash that lives on a webserver to talk to a local java server, that will live on the clients PC. I'm trying to achieve this with a socket connection. (port 6000)Now, at first flash was able to connect, but it just sends <policy-file-request/>. After this nothing happens.Now, some people at Kirupa suggested to send an cross-domain-policy xml as soon as any connection is established from the java side. http://www.kirupa.com/forum/showthread.php?t=301625However, my java server just throws the following:End Exception: java.net.SocketException: Software caused connection abort: recv failedI've already spend a great amount of time on this subject, and was wondering if anyone here knows what to do?\nPlease using this api: String.getBytes.\nAnswer:"
+}

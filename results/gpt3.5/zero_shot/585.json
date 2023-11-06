@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lw5ER1iCMoVqxBgJnilazs5rg5pz",
+    "object": "chat.completion",
+    "created": 1691659044,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: JsonElement.getAsString\n<<<code>>>: There is no direct implementation for a GSON Joda Time serialiser. However, you can use the JsonElement.getAsString method to retrieve the serialized Joda Time object as a string and then manually deserialize it using the Joda Time library.\n\nHere's an example of how you can use it:\n\n```java\nimport com.google.gson.JsonElement;\nimport com.google.gson.JsonSerializationContext;\nimport com.google.gson.JsonSerializer;\nimport org.joda.time.DateTime;\nimport org.joda.time.format.DateTimeFormatter;\nimport org.joda.time.format.ISODateTimeFormat;\n\npublic class JodaTimeSerializer implements JsonSerializer<DateTime> {\n    private static final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();\n\n    @Override\n    public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {\n        String serializedDateTime = formatter.print(src);\n        return context.serialize(serializedDateTime);\n    }\n}\n```\n\nYou can then register this serializer with your Gson instance:\n\n```java\nGson gson = new GsonBuilder()\n        .registerTypeAdapter(DateTime.class, new JodaTimeSerializer())\n        .create();\n```\n\nNow, when you serialize an object graph containing Joda Time entities, Gson will use this custom serializer to serialize the DateTime objects.\n\nNote that this example assumes you have already added the Joda Time library as a dependency in your project."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 214,
+        "completion_tokens": 280,
+        "total_tokens": 494
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Is there a standard implementation for a GSON Joda Time serialiser?: :I'm using GSON to serialise some object graphs to JSON.  These objects graphs use Joda Time entities (DateTime, LocalTime etc).The top Google hit for \"gson joda\" is this page:https://sites.google.com/site/gson/gson-type-adapters-for-common-classesIt provides source for a type adapter for org.joda.time.DateTime.  This link is also what is referenced in the GSON User Guide.I expected to find a pre-rolled library that included joda-time serialisers that I could reference as a Maven dependency - but I can't find one.  Is there one?  Or am I forced to replicate that snippet in my own project?\nPlease using this api: JsonElement.getAsString.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8YarrHLBEHobRlstTLH7yEJRPyM",
+    "object": "chat.completion",
+    "created": 1691706992,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n\n<<<code>>>: \n```java\nimport java.io.OutputStream;\nimport java.net.HttpURLConnection;\nimport java.net.URL;\nimport org.json.JSONObject;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        URL url = new URL(\"http://example.com\");\n        HttpURLConnection conn = (HttpURLConnection) url.openConnection();\n        conn.setDoOutput(true);\n        conn.setRequestMethod(\"POST\");\n        conn.setRequestProperty(\"Content-Type\", \"application/json\");\n\n        JSONObject json = new JSONObject();\n        json.put(\"key1\", \"value1\");\n        json.put(\"key2\", \"value2\");\n\n        OutputStream os = conn.getOutputStream();\n        os.write(json.toString().getBytes());\n        os.flush();\n\n        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {\n            throw new RuntimeException(\"Failed : HTTP error code : \" + conn.getResponseCode());\n        }\n\n        conn.disconnect();\n    }\n}\n```\n\n<<<explanation>>>: \nIn this code, we first create a URL object with the URL of the server we want to send the POST request to. We then open a connection to this URL and set the request method to POST. We also set the \"Content-Type\" header to \"application/json\" to indicate that we are sending JSON data.\n\nNext, we create a JSONObject and put some key-value pairs into it. This is the JSON data we want to send.\n\nWe then get an OutputStream from the connection and write the bytes of the JSON string to it. The getBytes() method of the String class is used to convert the JSON string to bytes. This is necessary because the OutputStream works with bytes, not strings.\n\nFinally, we check the response code from the server. If it's not HTTP_CREATED (201), we throw a RuntimeException. Otherwise, we disconnect from the server."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 108,
+        "completion_tokens": 369,
+        "total_tokens": 477
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How do i Send POST method with the JSON data (java)?: :i need toSend POST method with the JSON data ,Make sure i need to send JSON Object serialized into string. Not the JSON string itself.so how can i implement this using JAVA\nPlease using this api: String.getBytes.\nAnswer:"
+}

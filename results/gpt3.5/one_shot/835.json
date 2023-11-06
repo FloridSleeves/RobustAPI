@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzzK261KkNLU7hmBLktyCHiZbvQv",
+    "object": "chat.completion",
+    "created": 1691674054,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: URLConnection\n<<<code>>>: URL url = new URL(\"http://example.com?type=xml\");\n            URLConnection connection = url.openConnection();\n            InputStream inputStream = connection.getInputStream();\n            carparks = parser.parse(inputStream);\n<<<explanation>>>: You can use the URLConnection class to open a connection to the URL and get the input stream from it. Then you can pass the input stream to your parser to parse the XML data."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 685,
+        "completion_tokens": 91,
+        "total_tokens": 776
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: I have an activity that shows ProgressDialog while connecting to bluetooth device. It works fine until screen orientation changes while ProgressDialog is up. ProgressDialog disappears and when after connection is established, app calls progressDialog.dismiss(); at this point app crashes because there is no ProgressDialog to dismiss. How can i prevent to ProgressDialog dismissing while screen orientation changes? \npublic void prepareViews(int ID, boolean state){\n    switch(ID){\n    case USERNAME_TEXTBOX:\n        LoginUsernameTextBox.setEnabled(state);\n        break;\n    case PASSWORD_TEXTBOX:\n        LoginPasswordTextBox.setEnabled(state);\n        break;\n    case LOGIN_BUTTON:\n        LoginButton.setEnabled(state);\n        break;\n    case LOGIN_PROGRESSBAR:\n        if(state == true){\n            LoginProgressBar.setVisibility(View.VISIBLE);\n            LoginProgressBar.setIndeterminate(true); }\n        else{\n            LoginProgressBar.setVisibility(View.GONE);\n        }\n        break;\n    case CONNECTING_DIALOG:\n        if(state == true){\n        progressDialog = ProgressDialog.show(MainActivity.this, \"\", \"Connecting\", true); }\n        else{\n            progressDialog.dismiss();\n        }\n        break;\n    }\n}\n\nPlease using this api: ProgressDialog.dismiss.\nAnswer:<<<api>>>: ProgressDialog.dismiss\n<<<code>>>: if (progressDialog != null &&  progressDialog.isShowing()) {progressDialog.dismiss();}\n<<<explanation>>>: Try this.\nQuestion: how to get xml data stream from url and not just a file: :package org.me.myandroidstuff;import java.io.BufferedReader;import java.io.FileInputStream;import java.io.IOException;import java.io.InputStream;import java.io.InputStreamReader;import java.net.HttpURLConnection;import java.net.URL;import java.net.URLConnection;import java.util.List;import android.app.Activity;import android.graphics.Color;import android.os.Bundle;import android.view.Menu;import android.widget.ArrayAdapter;import android.widget.ListView;import android.widget.TextView;import org.me.myandroidstuff.CarParkClass;import org.me.myandroidstuff.XMLPullParserHandler;public class CarParkListingTestActivity extends Activity {ListView listView;private String url = \"example.com?type=xml\";@Overrideprotected void onCreate(Bundle savedInstanceState){    super.onCreate(savedInstanceState);    setContentView(R.layout.main);    listView = (ListView) findViewById(R.id.list);    List<CarParkClass> carparks = null;    try{        XMLPullParserHandler parser = new XMLPullParserHandler();        carparks = parser.parse(getAssets().open(\"carparks.xml\"));        //InputStream is = new FileInputStream(url);        //carparks = parser.parse(is);        ArrayAdapter<CarParkClass> adapter =                 new ArrayAdapter<CarParkClass>(this,R.layout.list_item, carparks);        listView.setAdapter(adapter);    } catch(IOException e){        e.printStackTrace();    }    listView.setBackgroundColor(Color.WHITE);}@Overridepublic boolean onCreateOptionsMenu(Menu menu){    //getMenuInflater().inflate(R.menu.main, menu);    return true;}I want to parse data from a url and not a file from the assets folder. How can i approach that step. I tried parsing from my assets folder, and the app work very well, but when i try parsing from the url as given it doesn't work. Your help is much appreciatedThanks\nPlease using this api: ProgressDialog.dismiss.\nAnswer:"
+}

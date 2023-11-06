@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lwGXWq1ez1Nk321XKsSr6Rw5NJC7",
+    "object": "chat.completion",
+    "created": 1691659745,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Map.get\n<<<code>>>: \npublic String[] getAllImages() {\n    Map<String, Object> fields = new HashMap<>();\n    Field[] allFields = this.getClass().getDeclaredFields();\n    for (Field field : allFields) {\n        if (field.getType().equals(Image.class)) {\n            fields.put(field.getName(), field.get(this));\n        }\n    }\n    return fields.keySet().toArray(new String[0]);\n}\n<<<explanation>>>: \nIn the code above, we use reflection to get all the fields of the class using `this.getClass().getDeclaredFields()`. We iterate over each field and check if its type is equal to `Image.class` using `field.getType().equals(Image.class)`. If it is, we add the field name as the key and the field value as the value to a `Map<String, Object> fields`. Finally, we return the keys of the map as an array using `fields.keySet().toArray(new String[0])`. This will give us an array of all the field names of type `Image`."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 193,
+        "completion_tokens": 218,
+        "total_tokens": 411
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: get fields names of certain types: :I have an example class below and I want to return all class fields of certain type, in this example of type Image. public class Contact {    private String surname, lastname, address;    private int age, floor;    private Image contactPhoto, companyPhoto;    private boolean isEmployed;    public String[] getAllImages() {        String images[] = // missing code        return images;        // in this case, I want to return {\"contactPhoto\",\"companyPhoto\"}    }}I need a help here. How can I find all class fields of certain type. I will be calling this method in another class ofc.\nPlease using this api: Map.get.\nAnswer:"
+}

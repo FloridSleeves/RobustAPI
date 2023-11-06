@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lwQ7yfcbnot8cMKSAanUU0e76DFm",
+    "object": "chat.completion",
+    "created": 1691660339,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\nimport java.io.*;\nimport java.util.regex.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        try {\n            // Read the XML file\n            File inputFile = new File(\"input.xml\");\n            BufferedReader reader = new BufferedReader(new FileReader(inputFile));\n            \n            // Create a temporary file to write the modified XML\n            File tempFile = new File(\"temp.xml\");\n            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));\n            \n            String line;\n            while ((line = reader.readLine()) != null) {\n                // Replace \"Hello\" with \"HI\" in the line\n                String modifiedLine = line.replaceAll(\"(?<!\\\")Hello(?!\\\\\\\")\", \"HI\");\n                \n                // Write the modified line to the temporary file\n                writer.write(modifiedLine + \"\\n\");\n            }\n            \n            // Close the reader and writer\n            reader.close();\n            writer.close();\n            \n            // Rename the temporary file to the original file\n            tempFile.renameTo(inputFile);\n            \n            System.out.println(\"XML file modified successfully.\");\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n\n<<<explanation>>>: \n1. The code reads the input XML file using a BufferedReader.\n2. It creates a temporary file to write the modified XML.\n3. It loops through each line of the input XML file.\n4. It uses the `replaceAll` method with a regular expression to replace \"Hello\" with \"HI\" in the line. The regular expression `(?<!\\\")Hello(?!\\\\\\\")` ensures that \"Hello\" is not part of a tag attribute by checking for the absence of double quotes before and after \"Hello\".\n5. It writes the modified line to the temporary file using PrintWriter's `write` method.\n6. After processing all the lines, it closes the reader and writer.\n7. It renames the temporary file to the original file to replace the original XML file.\n8. Finally, it prints a success message.\n\nNote: Make sure to replace \"input.xml\" with the actual path to your input XML file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 207,
+        "completion_tokens": 439,
+        "total_tokens": 646
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Replace words within xml: :I have the following xml<some tag>    <some_nested_tag attr=\"Hello\"> Text </some_nested_tag>    Hello world Hello Programming</some tag>From the above xml, I want to replace the occurances of the word \"Hello\" which are part of the tag content but not part of tag attribute.I want the following output (Replacing Hello by HI):<some tag>    <some_nested_tag attr=\"Hello\"> Text </some_nested_tag>    HI world HI Programming</some tag>I tried java regex and also some of the DOM parser tutorials, but without any luck. I am posting here for help as I have limited time available to fix this in my project. Help would be appreciated.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

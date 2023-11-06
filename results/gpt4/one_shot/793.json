@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEcbBJxLWtABYvqPticmyGQYS4eS",
+    "object": "chat.completion",
+    "created": 1691730305,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \ntry {\n    PdfReader reader = new PdfReader(\"yourfile.pdf\");\n    DocumentFont font;\n    for (int i = 1; i <= reader.getNumberOfPages(); i++) {\n        byte[] streamBytes = reader.getPageContent(i);\n        PRTokeniser tokenizer = new PRTokeniser(new RandomAccessFileOrArray(new RandomAccessSourceFactory().createSource(streamBytes)));\n        while (tokenizer.nextToken()) {\n            if (tokenizer.getTokenType() == PRTokeniser.TokenType.NAME) {\n                String key = tokenizer.getStringValue();\n                if (key.equals(\"Tf\")) {\n                    int fontNumber = Integer.parseInt(tokenizer.getStringValue());\n                    font = new DocumentFont(reader.getFont(PRIndirectReference));\n                    if (!font.isEmbedded()) {\n                        PrintWriter out = new PrintWriter(new FileWriter(\"output.txt\", true));\n                        out.write(\"Font is not embedded on page \" + i + \"\\n\");\n                        out.close();\n                    }\n                }\n            }\n        }\n    }\n} catch (Exception e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: This code reads a PDF file page by page and checks if the fonts are embedded or not. If a font is not embedded, it writes the information to a text file using PrintWriter.write. The text file is opened in append mode, so the information about each page is added to the end of the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 392,
+        "completion_tokens": 287,
+        "total_tokens": 679
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Check if fonts are embedded in an existing PDF?: :How can I check if the fonts are embedded in an existing PDF?That is, read an existing PDF and list out the results in a .txt fileI went through the following example:http://itextpdf.com/examples/iia.php?id=287The above example tries to create a new PDF, but I want to read a PDF file and check if the fonts are embedded or not.I am more of a PHP guy so having a hard time to tweak the code. Any help would be appreciated\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

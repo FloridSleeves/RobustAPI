@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m6hENGkm6OKb0ReOzZA7q7wDhu86",
+    "object": "chat.completion",
+    "created": 1691699840,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n\n<<<code>>>: \n```java\nimport java.io.*;\n\npublic class SplitFile {\n    public static void main(String[] args) throws IOException {\n        BufferedReader reader = new BufferedReader(new FileReader(\"input.txt\"));\n        int count = 0;\n        String line;\n        PrintWriter writer = new PrintWriter(new FileWriter(\"output\" + count + \".txt\"));\n\n        while ((line = reader.readLine()) != null) {\n            if (count % 2000 == 0 && count != 0) {\n                writer.close();\n                writer = new PrintWriter(new FileWriter(\"output\" + count / 2000 + \".txt\"));\n            }\n            writer.write(line + \"\\n\");\n            count++;\n        }\n        writer.close();\n        reader.close();\n    }\n}\n```\n\n<<<explanation>>>: \nThis Java code reads a flat file named \"input.txt\" line by line using BufferedReader. For every 2000 lines, it creates a new file named \"outputX.txt\" where X is the file number (starting from 0). It writes each line to the current output file using PrintWriter.write. After writing 2000 lines, it closes the current output file and opens a new one. The process continues until all lines in the input file have been read and written to output files. The last output file may contain less than 2000 lines if the total number of lines in the input file is not a multiple of 2000."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 129,
+        "completion_tokens": 294,
+        "total_tokens": 423
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Split Flat File using Java: :I am fairly new to java and need some help.  I have flat file with 10 columns and a total of, lets say, 9750 rows.  All the rows are pipe delimited.  I need to split the file into 2000 rows each (5 files). How do I do this in Java?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

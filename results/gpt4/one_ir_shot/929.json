@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFlKuBvTsyKjsNvG7v00f5MAME3I",
+    "object": "chat.completion",
+    "created": 1691973018,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: public static String calcShaHash (String data, String key) {\n    String HMAC_SHA1_ALGORITHM = \"HmacSHA1\";\n    String result = null;\n    try {\n        Key signingKey = new SecretKeySpec(key.getBytes(), HMAC_SHA1_ALGORITHM);\n        Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);\n        mac.init(signingKey);\n        byte[] rawHmac = mac.doFinal(data.getBytes());\n        result = Base64.encodeBase64String(rawHmac);\n    }\n    catch (Exception e) {\n        e.printStackTrace();\n    }\n    return result;\n}\n\n@Test\npublic void testCalcShaHash() {\n    String data = \"SampleIntegrationOwner2008-11-18T19:14:40.293Z\";\n    String key = \"xBy/2CLudnBJOxOtDhDRnsDYq9HTuDVr2uCs3FMzoxXEA/Od9tOuwSC70+mIfpjeG68ZGm/PrxFf/s/CzwxF4Q==\";\n    String result = Utils.calcShaHash(data, key);\n    assertEquals(result, \"/UhwvT/kY9HxiXaOjpIc/BarBkc=\");\n}\n<<<explanation>>>: The getBytes() method of the String class is used to encode this String into a sequence of bytes using the platform's default charset, storing the result into a new byte array. The behavior of this method when this string cannot be encoded in the default charset is unspecified. The SecretKeySpec class specifies a secret key in a provider-independent fashion. It can be used to construct a SecretKey from a byte array, without having to go through a (provider-based) SecretKeyFactory. The Mac class provides the functionality of a \"Message Authentication Code\" (MAC) algorithm."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 629,
+        "completion_tokens": 387,
+        "total_tokens": 1016
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: HMAC SHA1 Signature in Java: :I am trying to interface with a TransUnion web service and I need to provide a HMAC-SHA1 signature to access it.This example is in the TransUnion documentation:Input of SampleIntegrationOwner2008\u201011\u201018T19:14:40.293Z with securitykey xBy/2CLudnBJOxOtDhDRnsDYq9HTuDVr2uCs3FMzoxXEA/Od9tOuwSC70+mIfpjeG68ZGm/PrxFf/s/CzwxF4Q==creates output of /UhwvT/kY9HxiXaOjpIc/BarBkc=.Given that data and key, I cannot get this same result in Java.  I have tried several online calculators, and none of them return this result either.  Is the example in their documentation incorrect, or am I just not handling these strings correctly?Here is the code I am currently working with:public static String calcShaHash (String data, String key) {    String HMAC_SHA1_ALGORITHM = \"HmacSHA1\";           String result = null;    try {                 Key signingKey = new SecretKeySpec(key.getBytes(), HMAC_SHA1_ALGORITHM);        Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);        mac.init(signingKey);        byte[] rawHmac = mac.doFinal(data.getBytes());        result = Base64.encodeBase64String(rawHmac);        }    catch (Exception e) {        e.printStackTrace();     }           return result;}Here is my unit test code:@Testpublic void testCalcShaHash() {    String data = \"SampleIntegrationOwner2008-11-18T19:14:40.293Z\";    String key = \"xBy/2CLudnBJOxOtDhDRnsDYq9HTuDVr2uCs3FMzoxXEA/Od9tOuwSC70+mIfpjeG68ZGm/PrxFf/s/CzwxF4Q==\";    String result = Utils.calcShaHash(data, key);    assertEquals(result, \"/UhwvT/kY9HxiXaOjpIc/BarBkc=\");}\nPlease using this api: String.getBytes.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD5it8ZuXX7ToXIAFdshP6gMW55S",
+    "object": "chat.completion",
+    "created": 1691962750,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: public static String readStr(Socket client) throws IOException {\n    InputStream inStream = client.getInputStream();\n    StringBuilder answer = new StringBuilder();\n    int data = inStream.read();\n    while (data != -1) {\n        answer.append((char) data);\n        data = inStream.read();\n    }\n    System.out.println(\"answer:\\n \"+answer.toString());\n    return answer.toString();\n}\n<<<explanation>>>: The read() method of the InputStream class reads the next byte of data from the input stream. It returns -1 if there is no more data because the end of the stream is reached. The method blocks until input data is available, the end of the stream is detected, or an exception is thrown. In this code, we read each byte from the input stream and append it to the StringBuilder until there is no more data."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 401,
+        "completion_tokens": 180,
+        "total_tokens": 581
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Reading all string from a server socket which has not been closed: :I have a problem with socket programming in Java. There is a server which has been written in python like this which I shouldn't not change.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)s.connect((TCP_IP, TCP_PORT))s.send('from server\\nnewline\\0')data = s.recv(BUFFER_SIZE)s.close()Now I want to write a code in Java which read the string from a server. Something like this:public static String readStr(Socket client) throws IOException {        InputStreamReader inStream = new InputStreamReader(                client.getInputStream());        BufferedReader inBuff = new BufferedReader(inStream);        String answer = new String();        String str = inBuff.readLine();        while (str!=null) {            answer = answer.concat(str + \"\\n\");            str = inBuff.readLine();        }        answer = answer.substring(0, answer.length() - 1);        System.out.println(\"answer:\\n \"+answer);        return answer;    }But it seems that it blocks at line str = inBuff.readLine(); at the last line of the message. I tried the read() method but it was blocked too.\nPlease using this api: InputStream.read.\nAnswer:"
+}

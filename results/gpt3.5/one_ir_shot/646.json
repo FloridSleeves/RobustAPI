@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDEq9VYmXOUdVyDY9DOvzEReXjLX",
+    "object": "chat.completion",
+    "created": 1691963316,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Map.get\n<<<code>>>: public class array {\n    public static void main(String[] args) throws IOException {\n        BufferedReader reader = new BufferedReader(new FileReader(\"fruit.txt\"));\n        System.out.println(\"Enter the fruit you want to search\");\n        Scanner input = new Scanner(System.in);\n        String fruit = input.nextLine();\n        String line;\n        Map<String, Integer> fruitMap = new HashMap<String, Integer>();\n        while((line=reader.readLine()) !=null) {\n            String[] parts = line.split(\" \");\n            String fruitName = parts[0];\n            int fruitCount = Integer.parseInt(parts[1]);\n            fruitMap.put(fruitName, fruitCount);\n        }\n        reader.close();\n        if(fruitMap.containsKey(fruit)) {\n            int count = fruitMap.get(fruit);\n            System.out.println(\"You have \" + fruit + \" \" + count + \" of them and status is \" + getStatus(fruit));\n        } else {\n            System.out.println(\"Fruit not found\");\n        }\n    }\n    \n    public static String getStatus(String fruit) {\n        if(fruit.equals(\"apple\")) {\n            return \"good\";\n        } else if(fruit.equals(\"orange\")) {\n            return \"good\";\n        } else if(fruit.equals(\"banana\")) {\n            return \"needmore\";\n        } else {\n            return \"unknown\";\n        }\n    }\n}\n<<<explanation>>>: In this code, we read the contents of the \"fruit.txt\" file and store them in a HashMap called fruitMap, where the fruit name is the key and the fruit count is the value. We then check if the fruit entered by the user exists in the fruitMap using the containsKey() method. If it does, we retrieve the count using the get() method and display the desired output. The getStatus() method is used to determine the status based on the fruit name."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 357,
+        "completion_tokens": 384,
+        "total_tokens": 741
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: method to read array list to find certain string and value: :public class array {    public static void main(String[] args) throws IOException {         BufferedReader reader = new BufferedReader(new FileReader(\"fruit.txt\"));          System.out.println(\"enter the fruit you want to search\");               Scanner input =  new Scanner(System.in);          String fruit = input.nextLine();          String line;          List<String> list = new ArrayList<String>();          while((line=reader.readLine()) !=null)          {              list.add(line);          }          reader.close();          for (String s : list) {                  System.out.println(s);           }    }}I have fruit.txtapple 20 goodorange 30 goodbanana 40 needmorehow do I retrieve how many oranges I have from the array list.I want the program to read the user input in this case \"orange\" and display out 30 and the status is not good.ideal output isYou have orange 30 of them and status is good\nPlease using this api: Map.get.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxGhok9EZ7YQ9FbxYI9aJCBIe71I",
+    "object": "chat.completion",
+    "created": 1691663599,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes()\n<<<code>>>: \nTo convert the receipt string to a reply JSON, you can use the following code:\n\n```java\nimport java.util.Base64;\n\npublic static void main(String[] args) {\n    String receipt = \"{\\n\\t\\\"signature\\\" = \\\"[exactly_1320_characters]\\\";\\n\\t\\\"purchase-info\\\" =\\\"[exactly_868_characters]\\\";\\n\\t\\\"environment\\\" = \\\"Sandbox\\\";\\n\\t\\\"pod\\\" =\\\"100\\\";\\n\\t\\\"signing-status\\\" = \\\"0\\\";\\n}\";\n    String receiptData = Base64.getEncoder().encodeToString(receipt.getBytes());\n    String jsonData = \"{\\\"receipt-data\\\" : \\\"\" + receiptData + \"\\\"}\";\n    System.out.println(jsonData);\n}\n```\n\n<<<explanation>>>: \nIn the code above, we first encode the receipt string using Base64 encoding. Then, we create the JSON data by wrapping the encoded receipt data with the \"receipt-data\" key. Finally, we print the resulting JSON data."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 474,
+        "completion_tokens": 216,
+        "total_tokens": 690
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java and AppStore receipt verification: :I am trying to verify a payment receipt on server side. I am getting a {\"status\":21002, \"exception\":\"java.lang.IllegalArgumentException\"} in returnHere is the code:private final static String _sandboxUriStr = \"https://sandbox.itunes.apple.com/verifyReceipt\";public static void processPayment(final String receipt) throws SystemException{    final BASE64Encoder encoder = new BASE64Encoder();    final String receiptData = encoder.encode(receipt.getBytes());    final String jsonData = \"{\\\"receipt-data\\\" : \\\"\" + receiptData + \"\\\"}\";    System.out.println(receipt);    System.out.println(jsonData);    try    {        final URL url = new URL(_sandboxUriStr);        final HttpURLConnection conn = (HttpsURLConnection) url.openConnection();        conn.setRequestMethod(\"POST\");        conn.setDoOutput(true);        final OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());        wr.write(jsonData);        wr.flush();        // Get the response        final BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));        String line;        while ((line = rd.readLine()) != null)        {            System.out.println(line);        }        wr.close();        rd.close();    }    catch (IOException e)    {        throw new SystemException(\"Error when trying to send request to '%s', %s\", _sandboxUriStr, e.getMessage());    }}My receipt looks like this:{\\n\\t\"signature\" = \"[exactly_1320_characters]\";\\n\\t\"purchase-info\" =\"[exactly_868_characters]\";\\n\\t\"environment\" = \"Sandbox\";\\n\\t\"pod\" =\"100\";\\n\\t\"signing-status\" = \"0\";\\n}Receipt data with a BASE64 encoded receipt looks like this:{\"receipt-data\" : \"[Block_of_chars_76x40+44=3084_chars_total]\"}Does someone have an Idea, or sample code how can I get from receipt string to reply JSON, mentioned here?\nPlease using this api: String.getBytes.\nAnswer:"
+}

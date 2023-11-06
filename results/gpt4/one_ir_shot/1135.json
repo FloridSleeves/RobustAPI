@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nGaUsqJygYy2WzfqIvIYIcdERpul",
+    "object": "chat.completion",
+    "created": 1691976190,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \nprivate TreeMap<String, Double> prices = new TreeMap<String, Double>();\n\npublic void readFromFile(String fileName){\n    try {\n        BufferedReader reader = new BufferedReader(new FileReader(fileName));\n        String line;\n        while ((line = reader.readLine()) != null) {\n            StringTokenizer tokenizer = new StringTokenizer(line);\n            while (tokenizer.hasMoreTokens()) {\n                String item = tokenizer.nextToken();\n                Double price = Double.parseDouble(tokenizer.nextToken());\n                prices.put(item, price);\n            }\n        }\n        reader.close();\n    } catch (IOException e) {\n        e.printStackTrace();\n    }\n}\n<<<explanation>>>: In this code, we are using BufferedReader to read the file line by line. For each line, we create a StringTokenizer object and use the nextToken() method to get the item name and price. The item name and price are then put into the TreeMap. This way, we avoid using Scanner and the issue with initializing variables with null."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 452,
+        "completion_tokens": 198,
+        "total_tokens": 650
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Reading from a file without using Scanner: :I'm reading from a pretty simple file that displays items and how much they cost. It looks like this:Shoes 10.00Jersey 20.00Cookies 15.00Light Bulbs 2.00Paper 5.00I want to map every item to how much it costs and my current code works just fine. However, it looks a bit clunky and initializes variables with null that my project's submission server doesn't like and treats as a bug. I'm looking for a way to translate this into something a lot more elegant and thus learn to read files another way apart from relying on the Scanner class. Maybe using BufferedReader or PrintReader or something of the ilk that I have never really grasped. Help appreciated.    private TreeMap<String, Double> prices = new TreeMap<String, Double>();     public void readFromFile(String fileName){                File file = new File(fileName);                Scanner sc = null; //Server treats this as a bug.                 try {                    sc = new Scanner(file);                } catch (FileNotFoundException e) {                    e.printStackTrace();                }                while (sc.hasNextLine()) {                    Scanner sc2 = new Scanner(sc.nextLine());                    while (sc2.hasNext()) {                        String s = sc2.next(); //Gets the item name                        prices.put(s, Double.parseDouble(sc2.next())); //The next word is the price                        }                    sc2.close();                    }}\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

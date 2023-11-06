@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDOWpIyiyFydHzDNutWGtrx36IL4",
+    "object": "chat.completion",
+    "created": 1691963916,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \ntry {\n    InputStream inputStream = new BufferedInputStream(new FileInputStream(\"path_to_your_file\"));\n    byte[] sizeInfo = new byte[4];\n    while (inputStream.read(sizeInfo) != -1) {\n        int size = ByteBuffer.wrap(sizeInfo).order(ByteOrder.LITTLE_ENDIAN).getInt();\n        byte[] chars = new byte[size * 2];\n        if (inputStream.read(chars) != -1) {\n            String text = new String(chars, StandardCharsets.UTF_16LE);\n            System.out.println(text);\n        }\n    }\n} catch (IOException e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: The InputStream.read() method is used to read bytes from the input stream. It reads some number of bytes from the input stream and stores them into the buffer array. In this case, we first read the size of the text (4 bytes), convert it to an integer using ByteBuffer, and then read the corresponding number of bytes for the text. The text is then converted to a String using the UTF_16LE charset, which corresponds to the Little Endian byte order."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 313,
+        "completion_tokens": 235,
+        "total_tokens": 548
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to access data from a foreign stream: :A web service is providing a binary chunked application/octet-stream.I have to build a reading client in java. I know the structure from some documentation and would like to use that stream as an ObjectInputStream, but before I can call any self made readObject methods, this approach fails, due to java.io.StreamCorruptedException: invalid stream header. What's the best way to populate java objects from such a byte stream?BTW: Data is coming in as LittleEndian, texts as 16bit chars preceeded by 4 byte size info, e.g.   03 00 00 00 41 00 62 00 63 00   (hex)would result in \"Abc\"\nPlease using this api: InputStream.read.\nAnswer:"
+}

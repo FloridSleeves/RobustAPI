@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2nEPBaC2n0QMGmpmN6s6wg5zsYD",
+    "object": "chat.completion",
+    "created": 1691684836,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\npublic class XSSFilter implements Filter {\n\n    @Override\n    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)\n            throws IOException, ServletException {\n        HttpServletRequest httpServletRequest = (HttpServletRequest) request;\n        HttpServletResponse httpServletResponse = (HttpServletResponse) response;\n\n        XSSRequestWrapper wrappedRequest = new XSSRequestWrapper(httpServletRequest);\n\n        chain.doFilter(wrappedRequest, httpServletResponse);\n    }\n\n    @Override\n    public void destroy() {\n    }\n\n    @Override\n    public void init(FilterConfig filterconfig) throws ServletException {\n    }\n}\n\npublic class XSSRequestWrapper extends HttpServletRequestWrapper {\n\n    public XSSRequestWrapper(HttpServletRequest servletRequest) {\n        super(servletRequest);\n    }\n\n    @Override\n    public String[] getParameterValues(String parameter) {\n        String[] values = super.getParameterValues(parameter);\n\n        for (int i = 0; i < values.length; i++) {\n            values[i] = stripXSS(values[i]);\n        }\n\n        return values;\n    }\n\n    private String stripXSS(String value) {\n        if (value != null) {\n            // NOTE: It's highly recommended to use the ESAPI library and uncomment the following line to\n            // avoid encoded attacks.\n            // value = ESAPI.encoder().canonicalize(value);\n\n            // Avoid null characters\n            value = value.replaceAll(\"\\0\", \"\");\n\n            // Clean out HTML\n            Pattern scriptPattern = Pattern.compile(\"<script>(.*?)</script>\", Pattern.CASE_INSENSITIVE);\n            value = scriptPattern.matcher(value).replaceAll(\"\");\n\n            // More can be added here as needed\n        }\n        return value;\n    }\n}\n```\n\n<<<explanation>>>: \nIn the given code, a filter named `XSSFilter` is created which wraps the `HttpServletRequest` with `XSSRequestWrapper`. This wrapper overrides the `getParameterValues` method to sanitize the input parameters and protect from XSS attacks. \n\nThe `stripXSS` method is used to remove any potential XSS threats from the input value. It removes null characters and any script tags from the input. \n\nPlease note that it's highly recommended to use the ESAPI library to avoid encoded attacks. \n\nThe `InputStream.read` API is not directly used here because once you read the input stream in a servlet, you cannot read it again. Therefore, it's not suitable for this use case. Instead, the `getParameterValues` method is used to access and modify the request parameters."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 99,
+        "completion_tokens": 511,
+        "total_tokens": 610
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to change servlet request body in java filter?: :How can I change request body in java filter to protect from XSS attack?I build HttpServletRequestWrapper and use getparameter for change body butget stream close exception.\nPlease using this api: InputStream.read.\nAnswer:"
+}

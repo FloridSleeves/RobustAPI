@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m3g19rFmzWZNubTErEzZXQNa1Dxz",
+    "object": "chat.completion",
+    "created": 1691688233,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nimport java.util.Iterator;\nimport java.util.NoSuchElementException;\n\npublic class NestedArrayIterator implements Iterator<Integer> {\n    private final int[][][] array;\n    private int i = 0, j = 0, k = 0;\n\n    public NestedArrayIterator(int[][][] array) {\n        this.array = array;\n    }\n\n    @Override\n    public boolean hasNext() {\n        while (i < array.length) {\n            if (array[i] != null && j < array[i].length) {\n                if (array[i][j] != null && k < array[i][j].length) {\n                    if (array[i][j][k] != null) {\n                        return true;\n                    }\n                    k++;\n                } else {\n                    j++;\n                    k = 0;\n                }\n            } else {\n                i++;\n                j = k = 0;\n            }\n        }\n        return false;\n    }\n\n    @Override\n    public Integer next() {\n        if (!hasNext()) {\n            throw new NoSuchElementException();\n        }\n        return array[i][j][k++];\n    }\n}\n```\n<<<explanation>>>: This Java code defines a class `NestedArrayIterator` that implements the `Iterator` interface for a 3-dimensional array. The `hasNext` method checks if there is a next non-null element in the array. It does this by iterating over the array in a nested manner, similar to the Python generator function. If it finds a non-null element, it returns true. Otherwise, it continues to the next element. The `next` method returns the next non-null element if it exists, otherwise it throws a `NoSuchElementException`. The `next` method uses the `Iterator.next` API to get the next element."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 152,
+        "completion_tokens": 370,
+        "total_tokens": 522
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Generator functions equivalent in Java: :I would like to implement an Iterator in Java that behaves somewhat like the following generator function in Python:def iterator(array):   for x in array:      if x!= None:        for y in x:          if y!= None:            for z in y:              if z!= None:                yield zx on the java side can be multi-dimensional array or some form of nested collection. I am not sure how this would work. Ideas?\nPlease using this api: Iterator.next.\nAnswer:"
+}

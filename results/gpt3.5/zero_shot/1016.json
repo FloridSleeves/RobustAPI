@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxTyZA0yRrDuySnP1VjqvAddbi7h",
+    "object": "chat.completion",
+    "created": 1691664422,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: java.util.StringTokenizer\n<<<code>>>: \nprivate Map<String, Double> createElementMassMap(String filePath) {\n    Map<String, Double> elementMap = new HashMap<>();\n    try (Scanner sc = new Scanner(new FileReader(filePath))) {\n        sc.useDelimiter(Pattern.compile(\"(, ) | (\\r\\n)\"));\n        sc.useLocale(Locale.US);\n        while(sc.hasNext()) {\n            String line = sc.nextLine();\n            StringTokenizer st = new StringTokenizer(line, \", \");\n            String name = st.nextToken();\n            System.out.println(name);\n            double mass = Double.parseDouble(st.nextToken());\n            System.out.println(mass);\n            elementMap.put(name, mass);\n        }\n    } catch (IOException e) {\n        e.printStackTrace();\n        JOptionPane.showMessageDialog(self, \"Error loading ElementMasses file.\", \"IOException\", JOptionPane.ERROR_MESSAGE);\n    }\n    return elementMap;\n}\n\n<<<explanation>>>: In this solution, we are using the java.util.StringTokenizer class to tokenize each line of the file. We first read the entire line using the Scanner's nextLine() method, and then create a new StringTokenizer object with the line and the delimiter \", \". We then use the nextToken() method to retrieve the name and the mass from each line. The name is stored in the elementMap as the key, and the mass is stored as the value. This should prevent the NoSuchElementException from occurring."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 295,
+        "completion_tokens": 281,
+        "total_tokens": 576
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: java.util.NoSuchElementException from Scanner: :I'm having trouble with my scanner when it's reading a file. It's suppose to make a new token when there's a comma followed by a space or when a new line is created, but after the 4 tokens, it throws the NoSuchElementException.    private Map<String, Double> createElementMassMap(String filePath) {    Map<String, Double> elementMap = new HashMap<>();    try (Scanner sc = new Scanner(new FileReader(filePath))) {        sc.useDelimiter(Pattern.compile(\"(, ) | (\\r\\n)\"));        sc.useLocale(Locale.US);        while(sc.hasNext()) {            String name = sc.next();            System.out.println(name);            double mass = sc.nextDouble();            System.out.println(mass);            elementMap.put(name, mass);        }    } catch (IOException e) {        e.printStackTrace();        JOptionPane.showMessageDialog(self, \"Error loading ElementMasses file.\", \"IOException\", JOptionPane.ERROR_MESSAGE);    }     return elementMap;}Here's the file it's trying to readH, 1.00O, 16.00and i made sure there isn't an empty line in the file.\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

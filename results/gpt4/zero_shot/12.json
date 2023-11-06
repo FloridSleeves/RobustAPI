@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m0yHvh5T7yK5h8Oz60SZomIqRMJ9",
+    "object": "chat.completion",
+    "created": 1691677833,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Activity.findViewById\n<<<code>>>: \n```java\npublic class MainActivity extends AppCompatActivity {\n    TextView test;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_gameplay);\n        test = (TextView) findViewById(R.id.textViewTest);\n        MyClass myClass = new MyClass(this);\n        myClass.myFunction();\n    }\n\n    public void changeTest() {\n        test.setText(\"test\");\n    }\n}\n\npublic class MyClass {\n    MainActivity mainActivity;\n\n    public MyClass(MainActivity mainActivity) {\n        this.mainActivity = mainActivity;\n    }\n\n    public void myFunction() {\n        mainActivity.changeTest();\n    }\n}\n```\n<<<explanation>>>: The NullPointerException is thrown because you are trying to instantiate an Activity with new MainActivity(). This is not the correct way to use Activities in Android. You should never instantiate an Activity class directly. Instead, you should pass the instance of the Activity to the other class. In the code above, we are passing the instance of MainActivity to MyClass through the constructor. Then, we use this instance to call the changeTest() method. Also, we moved the findViewById() call to the onCreate() method of MainActivity, because the view hierarchy is not ready until setContentView() is called, so you can't find your views before this."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 312,
+        "completion_tokens": 268,
+        "total_tokens": 580
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Function to change TextView doesn't work when called from another class: :I've written a function to change the text of a TextView. It's in the class of the activity which contains the TextView. However, this function doesn't work when it's called from another class.The function looks like this:public class MainActivity extends AppCompatActivity {    public void changeTest() {        TextView test = (TextView) findViewById(R.id.textViewTest);        guessedLetters.setText(\"test\");    }}If I call this function from my MainActivity, it works perfectly fine:public class MainActivity extends AppCompatActivity {    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_gameplay);        changeTest();    }}But if I call it from a class that extends MainActivity, I get a java.lang.NullPointerException at android.app.Activity.findViewById(Activity.java:1884).public class MainActivity extends AppCompatActivity {    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_gameplay);        MyClass myClass = new MyClass();        myClass.myFunction();    }}public class MyClass extends MainActivity {    public void myFunction() {        MainActivity mainActivity = new MainActivity();        mainActivity.changeTest();    }}How could I fix this?\nPlease using this api: Activity.findViewById.\nAnswer:"
+}

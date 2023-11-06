@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m75S2nmxxaBYFSse046jFEsxtwsD",
+    "object": "chat.completion",
+    "created": 1691701342,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n\n<<<code>>>: \n```java\nimport java.io.*;\nimport javax.servlet.*;\nimport javax.servlet.http.*;\n\npublic class UploadServlet extends HttpServlet {\n    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {\n        PrintWriter out = response.getWriter();\n        try {\n            Part filePart = request.getPart(\"file\"); // Retrieves <input type=\"file\" name=\"file\">\n            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.\n            InputStream fileContent = filePart.getInputStream();\n\n            byte[] buffer = new byte[fileContent.available()];\n            fileContent.read(buffer);\n\n            File targetFile = new File(\"/path/to/uploads/\" + fileName);\n            OutputStream outStream = new FileOutputStream(targetFile);\n            outStream.write(buffer);\n\n            out.write(\"File uploaded successfully!\");\n        } catch (Exception e) {\n            out.write(\"File upload failed: \" + e.getMessage());\n        } finally {\n            out.close();\n        }\n    }\n}\n```\n\n<<<explanation>>>: This code creates a servlet that handles POST requests. It retrieves the file from the request, reads its content into a byte array, and then writes that byte array to a new file in the server's upload directory. If the file upload is successful, it sends a success message back to the client. If there's an exception, it sends an error message back to the client. The PrintWriter.write API is used to send these messages back to the client."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 108,
+        "completion_tokens": 302,
+        "total_tokens": 410
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Android, upload a file in the tomcat server: :I am looking for code that can quickly upload an image from my android application in tomcat server.At the moment I have not found the java code to place in the tomcat server (servlet)\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

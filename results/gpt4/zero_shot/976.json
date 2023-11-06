@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8hKuPke4ScbmUzy9m0hfn904A4i",
+    "object": "chat.completion",
+    "created": 1691707534,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \n```java\nfinal String secret = \"key\";\nfinal String message = \"The quick brown fox jumps over the lazy dog\";\n\nMac sha256_HMAC = Mac.getInstance(\"HmacSHA256\");\nSecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(\"UTF-8\"), \"HmacSHA256\");\nsha256_HMAC.init(secret_key);\n\nbyte[] bytes = sha256_HMAC.doFinal(message.getBytes(\"UTF-8\"));\n\nStringBuilder hash = new StringBuilder();\nfor (byte b : bytes) {\n    String hex = Integer.toHexString(0xff & b);\n    if (hex.length() == 1) hash.append('0');\n    hash.append(hex);\n}\n\nSystem.out.println(\"Result:[\" + hash.toString() + \"]\");\n```\n<<<explanation>>>: \nIn this code, we are using the `String.getBytes` method to convert the secret key and the message into byte arrays. This method is more straightforward and less error-prone than manually encoding the strings as ASCII. The `Mac.getInstance(\"HmacSHA256\")` method is used to get an instance of the HMAC-SHA256 algorithm. The `SecretKeySpec` class is used to convert the byte array into a secret key. The `Mac.init` method is used to initialize the Mac instance with the secret key. The `Mac.doFinal` method is used to compute the HMAC of the message. The resulting byte array is then converted into a hexadecimal string. The `0xff & b` operation is used to get the lower 8 bits of each byte, and `Integer.toHexString` is used to convert each byte into a hexadecimal string. If the hexadecimal string has only one character, a '0' is prepended to make it two characters. The resulting hexadecimal string is the HMAC of the message."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 372,
+        "completion_tokens": 368,
+        "total_tokens": 740
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: HMAC-SHA256 Algorithm for signature calculation: :I am trying to create a signature using the HMAC-SHA256 algorithm and this is my code.I am using US ASCII encoding.final Charset asciiCs = Charset.forName(\"US-ASCII\");final Mac sha256_HMAC = Mac.getInstance(\"HmacSHA256\");final SecretKeySpec secret_key = new javax.crypto.spec.SecretKeySpec(asciiCs.encode(\"key\").array(), \"HmacSHA256\");sha256_HMAC.init(secret_key);final byte[] mac_data = sha256_HMAC.doFinal(asciiCs.encode(\"The quick brown fox jumps over the lazy dog\").array());String result = \"\";for (final byte element : mac_data){    result += Integer.toString((element & 0xff) + 0x100, 16).substring(1);}System.out.println(\"Result:[\" + result + \"]\");The result that I am getting from the above code is:f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8This is same as to that of shown in the wikiHMAC_SHA256(\"key\", \"The quick brown fox jumps over the lazy dog\") = 0x f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8except for the 0x.I am looking for ideas/comments if I am doing everything right or may be I can improve my code.\nPlease using this api: String.getBytes.\nAnswer:"
+}

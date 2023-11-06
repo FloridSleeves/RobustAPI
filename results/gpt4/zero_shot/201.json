@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2f9Yf6uvuVvIdc2MkXn0dixIumY",
+    "object": "chat.completion",
+    "created": 1691684335,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \nHere is a simple example of a client-server application in Java using InputStream.read API.\n\nServer:\n\n```java\nimport java.io.*;\nimport java.net.*;\n\npublic class Server {\n    public static void main(String[] args) throws IOException {\n        ServerSocket serverSocket = new ServerSocket(8000);\n        System.out.println(\"Server is running...\");\n\n        while (true) {\n            Socket socket = serverSocket.accept();\n            DataInputStream in = new DataInputStream(socket.getInputStream());\n\n            byte[] bytes = new byte[1024];\n            in.read(bytes);\n            String clientMessage = new String(bytes);\n            System.out.println(\"Message from client: \" + clientMessage);\n\n            socket.close();\n        }\n    }\n}\n```\n\nClient:\n\n```java\nimport java.io.*;\nimport java.net.*;\n\npublic class Client {\n    public static void main(String[] args) throws IOException {\n        Socket socket = new Socket(\"localhost\", 8000);\n        DataOutputStream out = new DataOutputStream(socket.getOutputStream());\n\n        String message = \"Hello Server!\";\n        out.writeBytes(message);\n\n        socket.close();\n    }\n}\n```\n<<<explanation>>>: In the server part, we create a ServerSocket that listens on port 8000. When a client connects, we accept the connection, get the InputStream from the socket, and read the bytes sent by the client using InputStream.read(). We then convert these bytes to a string and print the message.\n\nIn the client part, we create a Socket that connects to the server on localhost and port 8000. We get the OutputStream from the socket and write a string message to the server in bytes."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 206,
+        "completion_tokens": 336,
+        "total_tokens": 542
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: make a client server java application: :I am trying to make a Java application in a client/server way.The client is a GUI in SWT which displays data from the server. The server is connected to a database.Ok, sorry for that, it's a classic question I'm sure, but I don't know how to start.In a project I worked for they implemented a lot of magic with Proxy.newProxyInstance() to invoke the Glassfish server transparently.I don't want to use a Glassfish server. I just want something simple in plain Java. But the concept of proxies seems pretty cool.Do you have ideas or examples of such thing? How do I write the server part to handle the requests of clients?Thanks in advanceFluminis\nPlease using this api: InputStream.read.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFyjUvC9RxEZrXfjQo2o5EHFn3vi",
+    "object": "chat.completion",
+    "created": 1691973849,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \nimport java.security.MessageDigest;\nimport java.security.NoSuchAlgorithmException;\n\npublic String generateHash(JSONObject jsonObject, String str) {\n    try {\n        MessageDigest digest = MessageDigest.getInstance(\"SHA-256\");\n        byte[] hash = digest.digest((jsonObject.toString() + str).getBytes(\"UTF-8\"));\n        StringBuilder hexString = new StringBuilder();\n\n        for (byte b : hash) {\n            String hex = Integer.toHexString(0xff & b);\n            if(hex.length() == 1) hexString.append('0');\n            hexString.append(hex);\n        }\n\n        return hexString.toString();\n    } catch(Exception ex){\n       throw new RuntimeException(ex);\n    }\n}\n<<<explanation>>>: This code generates a SHA-256 hash from a JSONObject and a String. It first converts the JSONObject to a String and concatenates it with the second String. Then it gets the bytes of the concatenated String using the getBytes() method. These bytes are then passed to the digest() method of the MessageDigest instance to generate the hash. The generated hash is a byte array, which is then converted to a hexadecimal String."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 235,
+        "completion_tokens": 235,
+        "total_tokens": 470
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Generate SHA 256 Hash using multiple values in Java/Android: :I have two objects based on which SHA 256 Hash needs to be generated.First value is a JSONObjectSecond value is a String variable.Ideally, what i need isHash hash= new Hash(JSONObject, String);I couldn't find any hash generation methods which takes two values.Could anyone help me with this?.\nPlease using this api: String.getBytes.\nAnswer:"
+}

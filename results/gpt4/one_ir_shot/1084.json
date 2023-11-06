@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nGMr7Rr5sKbOjzVTigRyqQtzwdi0",
+    "object": "chat.completion",
+    "created": 1691975345,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \ntry {\n    Process process = Runtime.getRuntime().exec(\"netstat -rn\");\n    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));\n    String line;\n    while ((line = bufferedReader.readLine()) != null) {\n        if (line.contains(\"default\") || line.contains(\"0.0.0.0\")) {\n            StringTokenizer stringTokenizer = new StringTokenizer(line);\n            stringTokenizer.nextToken();\n            stringTokenizer.nextToken();\n            String gatewayIp = stringTokenizer.nextToken();\n            System.out.println(\"Gateway IP: \" + gatewayIp);\n            break;\n        }\n    }\n} catch (IOException e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: This code executes the \"netstat -rn\" command which displays the routing table. It then reads the output line by line. If a line contains \"default\" or \"0.0.0.0\", it tokenizes the line using StringTokenizer and skips the first two tokens to get the IP of the gateway."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 240,
+        "completion_tokens": 207,
+        "total_tokens": 447
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How can I determine the IP of my router/gateway in Java?: :How can I determine the IP of my router/gateway in Java? I can get my IP easily enough. I can get my internet IP using a service on a website. But how can I determine my gateway's IP?This is somewhat easy in .NET if you know your way around. But how do you do it in Java?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

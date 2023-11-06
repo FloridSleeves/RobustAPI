@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvdlg4apWnD8Anhis0gpnI4UTBst",
+    "object": "chat.completion",
+    "created": 1691657341,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nimport org.mockito.Mockito;\n\nIterator<String> iterator = Mockito.mock(Iterator.class);\nMockito.when(iterator.next()).thenReturn(\"a\", \"b\", \"c\", null);\n```\n<<<explanation>>>: \nTo mock the CSVReader and have it return a new array each time, you can use the `Iterator.next` method from the Mockito API. \n\nFirst, you need to mock the `Iterator` class using `Mockito.mock(Iterator.class)`. Then, you can use the `Mockito.when` method to specify the return values for the `next` method. In this case, you can pass the values \"a\", \"b\", \"c\", and null as arguments to `thenReturn` to simulate the behavior you want.\n\nBy chaining multiple `thenReturn` calls, you can specify multiple return values for the `next` method. Each call to `next` will return the next value in the sequence, and the last call will return null."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 545,
+        "completion_tokens": 209,
+        "total_tokens": 754
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Mock CSVReader with mockito and multible return values: :I wan't to mock the CSVReader. So my mock should return a new array each time, this should be generic.the last value should be null.exnextLine() -> [\"a\",\"b\",\"c\"]nextLine() -> [\"a\",\"b\",\"c\"]nextLine() -> nullMy MockClass:import au.com.bytecode.opencsv.CSVReader;import com.sun.javafx.beans.annotations.NonNull;import org.mockito.Mockito;import org.mockito.stubbing.OngoingStubbing;import java.io.IOException;import java.util.ArrayList;import java.util.LinkedList;import java.util.List;import static org.mockito.Mockito.mock;import static org.mockito.Mockito.when;public class CSVReaderMock {    CSVReader reader;    private boolean linesCorrectInitialized;    public CSVReaderMock()    {        reader = mock(CSVReader.class);    }    public CSVReaderMock returnLines(@NonNull List<String> lines) {        // the last value has to be null        lines.add(null);        try {            for (String line : lines) {                String[] lineArr = null;                if (line != null) {                    lineArr = line.split(\",\");                }                when(reader.readNext()).thenReturn(lineArr);            }            linesCorrectInitialized = true;        } catch (IOException e) {            e.printStackTrace();        };        return this;    }    public CSVReader create() {        if (!linesCorrectInitialized) { throw new RuntimeException(\"lines are not initialized correct\"); }        return reader;    }}and here a testcase (i only writed to check my mock builder):@Testpublic void testImportLines() throws Exception {    CSVReader reader;    List<String> list = new LinkedList<>();    list.add(\"some,lines,for,testing\");    reader = new CSVReaderMock().returnLines(list).create();    System.out.println(reader.readNext()); // should return [Ljava.lang.String;@xxxx with conent-> [\"some\",\"lines\",\"for\",\"testing\"]    System.out.println(reader.readNext()); // should return null}the actual output is :nullnullSo my question is, how can i pass a list of return values without knowing in advance how the list will look? I know i could pass the \"csv lines\" via .thenReturn(line1,line2,line3) but this will break my approach.\nPlease using this api: Iterator.next.\nAnswer:"
+}

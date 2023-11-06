@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDJi7qnDHtuHH8TgPA31KVKAn8D4",
+    "object": "chat.completion",
+    "created": 1691963618,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \ntry {\n    ChannelExec channel = (ChannelExec) session.openChannel(\"exec\");\n    channel.setCommand(\"tail -f /path/to/your/logfile\");\n    channel.connect();\n\n    InputStream in = channel.getInputStream();\n    byte[] tmp = new byte[1024];\n    while (true) {\n        while (in.available() > 0) {\n            int i = in.read(tmp, 0, 1024);\n            if (i < 0) break;\n            System.out.print(new String(tmp, 0, i));\n        }\n        if (channel.isClosed()) {\n            System.out.println(\"exit-status: \" + channel.getExitStatus());\n            break;\n        }\n        try {\n            Thread.sleep(1000);\n        } catch (Exception ee) {\n        }\n    }\n    channel.disconnect();\n    session.disconnect();\n} catch (Exception e) {\n    System.out.println(e);\n}\n<<<explanation>>>: This code opens an exec channel and sets the command to tail the log file. It then connects to the channel and reads the input stream. If the channel is closed, it prints the exit status and breaks the loop. Finally, it disconnects the channel and the session. If there is an exception, it prints the exception."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 236,
+        "completion_tokens": 267,
+        "total_tokens": 503
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Kill process before disconnecting: :I am using Jsch to tail a server-log. When I close my exec-channel and session, the \"tail -f ...\" process still stays alive at server side.I tried to do channel.sendSignal(\"KILL\") but it throws an exception:com.jcraft.jsch.JSchException: failed to send channel requesthow can I do a clean disconnect?\nPlease using this api: InputStream.read.\nAnswer:"
+}

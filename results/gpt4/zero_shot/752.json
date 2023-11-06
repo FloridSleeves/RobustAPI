@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m6yvwOMaujpCGLa45DW7jitSjDhW",
+    "object": "chat.completion",
+    "created": 1691700937,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\npublic class PersonalInfoOutput extends HttpServlet {\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        response.setContentType(\"text/html;charset=UTF-8\");\n        PrintWriter out = response.getWriter();\n        String firstname = request.getParameter(\"firstname\");\n        String lastname = request.getParameter(\"lastname\");\n        String address = request.getParameter(\"address\");\n        if(PersonalInfo.ViewPersonal(firstname, lastname, address)) {\n            out.write(\"First Name: \" + firstname + \"<br>\");\n            out.write(\"Last Name: \" + lastname + \"<br>\");\n            out.write(\"Address: \" + address + \"<br>\");\n        }\n    }\n}\n```\n<<<explanation>>>: The PrintWriter.write method is used to print the firstname, lastname, and address to the HTTP response. The \"<br>\" is an HTML tag for a line break, which will format the output so each piece of information is on a new line."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 428,
+        "completion_tokens": 201,
+        "total_tokens": 629
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I print the firstname, lastname and address from database?: :This question already exists:                                                            I have retrieved information from a database, but how do I format it properly? Perhaps using html [duplicate]Closed 7 years ago.I've tried to retrieve and print the firstname, lastname and address from a database and then display it. I have the servlet below, can someone please help me, thanks :) Will I have to use html at all? It is not printing firstname.PersonalInfoOut.javaimport java.io.*;import javax.servlet.*;import javax.servlet.http.*;import java.sql.*;public class PersonalInfoOutput extends HttpServlet {    protected void doPost(HttpServletRequest request, HttpServletResponse response)            throws ServletException, IOException {        response.setContentType(\"text/html;charset=UTF-8\");        PrintWriter out = response.getWriter();        String firstname = request.getParameter(\"firstname\");        String lastname = request.getParameter(\"lastname\");        String address = request.getParameter(\"address\");        if(PersonalInfo.ViewPersonal(firstname, lastname, address))        out.println(firstname);        }    }PersonalInfo.java import java.sql.*;public class PersonalInfo {     public static boolean ViewPersonal(String firstname, String lastname, String address)    {        boolean st = false;        try {             Class.forName(\"com.mysql.jdbc.Driver\").newInstance();             Connection con = DriverManager.getConnection(\"jdbc:mysql://localhost:3306/payroll_system\", \"root\", \"\");             PreparedStatement ps = con.prepareStatement(\"select FirstName, LastName, Address from payroll_system.employee_info where employeeID = 1234\");             ps.setString(1, firstname);            ps.setString(2, lastname);            ps.setString(3, address);             ResultSet rs = ps.executeQuery();             st = rs.next();          }catch(Exception e)          {              e.printStackTrace();          }             return st;                 } } \nPlease using this api: PrintWriter.write.\nAnswer:"
+}

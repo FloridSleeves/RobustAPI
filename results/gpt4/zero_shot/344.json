@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m3xTWo0fcGWbqWmVjCnxkVc2KqrX",
+    "object": "chat.completion",
+    "created": 1691689315,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nimport static org.mockito.Mockito.when;\nimport static org.testng.Assert.assertTrue;\nimport java.util.ArrayList;\nimport java.util.Iterator;\nimport java.util.List;\nimport org.mockito.Mockito;\nimport org.testng.annotations.Test;\n\npublic class ListTest{  \n    @Test  \n    public void test()  {    \n        List<String> mockList = Mockito.mock(List.class);    \n        Iterator<String> mockIterator = Mockito.mock(Iterator.class);    \n        when(mockList.iterator()).thenReturn(mockIterator);    \n        when(mockIterator.hasNext()).thenReturn(true, false);    \n        when(mockIterator.next()).thenReturn(\"A\");    \n        boolean flag = false;    \n        for(String s : mockList) {        \n            flag = true;    \n        }    \n        assertTrue(flag);  \n    }\n}\n```\n<<<explanation>>>: In the given code, we are mocking a List and an Iterator. We then set up the behavior of these mocks using Mockito's when() method. We specify that when iterator() method is called on the mock list, it should return the mock iterator. We also specify that the first call to hasNext() on the mock iterator should return true (indicating that there is a next element), and any subsequent call should return false (indicating that there are no more elements). We also specify that when next() is called on the mock iterator, it should return \"A\". In the enhanced for loop, we iterate over the mock list. Since we have set up the mock iterator to return true for the first call to hasNext(), the loop is entered once, and flag is set to true. The assertion at the end checks that flag is indeed true, which verifies that the loop was entered."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 327,
+        "completion_tokens": 354,
+        "total_tokens": 681
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Testing Java enhanced for behavior with Mockito: :I want to test a java method that has an enhanced for on it using Mockito. The problem is that when I don't know how to set the expectations for the enhanced for to work. The following code was gotten from an unanswered question in the mockito google group: import static org.mockito.Mockito.when;import static org.testng.Assert.assertTrue;import java.util.ArrayList;import java.util.Iterator;import java.util.List;import org.mockito.Mockito;import org.testng.annotations.Test;public class ListTest{  @Test  public void test()  {    List<String> mockList = Mockito.mock(List.class);    Iterator<String> mockIterator = Mockito.mock(Iterator.class);    when(mockList.iterator()).thenReturn(mockIter);    when(mockIter.hasNext()).thenReturn(true).thenReturn(false);    when(mockIter.next()).thenReturn(\"A\");    boolean flag = false;    for(String s : mockList) {        flag = true;    }    assertTrue(flag);  }} The code inside the for loop never gets executed. Setting expectations for an iterator doesn't work, because the java enhanced for doesn't use the list iterator internally. Setting expectations for List.get() method doesn't either since the enhanced for implementation doesn't seem to call the get() method of the list either. Any help will be much appreciated.\nPlease using this api: Iterator.next.\nAnswer:"
+}

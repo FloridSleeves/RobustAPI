@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mDzGqbXSyCMPFLTN2ctpwAdjBoXD",
+    "object": "chat.completion",
+    "created": 1691727866,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \nimport java.io.*;\nimport java.net.URL;\nimport java.net.URLConnection;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        try {\n            URL url = new URL(\"http://www.example.com\");\n            URLConnection connection = url.openConnection();\n            Scanner scanner = new Scanner(connection.getInputStream());\n            PrintWriter printWriter = new PrintWriter(new FileOutputStream(\"b.txt\"));\n            while (scanner.hasNextLine()) {\n                printWriter.write(scanner.nextLine() + \"\\n\");\n            }\n            printWriter.close();\n            scanner.close();\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n<<<explanation>>>: In your code, you are trying to read from a local file, not from a URL. To read from a URL, you need to create a URL object and open a connection to it. Then, you can use a Scanner to read the content of the webpage line by line. For each line, you write it to the output file using PrintWriter.write method. Don't forget to add a newline character (\"\\n\") after each line to preserve the original formatting of the webpage. Finally, close both the Scanner and the PrintWriter to free up resources."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 446,
+        "completion_tokens": 254,
+        "total_tokens": 700
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Saving HTML content of any URL in a text file in Java: :I am trying to Save HTML Content of any URL  as Text file in java but its not work How save it?My code isimport java.io.*;class DemoTest {    public static void main(String st[]) {        try {            FileInputStream fis = new FileInputStream(\"C:\\Users\\Admin\\Desktop\\new.html\");            //a.html or pass tha path of html            FileOutputStream fos = new FileOutputStream(\"b.txt\");//to writw source in file            while (true) {                int i = fis.read();                if (i == -1)                    break;                System.out.print((char) i);//display on cmd                fos.write(i);// write the source in b.txt            }        } catch (Exception e) {        }    }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

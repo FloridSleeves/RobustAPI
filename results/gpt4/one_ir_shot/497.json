@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nED1SH8PIhbFhnvgAlnaTv215gh3",
+    "object": "chat.completion",
+    "created": 1691967047,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \nMap<String, String> replacements = new HashMap<>();\nreplacements.put(\"cat\", \"dog\");\nreplacements.put(\"dog\", \"fish\");\nreplacements.put(\"fish\", \"cat\");\n\nString input = \"cat dog fish dog fish cat\";\nPattern pattern = Pattern.compile(String.join(\"|\", replacements.keySet()));\nMatcher matcher = pattern.matcher(input);\n\nStringBuffer sb = new StringBuffer();\nwhile(matcher.find()) {\n    matcher.appendReplacement(sb, replacements.get(matcher.group()));\n}\nmatcher.appendTail(sb);\n\nSystem.out.println(sb.toString());\n<<<explanation>>>: This code creates a map of replacements, then compiles a pattern that matches any of the keys in the map. It then uses a Matcher to find each occurrence of the pattern in the input string. For each match, it replaces the match with the corresponding value from the map. The result is appended to a StringBuffer. After all matches have been replaced, the remainder of the input string is appended to the StringBuffer. The result is the desired string with all replacements made."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 360,
+        "completion_tokens": 215,
+        "total_tokens": 575
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Replacing multiple substrings in Java when replacement text overlaps search text: :Say you have the following string:cat dog fish dog fish catYou want to replace all cats with dogs, all dogs with fish, and all fish with cats. Intuitively, the expected result:dog fish cat fish cat dogIf you try the obvious solution, looping through with replaceAll(), you get:(original) cat dog fish dog fish cat(cat -> dog) dog dog fish dog fish dog(dog -> fish) fish fish fish fish fish fish(fish -> cat) cat cat cat cat cat catClearly, this is not the intended result. So what's the simplest way to do this? I can cobble something together with Pattern and Matcher (and a lot of Pattern.quote() and Matcher.quoteReplacement()), but I refuse to believe I'm the first person to have this problem and there's no library function to solve it. (FWIW, the actual case is a bit more complicated and doesn't involve straight swaps.)\nPlease using this api: Iterator.next.\nAnswer:"
+}

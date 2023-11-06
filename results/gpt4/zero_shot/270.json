@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m3FUgBz4xzD4WJ48G0rOMVtEigEU",
+    "object": "chat.completion",
+    "created": 1691686588,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n\n<<<code>>>: \n```java\nimport java.io.*;\nimport java.util.*;\nimport org.apache.poi.ss.usermodel.*;\n\npublic class ExcelToCSV {\n    public static void main(String[] args) throws Exception {\n        FileInputStream fis = new FileInputStream(new File(\"ExcelFile.xlsx\"));\n        Workbook workbook = WorkbookFactory.create(fis);\n        Sheet sheet = workbook.getSheetAt(0);\n        Iterator<Row> rowIterator = sheet.iterator();\n        FileWriter csvWriter = new FileWriter(\"CSVFile.csv\");\n\n        while (rowIterator.hasNext()) {\n            Row row = rowIterator.next();\n            Iterator<Cell> cellIterator = row.cellIterator();\n            while (cellIterator.hasNext()) {\n                Cell cell = cellIterator.next();\n                switch (cell.getCellType()) {\n                    case STRING:\n                        csvWriter.append(cell.getStringCellValue());\n                        break;\n                    case NUMERIC:\n                        csvWriter.append(String.valueOf(cell.getNumericCellValue()));\n                        break;\n                    case BOOLEAN:\n                        csvWriter.append(String.valueOf(cell.getBooleanCellValue()));\n                        break;\n                    default:\n                        csvWriter.append(\"\");\n                }\n                csvWriter.append(\",\");\n            }\n            csvWriter.append(\"\\n\");\n        }\n        csvWriter.flush();\n        csvWriter.close();\n        fis.close();\n    }\n}\n```\n\n<<<explanation>>>: \nThis code reads an Excel file using Apache POI library and writes the data to a CSV file. It uses the Iterator.next method to iterate over the rows and cells of the Excel file. For each cell, it checks the cell type and writes the cell value to the CSV file accordingly. After writing all cells in a row, it appends a newline character to start a new line in the CSV file. After all rows are written, it flushes and closes the FileWriter."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 97,
+        "completion_tokens": 354,
+        "total_tokens": 451
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to write csv file on the basis of Excel using java?: :I have spreadsheet with certain data. I would like to programmatically dump this to CSV file. How can I do this using java?\nPlease using this api: Iterator.next.\nAnswer:"
+}

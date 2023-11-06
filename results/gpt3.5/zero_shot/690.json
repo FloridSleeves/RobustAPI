@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lwMUCec0E5pfotPduHsxpTf4OV41",
+    "object": "chat.completion",
+    "created": 1691660114,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \npublic class objectOutput {\n    static int i=0;\n    PrintWriter printWriter;\n    \n    public objectOutput(HttpServletResponse response) throws IOException {\n        response.setContentType(\"text/html\");\n        response.setCharacterEncoding(\"UTF-8\");\n        printWriter = response.getWriter();\n    }\n    \n    // Using this method to write a Json String\n    public void writeObject(String jsonString) {\n        printWriter.write(jsonString);\n        printWriter.close();\n    }\n}\n\n<<<explanation>>>: \nTo solve the issue of question marks being appended at the beginning of the JSON string, you can use the PrintWriter.write method instead of ObjectOutputStream. \n\nIn the code provided, the objectOutput class is modified to use PrintWriter instead of ObjectOutputStream. The response content type is set to \"text/html\" and the character encoding is set to \"UTF-8\" to ensure proper handling of the JSON string. The writeObject method takes a JSON string as input and uses the PrintWriter.write method to write the string to the response. Finally, the PrintWriter is closed to ensure proper cleanup."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 220,
+        "completion_tokens": 222,
+        "total_tokens": 442
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: ObjectOutputStream: appending question marks at the beginning of the String: :Server(Java) sends a Json String to a client(TypeScript). On the client I get the following:  Therefore JSON.parse() fails due to question marks being appended. I tried:Setting content type to - \"text/html\"Setting encode to - \"UTF-8\"And nothing seem to remove these.My code:public class objectOutput {    static int i=0;    ObjectOutputStream objectOutputStream;    public objectOutput(HttpServletResponse response)  throws IOException {        response.setContentType(\"application/octet-stream\");        objectOutputStream = new ObjectOutputStream(response.getOutputStream());      }    // Using this method to write a Json String    public void writeObject(Object object) throws IOException {        objectOutputStream.writeObject(object);        objectOutputStream.close();        objectOutputStream.flush();           }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

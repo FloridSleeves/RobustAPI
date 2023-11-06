@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCreSbq5mIDfDZyF2m92MiSMIQfD",
+    "object": "chat.completion",
+    "created": 1691961878,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: String input = \"columns=20xs, viewport_supported=true, wta=false, ..., mmf=false... columns=11xs, viewport_supported=false, wta=false, ..., mmf=true ... columns=15xs, viewport_supported=true, wta=false, ..., mmf=false\";\nMap<String, List<String>> columnsMap = new HashMap<>();\nString[] inputs = input.split(\"\\\\.\\\\.\\\\.\");\nfor (String str : inputs) {\n    String[] keyValuePairs = str.split(\", \");\n    for (String pair : keyValuePairs) {\n        String[] keyValue = pair.split(\"=\");\n        String key = keyValue[0];\n        String value = keyValue[1];\n        if (!columnsMap.containsKey(key)) {\n            columnsMap.put(key, new ArrayList<>());\n        }\n        columnsMap.get(key).add(value);\n    }\n}\n\nList<String> columnHeaders = new ArrayList<>(columnsMap.keySet());\nCollections.sort(columnHeaders);\n\nSystem.out.print(\"columns\\t\");\nfor (String columnHeader : columnHeaders) {\n    System.out.print(columnHeader + \"\\t\\t\");\n}\nSystem.out.println();\n\nint numRows = columnsMap.get(columnHeaders.get(0)).size();\nfor (int i = 0; i < numRows; i++) {\n    for (String columnHeader : columnHeaders) {\n        System.out.print(columnsMap.get(columnHeader).get(i) + \"\\t\\t\");\n    }\n    System.out.println();\n}\n<<<explanation>>>: The code splits the input string into individual key-value pairs and stores them in a map. Each key represents a column header and the corresponding values are stored in a list. The column headers are sorted and printed as the first row. Then, the values for each column are printed row by row."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 332,
+        "completion_tokens": 357,
+        "total_tokens": 689
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: convert comma (with a space) delimited string into columns under the matching values from the string itself: :I have an output in the console from my code like the sample given below,... columns=20xs, viewport_supported=true, wta=false, ..., mmf=false... columns=11xs, viewport_supported=false, wta=false, ..., mmf=true ... columns=15xs, viewport_supported=true, wta=false, ..., mmf=falseI want to re-arrange it by extracting the common string left to the '=' sign and put it as the column header and its values in its column. How to start doing this in Java?I am looking for the output like below:columns      viewport_supported        wta     and so on  20xs              true              false  11xs              false             false  15xs              true              false\nPlease using this api: Iterator.next.\nAnswer:"
+}

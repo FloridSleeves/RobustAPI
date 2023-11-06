@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD62gaevuG26nTaKzfZvblWtxZVR",
+    "object": "chat.completion",
+    "created": 1691962770,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \npublic class XSSFilter implements Filter {\n\n    @Override\n    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)\n            throws IOException, ServletException {\n        XSSRequestWrapper wrappedRequest = new XSSRequestWrapper((HttpServletRequest) request);\n        chain.doFilter(wrappedRequest, response);\n    }\n\n    class XSSRequestWrapper extends HttpServletRequestWrapper {\n        private byte[] rawData;\n        private HttpServletRequest request;\n        private ResettableServletInputStream servletStream;\n\n        XSSRequestWrapper(HttpServletRequest request) {\n            super(request);\n            this.request = request;\n            this.servletStream = new ResettableServletInputStream();\n        }\n\n        class ResettableServletInputStream extends ServletInputStream {\n            private InputStream inputStream;\n\n            public void setInputStream(InputStream inputStream) {\n                this.inputStream = inputStream;\n            }\n\n            @Override\n            public int read() throws IOException {\n                return inputStream.read();\n            }\n        }\n\n        @Override\n        public ServletInputStream getInputStream() throws IOException {\n            if (rawData == null) {\n                rawData = IOUtils.toByteArray(this.request.getReader());\n                servletStream.setInputStream(new ByteArrayInputStream(rawData));\n            }\n            return servletStream;\n        }\n\n        @Override\n        public String getParameter(String name) {\n            String value = super.getParameter(name);\n            return stripXSS(value);\n        }\n\n        private String stripXSS(String value) {\n            // You'll need to implement this method to actually strip out XSS characters\n        }\n    }\n}\n<<<explanation>>>: This code creates a filter that wraps the HttpServletRequest with a custom HttpServletRequestWrapper. The wrapper overrides the getInputStream() and getParameter() methods. The getInputStream() method reads the raw data from the request, and the getParameter() method strips out any potential XSS characters from the parameter values. The InputStream.read() API is used to read the raw data from the request."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 200,
+        "completion_tokens": 382,
+        "total_tokens": 582
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to change servlet request body in java filter?: :How can I change request body in java filter to protect from XSS attack?I build HttpServletRequestWrapper and use getparameter for change body butget stream close exception.\nPlease using this api: InputStream.read.\nAnswer:"
+}

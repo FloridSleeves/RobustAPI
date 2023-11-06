@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nE9JIY0KvcQdtxrORtkYkadi32GY",
+    "object": "chat.completion",
+    "created": 1691966817,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \nFile[] listOfFiles = folder.listFiles();\nfor (File file : listOfFiles){\n    if (file.isFile()&&(file.getName().substring(file.getName().lastIndexOf('.')+1).equals(\"xlsx\"))){\n        Workbook workbook = WorkbookFactory.create(file.getAbsoluteFile());\n        Iterator<Sheet> sheetIterator = workbook.sheetIterator();\n        while(sheetIterator.hasNext()) {\n            Sheet sheet = sheetIterator.next();\n            int j = sheet.getLastRowNum();\n            System.out.println(\"Last row number for sheet \" + sheet.getSheetName() + \": \" + j);\n        }\n    }\n}\n<<<explanation>>>: The Iterator.next() method returns the next element in the iteration. In this case, it is used to iterate over each sheet in the workbook. For each sheet, it gets the last row number using the getLastRowNum() method and prints it. This way, you get the last row number for each sheet in each .xlsx file in the folder, not the sum of all values in all files."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 354,
+        "completion_tokens": 215,
+        "total_tokens": 569
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: how to get lastRowNum() from a specific file from a list of file in java: :I am unable to get the lastRowNum() for a specific file while reading it from a folder.The lastRowNum() method returns, last row after consolidating all the files in folder. I need a specific file .Below is the code usedFile[] listOfFiles = folder.listFiles();for (File file : listOfFiles){if (file.isFile()&&(file.getName().substring(file.getName().lastIndexOf('.')+1).equals(\"xlsx\"))){ Workbook workbook =WorkbookFactory.create(file.getAbsoluteFile());                       Sheet sheet = workbook.getSheetAt(0);                       int j = sheet.getLastRowNum();                       System.out.println(j);    }   }  I am getting output as 340 which is the sum of all values in all files in the folder.But for 1st sheet it should be 40. As in 1st sheet it contains 40 rows only\nPlease using this api: Iterator.next.\nAnswer:"
+}

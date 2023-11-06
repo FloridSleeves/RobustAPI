@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mDY6PyzolsOFQjwAQ5tZaZwdWeBA",
+    "object": "chat.completion",
+    "created": 1691726182,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: JsonElement.getAsString\n<<<code>>>: public class DateTimeTypeConverter implements JsonSerializer<DateTime>, JsonDeserializer<DateTime> {\n    private static final DateTimeFormatter DATE_TIME_FORMATTER = ISODateTimeFormat.dateTime();\n\n    @Override\n    public JsonElement serialize(DateTime src, Type srcType, JsonSerializationContext context) {\n        return new JsonPrimitive(DATE_TIME_FORMATTER.print(src));\n    }\n\n    @Override\n    public DateTime deserialize(JsonElement json, Type type, JsonDeserializationContext context)\n            throws JsonParseException {\n        return DATE_TIME_FORMATTER.parseDateTime(json.getAsString());\n    }\n}\n\nGson gson = new GsonBuilder()\n    .registerTypeAdapter(DateTime.class, new DateTimeTypeConverter())\n    .create();\n<<<explanation>>>: This code creates a custom serializer and deserializer for Joda's DateTime class. The serializer converts the DateTime object to a string using the ISODateTimeFormat, and the deserializer does the reverse. You can then register this converter with Gson using the registerTypeAdapter method. This way, whenever Gson encounters a DateTime object, it will use your custom converter."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 549,
+        "completion_tokens": 222,
+        "total_tokens": 771
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Gson to json conversion with two DateFormat: My server JSON is returning with two different type of DateFormat. \"MMM dd, yyyy\" and \"MMM dd, yyyy HH:mm:ss. When I convert the JSON with the following it is fine: Gson gson = new GsonBuilder().setDateFormat(\"MMM dd, yyyy\").create();But when I want the detailed date format and changed it to this, it throws exception com.google.gson.JsonSyntaxException: Mar 21, 2013.Gson gson = new GsonBuilder().setDateFormat(\"MMM dd, yyyy HH:mm:ss\").create(); Is there a way for gson to handle two different DateFormat for its Json conversion?\nPlease using this api: JsonElement.getAsString.\nAnswer:<<<api>>>: JsonElement.getAsString\n<<<code>>>: new GsonBuilder().registerTypeAdapter(Date.class, new DateDeserializer());\nprivate static final String[] DATE_FORMATS = new String[] {\n        \"MMM dd, yyyy HH:mm:ss\",\n                \"MMM dd, yyyy\"\n};\nprivate class DateDeserializer implements JsonDeserializer<Date> {\n    @Override\n        public Date deserialize(JsonElement jsonElement, Type typeOF,\n                    JsonDeserializationContext context) throws JsonParseException {\n                            for (String format : DATE_FORMATS) {\n                                        try {\n                                                        return new SimpleDateFormat(format, Locale.US).parse(jsonElement.getAsString());\n                                        } catch (ParseException e) {\n                                        }\n                            }\n                                    throw new JsonParseException(\"Unparseable date: \"\" + jsonElement.getAsString()\n                                                    + \"\". Supported formats: \" + Arrays.toString(DATE_FORMATS));                                                        \n                    }\n}\n<<<explanation>>>: Here is my solution via custom deserialization.\nQuestion: Is there a standard implementation for a GSON Joda Time serialiser?: :I'm using GSON to serialise some object graphs to JSON.  These objects graphs use Joda Time entities (DateTime, LocalTime etc).The top Google hit for \"gson joda\" is this page:https://sites.google.com/site/gson/gson-type-adapters-for-common-classesIt provides source for a type adapter for org.joda.time.DateTime.  This link is also what is referenced in the GSON User Guide.I expected to find a pre-rolled library that included joda-time serialisers that I could reference as a Maven dependency - but I can't find one.  Is there one?  Or am I forced to replicate that snippet in my own project?\nPlease using this api: JsonElement.getAsString.\nAnswer:"
+}

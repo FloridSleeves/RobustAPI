@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mE6wR2itSZeu6ptVpzsobQ7Fe8XY",
+    "object": "chat.completion",
+    "created": 1691728342,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```\ntry {\n    URL url = new URL(\"http://www.example.com/login\");\n    HttpURLConnection conn = (HttpURLConnection) url.openConnection();\n    conn.setRequestMethod(\"POST\");\n    conn.setDoOutput(true);\n    PrintWriter out = new PrintWriter(conn.getOutputStream());\n    out.write(\"username=yourUsername&password=yourPassword\");\n    out.close();\n\n    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));\n    String inputLine;\n    while ((inputLine = in.readLine()) != null) \n        System.out.println(inputLine);\n    in.close();\n} catch (Exception e) {\n    e.printStackTrace();\n}\n```\n<<<explanation>>>: This code sends a POST request to the login page of the website with the username and password as parameters. The PrintWriter.write method is used to write the parameters to the output stream of the connection. After sending the POST request, the server's response is read from the input stream of the connection. If the login is successful, you should be able to download the file using the same session."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 374,
+        "completion_tokens": 219,
+        "total_tokens": 593
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Create a Session in Java Application: :There is this certain website that I'm trying to get a csv file from but it requires a user to login first before downloading. I've tried logging in using Internet Explorer and download using that session but it didn't work. So I'm guessing I need to POST user data to the web, get an answer and download the file.How can I create a session wtih Java and download the file? Thank you in advance.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

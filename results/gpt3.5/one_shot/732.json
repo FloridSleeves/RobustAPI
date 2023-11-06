@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzewPRglKyZJcytSoqJ0ikVJ8dUB",
+    "object": "chat.completion",
+    "created": 1691672790,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: while (score < 10) {\n                int val = sc.nextInt();\n                if (val < 0) break;\n                outputWriter.write(val + \"\\n\");\n                score++;\n            }\n<<<explanation>>>: The issue is with the condition in the while loop. It should be \"score < 10\" instead of \"score <= 10\" to ensure that only 10 scores are entered. Additionally, you need to add a line break (\"\\n\") after each score when writing to the file using PrintWriter.write."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 690,
+        "completion_tokens": 117,
+        "total_tokens": 807
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Java Writing to a File Test Scores: :I have to make a program that asks the user to enter several scores. Each score needs to be written to the file \"scores.txt,\" but after I enter my 10 scores, the program doesn't do anything, and the scores are not being written to the file. Basically, I'm not sure how to use processFile to show the mean score. The final program should prompt the user for several scores, write the scores to a file, then open that file, calculate the mean, and display it. I have to use an exit condition, and if it is negative, it should assume the user is done entering data.    public class MoreTestScores {    /**     * @param args the command line arguments     */    public static void main(String[] args) throws IOException {        writeToFile(\"scores.txt\");        processFile(\"scores.txt\");    }    public static void writeToFile (String filename) throws IOException {        BufferedWriter outputWriter = new BufferedWriter(new FileWriter(\"scores.txt\"));        System.out.println(\"Please enter 10 scores.\");        System.out.println(\"You must hit enter after you enter each score.\");        Scanner sc = new Scanner(System.in);        int score = 0;        while (score <= 10) {            int val = sc.nextInt();            if (val < 0) break;            outputWriter.write(val);            score++;        }        outputWriter.flush();        outputWriter.close();    }    public static void processFile (String filename) throws IOException, FileNotFoundException {        double sum = 0;        double number;        double average;        double count = 0;        BufferedReader inputReader = new BufferedReader (new InputStreamReader(new FileInputStream(\"scores.txt\")));        String line;        while ((line = inputReader.readLine()) != null) {            number = Double.parseDouble(line);            sum += number;            count ++;        }        average = sum/count;        System.out.println(average);        inputReader.close();    }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

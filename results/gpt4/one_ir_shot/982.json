@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFyTxYb0diEm0CfCtfcD1cJSqka5",
+    "object": "chat.completion",
+    "created": 1691973833,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \nimport java.security.MessageDigest;\nimport java.security.NoSuchAlgorithmException;\n\npublic String encryptURL(String url) {\n    try {\n        MessageDigest md = MessageDigest.getInstance(\"MD5\");\n        md.update(url.getBytes());\n        byte[] digest = md.digest();\n        StringBuilder sb = new StringBuilder();\n        for (byte b : digest) {\n            sb.append(String.format(\"%02x\", b & 0xff));\n        }\n        return sb.toString();\n    } catch (NoSuchAlgorithmException e) {\n        throw new RuntimeException(e);\n    }\n}\n<<<explanation>>>: This code uses the MD5 algorithm to encrypt the URL. The getBytes() method is used to convert the URL string into bytes, which is then updated to the MessageDigest object. The digest() method of the MessageDigest class is then used to complete the hash computation. The resulting hash (digest) is then converted back into a string using a StringBuilder. The \"%02x\" format specifier is used to convert the byte to a two-digit lowercase hexadecimal number. If the MD5 algorithm is not available in the system, it will throw a NoSuchAlgorithmException, which is then caught and a RuntimeException is thrown."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 256,
+        "completion_tokens": 244,
+        "total_tokens": 500
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: java android URL encrypting: :I am working on an application that uploads a file to amazon s3(part of the application). But when I generate the URL of the files, it shows the authentication key, file name and etc. I need to encrypt the URL. Also I am using tiny url to shorten the URL but when I put the curser on the link it shows the real URL. I looked for md5 but I couldn't make it work. Is there any suggestion? \nPlease using this api: String.getBytes.\nAnswer:"
+}

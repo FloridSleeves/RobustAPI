@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCpIzQesZ2iOroczgmghs6hSvHiD",
+    "object": "chat.completion",
+    "created": 1691961732,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: FileChannel.write\n<<<code>>>: @Override\npublic void onMessage(WebSocket conn, ByteBuffer message) {\n    System.out.println(\"Binary Data\");\n    try {\n        FileChannel fileChannel = fos.getChannel();\n        while(message.hasRemaining()) {\n            fileChannel.write(message);\n        }\n    } catch (IOException e) {\n        e.printStackTrace();\n    }\n}\n<<<explanation>>>: The FileChannel.write method writes a sequence of bytes to this channel from the given buffer. Bytes are written starting at this channel's current file position unless the channel is in append mode, in which case the position is first advanced to the end of the file. The file is opened for writing and the size of the file increases as bytes are written."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 745,
+        "completion_tokens": 152,
+        "total_tokens": 897
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Why does the size of the file always zero when uploading through web socket client?: :I have a websocket client code and when I upload a file through it, the web socket server receives the file. But the size is always zero. I am using Java-Websocket server from tootallnate. Below is my client code.<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><title>Chat</title><script type=\"text/javascript\" src=\"/MyHomePage/jquery-2.0.3.min.js\">    </script></head><body>  <h2>File Upload</h2>   Select file   <input type=\"file\" id=\"filename\" />   <br><input type=\"button\" value=\"Connect\" onclick=\"connectChatServer()\" /><br><input type=\"button\" value=\"Upload\" onclick=\"sendFile()\" /><script>    var ws;    function connectChatServer() {        ws = new WebSocket(                \"ws://localhost:8887/\");        ws.binaryType = \"arraybuffer\";        ws.onopen = function() {            alert(\"Connected.\")        };        ws.onmessage = function(evt) {            alert(evt.msg);        };        ws.onclose = function() {            alert(\"Connection is closed...\");        };        ws.onerror = function(e) {            alert(e.msg);        }    }    function sendFile() {        var file = document.getElementById('filename').files[0];        ws.send('filename:'+file.name);        var reader = new FileReader();        var rawData = new ArrayBuffer();                    //alert(file.name);        reader.loadend = function() {        }        reader.onload = function(e) {            rawData = e.target.result;            ws.send(rawData);            alert(\"the File has been transferred.\")            ws.send('end');        }        reader.readAsArrayBuffer(file);    }</script>Below is my web socket server code. @Overridepublic void onMessage(WebSocket conn, String message) {    System.out.println(\"received message from \" + conn.getRemoteSocketAddress() + \": \" + message);    if (!message.equals(\"end\")) {        fileName = message.substring(message.indexOf(':') + 1);        uploadedFile = new File(filePath + fileName);        try {            fos = new FileOutputStream(uploadedFile);        } catch (FileNotFoundException e) {            e.printStackTrace();        }    } else {        try {            fos.flush();            fos.close();        } catch (IOException e) {            e.printStackTrace();        }    }}@Overridepublic void onMessage(WebSocket conn, ByteBuffer message) {    System.out.println(\"Binary Data\");    while (message.hasRemaining()) {        try {            fos.write(message.get());        } catch (IOException e) {            e.printStackTrace();        }    }}Please advice.\nPlease using this api: FileChannel.write.\nAnswer:"
+}

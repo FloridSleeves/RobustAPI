@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m6hpCE9nEt4r3KLQyLpWGgy2Z6u7",
+    "object": "chat.completion",
+    "created": 1691699877,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n\n<<<code>>>: \n```java\nclass listFilesForFolder{\n    static String fs1= System.getProperty(\"user.dir\" )+\"/lista plik\u00f3w\";\n    static File fs2= new File(fs1);\n    public static void listFilesForFolder(File folder) throws FileNotFoundException  {\n        for ( File fileEntry : folder.listFiles()) {\n            if (fileEntry.isDirectory()) {\n                listFilesForFolder(fileEntry);\n            }\n            System.out.println(fileEntry.getName());\n            zapis(fileEntry.getName());\n        }\n    }\n    static void zapis(String plik)throws FileNotFoundException {\n        FileWriter fw = new FileWriter(fs2, true);\n        PrintWriter zapis = new PrintWriter(fw);\n        zapis.write(plik+ \"\\r\\n\");\n        zapis.close();\n    }\n}\n```\n\n<<<explanation>>>: The problem with your code is that every time you call the `zapis` method, it creates a new `PrintWriter` object which overwrites the existing file content. To append to the file instead of overwriting it, you should create a `FileWriter` object with the second argument as `true`, which means append mode. Then, pass this `FileWriter` object to the `PrintWriter` constructor. Also, you should use `write` method instead of `println` to write to the file. This will solve your problem and all file names will be written to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 246,
+        "completion_tokens": 293,
+        "total_tokens": 539
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java next line print.writer: :I have a little problem with saving files list to file:class listFilesForFolder{    static String fs1= System.getProperty(\"user.dir\" )+\"/lista plik\u00f3w\";    static File fs2= new File(fs1);    public static void listFilesForFolder(File folder) throws FileNotFoundException  {        for ( File fileEntry : folder.listFiles()) {               if (fileEntry.isDirectory()) {                listFilesForFolder(fileEntry);            }            System.out.println(fileEntry.getName());            zapis(fileEntry.getName());         }    }    static void zapis(String plik)throws FileNotFoundException {        PrintWriter zapis = new PrintWriter(fs2);        zapis.println(plik+ \"\\r\\n\");        zapis.close();    }}This code print all files list on the screen but my file \"lista plik\u00f3w\" have only one name of file (should have more). What I should do?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

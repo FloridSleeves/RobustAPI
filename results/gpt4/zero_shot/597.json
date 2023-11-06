@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m5u7EZofXiZB3XU1tDX6lCPaqVzR",
+    "object": "chat.completion",
+    "created": 1691696795,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: List.get\n<<<code>>>: \n```java\nimport java.util.*;\n\nclass Record {\n    private Map<String, Object> attrs;\n\n    public Record(String key, Map<String, Object> attrs) {\n        this.attrs = attrs;\n        for (Map.Entry<String, Object> entry : attrs.entrySet()) {\n            Object value = entry.getValue();\n            if (!(value instanceof String || value instanceof List)) {\n                throw new IllegalArgumentException(\"Map values must be either String or List<String>\");\n            }\n            if (value instanceof List) {\n                List<?> list = (List<?>) value;\n                if (!list.isEmpty() && !(list.get(0) instanceof String)) {\n                    throw new IllegalArgumentException(\"List values must be of type String\");\n                }\n            }\n        }\n    }\n}\n```\n<<<explanation>>>: In the given code, we are creating a class `Record` which accepts a `Map` of `String` and `Object` as an argument in its constructor. Inside the constructor, we are iterating over the `Map` and checking the type of each value. If the value is not an instance of `String` or `List`, we throw an `IllegalArgumentException`. If the value is an instance of `List`, we further check if the first element of the list is a `String` or not. If it's not, we again throw an `IllegalArgumentException`. This way, we ensure that the `Map` only contains `String` or `List<String>` as values. The `List.get` API is used to retrieve the first element from the list for type checking."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 353,
+        "completion_tokens": 325,
+        "total_tokens": 678
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: In java, how can I work with objects which can be either String or List<String>?: :This question already has answers here:                                                            Closed 11 years ago.Possible Duplicate:Maps with multiple types of values in java I have an odd question. Maybe I'm going about this the wrong way, but let's see where this question goes :)I would like a Map container that contains either Strings or lists of Strings. I want to enforce this rule during construction of this object so that you can't create a map with values that aren't either of those.e.g.class Record {  public Record(String key, Map<String,Object> attrs) {    // check that attrs only contains Objects which are Strings or List<Strings>  }}Other ways I have thought of to solve the problem might be...1)class Record {  public Record(String key, Map<String,String> attrs, Map<String,List<String>> multiAttrs) {    // ...  }}2)class Record {  public Record(String key, Map<String,Value> attrs) {    // ...  }}class Value {  // Create some funky class that encapsulates lists.  // Perhaps returning the only element in the list if the size is 1,  // but returning the list otherwise}I am not immediately excited at the alternatives, but I'm just putting it there as stuff I've already considered. Really I want the distinction between Strings and List to be transparent to the user of the class.\nPlease using this api: List.get.\nAnswer:"
+}

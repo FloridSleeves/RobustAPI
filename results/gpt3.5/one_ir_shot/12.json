@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCJ6DMOTRDT3eLFMCAVkH3e2aEui",
+    "object": "chat.completion",
+    "created": 1691959736,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Activity.findViewById\n<<<code>>>: public class MainActivity extends AppCompatActivity {\n    public void changeTest() {\n        TextView test = (TextView) findViewById(R.id.textViewTest);\n        test.setText(\"test\");\n    }\n}\n\npublic class MyClass {\n    public void myFunction(Activity activity) {\n        activity.changeTest();\n    }\n}\n\npublic class MainActivity extends AppCompatActivity {\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_gameplay);\n        MyClass myClass = new MyClass();\n        myClass.myFunction(this);\n    }\n}\n<<<explanation>>>: The issue is that you are creating a new instance of MainActivity in MyClass, which is not the same instance as the one created in onCreate(). To fix this, you can pass the instance of MainActivity to myFunction() as a parameter and use that instance to call changeTest(). This ensures that you are using the correct instance of MainActivity and can access the TextView."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 413,
+        "completion_tokens": 193,
+        "total_tokens": 606
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Function to change TextView doesn't work when called from another class: :I've written a function to change the text of a TextView. It's in the class of the activity which contains the TextView. However, this function doesn't work when it's called from another class.The function looks like this:public class MainActivity extends AppCompatActivity {    public void changeTest() {        TextView test = (TextView) findViewById(R.id.textViewTest);        guessedLetters.setText(\"test\");    }}If I call this function from my MainActivity, it works perfectly fine:public class MainActivity extends AppCompatActivity {    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_gameplay);        changeTest();    }}But if I call it from a class that extends MainActivity, I get a java.lang.NullPointerException at android.app.Activity.findViewById(Activity.java:1884).public class MainActivity extends AppCompatActivity {    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_gameplay);        MyClass myClass = new MyClass();        myClass.myFunction();    }}public class MyClass extends MainActivity {    public void myFunction() {        MainActivity mainActivity = new MainActivity();        mainActivity.changeTest();    }}How could I fix this?\nPlease using this api: Activity.findViewById.\nAnswer:"
+}

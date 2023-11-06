@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCP2kib6tVctmvawFoQvvQMzd61l",
+    "object": "chat.completion",
+    "created": 1691960104,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: FileOutputStream fos = new FileOutputStream(\"file.txt\");\nDataOutputStream dos = new DataOutputStream(fos);\n\n// Writing byte arrays to file\nbyte[] array1 = {1, 2, 3};\nbyte[] array2 = {4, 5, 6};\n\ndos.writeInt(array1.length);\ndos.write(array1);\ndos.writeInt(array2.length);\ndos.write(array2);\n\ndos.close();\n\n// Reading byte arrays from file\nFileInputStream fis = new FileInputStream(\"file.txt\");\nDataInputStream dis = new DataInputStream(fis);\n\nwhile (dis.available() > 0) {\n    int length = dis.readInt();\n    byte[] array = new byte[length];\n    dis.readFully(array);\n    \n    // Process the array\n    System.out.println(Arrays.toString(array));\n}\n\ndis.close();\n<<<explanation>>>: To write multiple byte arrays to a file, you can use the DataOutputStream class. First, create a FileOutputStream to write to the file. Then, create a DataOutputStream using the FileOutputStream. Use the writeInt() method to write the length of each byte array, followed by the write() method to write the byte array itself. To read the byte arrays from the file, create a FileInputStream and a DataInputStream. Use the available() method of the DataInputStream to check if there are more byte arrays to read. Use the readInt() method to read the length of each byte array, followed by the readFully() method to read the byte array itself. Process the byte array as needed."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 375,
+        "completion_tokens": 313,
+        "total_tokens": 688
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Write and read multiple byte[] in file with Java: :I have to write byte arrays in a file. I can't do it in one time so I can't put my arrays in a container. Also the size of my arrays is variable.Secondly, the file is very huge, so I have to split it, in order to read it array by array.How can I do that ? I tried to write line by line my byte arrays  but I haven't been able. How can I put a separator between my arrays and after split it over this separator ?EDIT : I tried this :ByteArrayOutputStream bos = new ByteArrayOutputStream();ObjectOutput out = new ObjectOutputStream(bos);out.writeObject(byteArray);But, I execute this code several times, so the ObjectOutputStream adds each time a new header which corrupt the file.I also try : out.write(byteArray);but I couldn't separate my arrays. So I tried to append a '\\n', which didn't work. After I was looking for library like FileUtils in order to write byte[] line by line but I didn't find.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

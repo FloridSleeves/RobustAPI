@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxOZVvwT9sTIkR6NAiMBCJy7cnoF",
+    "object": "chat.completion",
+    "created": 1691664087,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes()\n<<<code>>>: byte[] plainTextBytes = message.getBytes(\"utf-8\");\n<<<explanation>>>: The String.getBytes() method is used to convert a string into a byte array. In this code, it is used to convert the message (plain text) into a byte array using the UTF-8 encoding."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 470,
+        "completion_tokens": 71,
+        "total_tokens": 541
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java equivalent for PHP Triple DES ECB encryption/decryption: :I have a below PHP function that I want to implement in Java with no luck, I'm not able to obtain the same output:function encryptText( $plainText, $key ){    $mcopen = mcrypt_module_open (MCRYPT_TripleDES, \"\", MCRYPT_MODE_ECB,\"\");    $iv = mcrypt_create_iv (mcrypt_enc_get_iv_size ($mcopen), MCRYPT_RAND);    $td = mcrypt_module_open('tripledes', '', 'ecb', '');    $cryptedHash = '';    if (mcrypt_generic_init($td, $key, $iv) != -1)    {        $cryptedHash = mcrypt_generic($td, $plainText);        mcrypt_generic_deinit($td);        mcrypt_module_close($td);    }    return base64_encode($cryptedHash); }This is my java code found here :public static String encrypt(String message, String key) throws Exception {    final MessageDigest md = MessageDigest.getInstance(\"md5\");    final byte[] digestOfPassword = md.digest(key.getBytes(\"utf-8\"));    final byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);    for (int j = 0, k = 16; j < 8;) {        keyBytes[k++] = keyBytes[j++];    }    final SecretKey keyz = new SecretKeySpec(keyBytes, \"DESede\");    final IvParameterSpec iv = new IvParameterSpec(new byte[8]);    final Cipher cipher = Cipher.getInstance(\"DESede/CBC/PKCS5Padding\");    cipher.init(Cipher.ENCRYPT_MODE, keyz, iv);    final byte[] plainTextBytes = message.getBytes(\"utf-8\");    final byte[] cipherText = cipher.doFinal(plainTextBytes);    final String encodedCipherText = new   sun.misc.BASE64Encoder().encode(cipherText);    return encodedCipherText;}\nPlease using this api: String.getBytes.\nAnswer:"
+}

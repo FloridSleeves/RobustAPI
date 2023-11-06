@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nGjJmjtbZ2FcMEtKXRg8nX8kHeIc",
+    "object": "chat.completion",
+    "created": 1691976737,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \nString html = \"<html><body><style>body{background:#FFC}p{background:red}body, p{font-weight:bold}</style><p>...</p></body></html>\";\nStringTokenizer st = new StringTokenizer(html, \"<>\");\nwhile (st.hasMoreTokens()) {\n    String token = st.nextToken();\n    if (token.startsWith(\"style\")) {\n        String styles = token.substring(token.indexOf(\"{\") + 1, token.indexOf(\"}\"));\n        StringTokenizer st2 = new StringTokenizer(styles, \":;\");\n        while (st2.hasMoreTokens()) {\n            String key = st2.nextToken().trim();\n            String value = st2.nextToken().trim();\n            html = html.replace(\"<\" + key, \"<\" + key + \" style=\\\"\" + value + \"\\\"\");\n        }\n    }\n}\n<<<explanation>>>: The StringTokenizer class is used to break a string into tokens. In this case, we are breaking the HTML string into tokens using \"<>\" as delimiters. Then, we check if the token starts with \"style\". If it does, we extract the styles and break them into key-value pairs using \":;\" as delimiters. Then, we replace the original tags with the tags that include the inline styles. Please note that this is a very basic example and might not work for all cases. For a more robust solution, consider using an HTML parser library."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 322,
+        "completion_tokens": 289,
+        "total_tokens": 611
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Automatically convert Style Sheets to inline style: :Don't have to worry about linked style or hover style.I want to automatically convert files like this<html><body><style>body{background:#FFC}p{background:red}body, p{font-weight:bold}</style><p>...</p></body></html>to files like this<html><body style=\"background:red;font-weight:bold\"><p style=\"background:#FFC;font-weight:bold\">...</p></body></html>I would be even more interested if there was an HTML parser that would do this.The reason I want to do this is so I can display emails that use global style sheets without their style sheets messing up the rest of my web page. I also would like to send the resulting style to web based rich text editor for reply and original message.\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

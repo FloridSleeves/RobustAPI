@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxdekuDAooNYapJooBRhjqkMVykI",
+    "object": "chat.completion",
+    "created": 1691665022,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \nprivate String getPartialIssueList() {\n    String listFromProperties = getPropertyValue(\"propagateList\");\n    StringTokenizer token = new StringTokenizer(listFromProperties, \",\");\n    StringBuilder partialListString = new StringBuilder();\n    partialListString.append(\" AND (key=\");\n    while (token.hasMoreElements()) {\n        partialListString.append(token.nextToken());\n        if (token.hasMoreElements()) {\n            partialListString.append(\" OR key=\");\n        }\n    }\n    partialListString.append(\")\");\n    return partialListString.toString();\n}\n\n<<<explanation>>>: \nIn your code, you are using `token.nextElement()` twice in each iteration of the while loop, which causes the issue of skipping values. To fix this, you can use `token.nextToken()` instead, which will return the next token and move the pointer forward. \n\nAdditionally, you need to add the opening bracket \"(\" before appending the first key value and the closing bracket \")\" after the while loop to enclose all the key values.\n\nThe modified code above should give you the desired output by adding \"OR key=\" between each key value and enclosing them in brackets."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 483,
+        "completion_tokens": 234,
+        "total_tokens": 717
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Conditionally Adding String in StringTokenizer: :I am currently stuck with a very simple yet confusing issue while using StringTokenizer. What I am trying to achieve is below:I have a URL String as:http://xxx:port/jira/rest/api/2/search?jql=project='TP' AND(status='Ready for INT Deployment' or status = 'Ready for UAT Deployment')Above is the base string. Now I want to dynamically add more query parameters to the above URL as below: \"AND (key=NN-1234 OR key=NN-4321 OR key=NN-65343.....)\"Here is my code:private String getPartialIssueList() {    String listFromProperties = getPropertyValue(\"propagateList\");    StringTokenizer token = new StringTokenizer(listFromProperties, \",\");    StringBuilder partialListString = new StringBuilder();    partialListString.append(\" AND key=\");    while (token.hasMoreElements()) {        partialListString.append(token.nextElement() + \" OR key=\" + token.nextElement());    }    return partialListString.toString();}Somehow this only works if I have 2 inputs. What I want is, after the base url an \"AND\" should be added followed by opening brackets \"(\" and then key=\"value from properties\", value 2 from properties, value 3 from properties, then closing brace \")\". Irrespective of how many JIRA ID's I have in properties file, it should keep on adding \"OR key=NN-5432 OR key=\"NN-9875\" and so on..This is the output I am looking for:http://xxx:port/jira/rest/api/2/search?jql=project='TP' AND (status='Ready for INT Deployment' or status = 'Ready for UAT Deployment') AND (key=NN-09876 OR key=NN-09873 OR key=NN-09376 OR key=NN-02876)Currently values for propagateList in the properties file ispropagateList=\"NN-09876\",\"NN-65432\",\"NN-65430\"Can someone please help out on this?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

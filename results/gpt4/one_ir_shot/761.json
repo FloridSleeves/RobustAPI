@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nF8ja7UbukhQ3TiDpeNdk9d2zbci",
+    "object": "chat.completion",
+    "created": 1691970625,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \nFileItemFactory factory = new DiskFileItemFactory();\nServletFileUpload upload = new ServletFileUpload(factory);\nList<FileItem> items = upload.parseRequest(request);\nfor (FileItem item : items) {\n    if (!item.isFormField()) {\n        String fileName = item.getName();\n        String ext = fileName.substring(fileName.lastIndexOf('.') + 1);\n        File file = new File(uploadPath, fileName);\n        try (PrintWriter writer = new PrintWriter(file)) {\n            InputStream input = item.getInputStream();\n            int c;\n            while ((c = input.read()) != -1) {\n                writer.write(c);\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n<<<explanation>>>: This code uses the Apache Commons FileUpload library to handle file uploads. It first creates a FileItemFactory and a ServletFileUpload. It then parses the request to get a list of FileItems. For each FileItem, if it is not a form field (i.e., it is a file), it gets the file name and extension, creates a new File object with the upload path and file name, and writes the contents of the file to the new file using a PrintWriter. The input stream from the FileItem is read and each byte is written to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 256,
+        "completion_tokens": 273,
+        "total_tokens": 529
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: how to upload a file using commons file upload streaming api: :I am following the example provided in the commons file upload site about streaming API. I am stuck trying to figure out how to get the file extension of the uploaded file, how to write the file to a directory and the worst part is where the person who wrote the example comments // Process the input stream... It leaves me wondering if it's something so trivial that I'm the only one  who doesn't know how to. \nPlease using this api: PrintWriter.write.\nAnswer:"
+}

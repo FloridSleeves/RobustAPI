@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEJrg2lYJcYxWCfXZ7p7HgltHz2w",
+    "object": "chat.completion",
+    "created": 1691729143,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\nPrintWriter out = new PrintWriter(file);\nfor(int i = 0; i<dvorana.length; i++) {\n    for (int j = 0; j<dvorana[i].length; j++) {\n        dvorana [i][j] = r.nextInt(3);\n        System.out.print(dvorana[i][j]);\n        out.write(Integer.toString(dvorana[i][j]));\n    }\n    out.write(\"\\n\");\n}\nout.close();\n```\n<<<explanation>>>: The PrintWriter should be initialized outside the loop, otherwise it will overwrite the file in each iteration. The write method of PrintWriter is used to write the integer values of the array to the file. After writing all the elements of a row, a newline character is written to the file to start a new line for the next row. The PrintWriter is closed after all the elements of the array have been written to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 572,
+        "completion_tokens": 199,
+        "total_tokens": 771
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: I am trying to print a 2D array to a file: :I want to print 2D array to txt file on my desktop. It is important, that the output is formatted in way, that is in code, because it represents rows and seats.Code:package vaja15;import java.util.*;import java.io.PrintWriter;import java.io.File;import java.io.FileNotFoundException;public class Vaja15 {    public static void main(String[] args) throws FileNotFoundException     {        System.out.println(\"Vnesi velikost dvorane (vrste/sedezi):  \");        Scanner sc = new Scanner(System.in);        Random r  = new Random();        int vrst = sc.nextInt();        int sedezev = sc.nextInt();         int [][] dvorana  = new int [vrst][sedezev];        File  file = new File (\"C:/users/mr/desktop/dvorana.txt\");        for(int i = 0; i<dvorana.length; i++)        {            System.out.println();            for (int j = 0; j<dvorana.length; j++)            {                dvorana [i][j] = r.nextInt(3);                  System.out.print(dvorana[i][j]);                PrintWriter out = new PrintWriter(file);                out.println(dvorana[i][j]);                out.close();            }           }     } }\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

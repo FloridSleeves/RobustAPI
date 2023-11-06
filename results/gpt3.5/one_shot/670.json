@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzYiC6A1LB6637TcYorYdsXngOfw",
+    "object": "chat.completion",
+    "created": 1691672404,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.writeDouble\n<<<code>>>: try { \n    FileOutputStream fos = new FileOutputStream(strFilePath);\n    DataOutputStream dos = new DataOutputStream(fos);\n    dos.writeDouble(12);\n    dos.close();\n} catch (IOException e) {\n    System.out.println(\"IOException : \" + e);\n}\n<<<explanation>>>: The issue is that you are using a DataOutputStream to write a double value, which is a binary value, to the file. When you open the file in a text editor, you see the ASCII representation of the binary value. If you want to write the value as text, you can use a PrintWriter instead. To achieve the same functionality as MATLAB's fwrite function, you can use the DataOutputStream class in Java."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 481,
+        "completion_tokens": 155,
+        "total_tokens": 636
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Not working I/O method: :I'm pretty new to JAVA, so I do not really see what I am doing wrong within the following method:public void writeWNDFile(){        String strFilePath = \"C:/Users/fperrone/Desktop/ddd.txt\";        try        {          //create FileOutputStream object          FileOutputStream fos = new FileOutputStream(strFilePath);           DataOutputStream dos = new DataOutputStream(fos);           dos.writeDouble(12);                       dos.close();        }        catch (IOException e)        {          System.out.println(\"IOException : \" + e);        }    }The file is actually generated, but I don't get 12 as printed and expected result, but @(, which probably is the ASCII representation.May you shed some light?EDITDoes eventually exist a JAVA function behaving similarly to the MATLAB fwrite function? I actually wanna write a binary file. In MATLAB I am simply calling:fwrite(filename, A, precision)How could I achieve the same in JAVA?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

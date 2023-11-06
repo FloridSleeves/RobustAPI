@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDq8De0GMgMeSXdgX4GVzYegKZgK",
+    "object": "chat.completion",
+    "created": 1691965628,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: public static ArrayList dataRead() throws FileNotFoundException {\n    Scanner s = new Scanner(new File(\"c:\\\\stats.txt\")).useDelimiter(\"\\r\");\n    ArrayList<String> array = new ArrayList<String>();\n    while (s.hasNextLine()) {\n        String currentLine = s.nextLine();\n        StringTokenizer st = new StringTokenizer(currentLine, \"\\t\");\n        while (st.hasMoreTokens()) {\n            System.out.print(st.nextToken() + \" \");\n        }\n        System.out.println();\n    }\n    s.close();\n    return array;\n}\n<<<explanation>>>: In your code, you are calling s.next() twice in each iteration of the while loop, which causes the NoSuchElementException. To fix this, you can use s.hasNextLine() to check if there is another line in the file, and then use s.nextLine() to read the entire line. Then, you can use StringTokenizer to split the line into tokens using the tab delimiter. The while loop will continue until there are no more tokens in the line."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 407,
+        "completion_tokens": 208,
+        "total_tokens": 615
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to end a file scanner while loop with undetermined length correctly in java: :I wrote a function that scans a tab delimited file of baseball stats.public static ArrayList dataRead() throws FileNotFoundException {    //ArrayList array = new ArrayList<ArrayList>();    Scanner s = new Scanner(new File(\"c:\\\\stats.txt\")).useDelimiter(\"\\r\");    ArrayList<String> array = new ArrayList<String>();    int i = 0;    while(s.next() != null) {        String currentLine = s.next();        Scanner split = new Scanner(currentLine).useDelimiter(\"\\t\");        for(int j = 0; j < 16; j++) {            System.out.print(split.next() + \" \");            j++;        }        System.out.println(\"\\r\");    }    s.close();    return array;}This function works until the end of the file. To my knowledge the while loop should close at the end of the file because it returns null, but I keep getting a noSuchElement error instead. If I could guarantee the file size, I would just use a for loop with the size, but I can't because team size could technically vary. How would I properly end the file scanner while loop so I can close the scanner?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

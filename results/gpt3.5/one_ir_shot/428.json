@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCtyyfJmtJOFVun5elMAXZsKYwc6",
+    "object": "chat.completion",
+    "created": 1691962022,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: CSVReader reader = mock(CSVReader.class);\nList<String> lines = new LinkedList<>();\nlines.add(\"a,b,c\");\nlines.add(\"a,b,c\");\nlines.add(null);\n\nwhen(reader.readNext()).thenAnswer(new Answer<String[]>() {\n    private Iterator<String> iterator = lines.iterator();\n\n    @Override\n    public String[] answer(InvocationOnMock invocation) throws Throwable {\n        if (iterator.hasNext()) {\n            String line = iterator.next();\n            if (line != null) {\n                return line.split(\",\");\n            }\n        }\n        return null;\n    }\n});\n\n<<<explanation>>>: In this code, we are using the Iterator.next() method to iterate through the list of lines. We create a mock CSVReader object and define the behavior of the readNext() method using the thenAnswer() method. Inside the answer() method, we check if the iterator has a next element. If it does, we split the line by comma and return the array. If the iterator does not have a next element or the line is null, we return null. This allows us to pass a list of return values without knowing in advance how the list will look."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 646,
+        "completion_tokens": 245,
+        "total_tokens": 891
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Mock CSVReader with mockito and multible return values: :I wan't to mock the CSVReader. So my mock should return a new array each time, this should be generic.the last value should be null.exnextLine() -> [\"a\",\"b\",\"c\"]nextLine() -> [\"a\",\"b\",\"c\"]nextLine() -> nullMy MockClass:import au.com.bytecode.opencsv.CSVReader;import com.sun.javafx.beans.annotations.NonNull;import org.mockito.Mockito;import org.mockito.stubbing.OngoingStubbing;import java.io.IOException;import java.util.ArrayList;import java.util.LinkedList;import java.util.List;import static org.mockito.Mockito.mock;import static org.mockito.Mockito.when;public class CSVReaderMock {    CSVReader reader;    private boolean linesCorrectInitialized;    public CSVReaderMock()    {        reader = mock(CSVReader.class);    }    public CSVReaderMock returnLines(@NonNull List<String> lines) {        // the last value has to be null        lines.add(null);        try {            for (String line : lines) {                String[] lineArr = null;                if (line != null) {                    lineArr = line.split(\",\");                }                when(reader.readNext()).thenReturn(lineArr);            }            linesCorrectInitialized = true;        } catch (IOException e) {            e.printStackTrace();        };        return this;    }    public CSVReader create() {        if (!linesCorrectInitialized) { throw new RuntimeException(\"lines are not initialized correct\"); }        return reader;    }}and here a testcase (i only writed to check my mock builder):@Testpublic void testImportLines() throws Exception {    CSVReader reader;    List<String> list = new LinkedList<>();    list.add(\"some,lines,for,testing\");    reader = new CSVReaderMock().returnLines(list).create();    System.out.println(reader.readNext()); // should return [Ljava.lang.String;@xxxx with conent-> [\"some\",\"lines\",\"for\",\"testing\"]    System.out.println(reader.readNext()); // should return null}the actual output is :nullnullSo my question is, how can i pass a list of return values without knowing in advance how the list will look? I know i could pass the \"csv lines\" via .thenReturn(line1,line2,line3) but this will break my approach.\nPlease using this api: Iterator.next.\nAnswer:"
+}

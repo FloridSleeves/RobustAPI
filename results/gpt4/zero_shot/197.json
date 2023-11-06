@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2cpGeVNqTodfktgn3yAJqrN1Vht",
+    "object": "chat.completion",
+    "created": 1691684191,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\nimport com.jcraft.jsch.*;\n\npublic class SSHConnectionExample {\n    public static void main(String[] arg) {\n        try {\n            JSch jsch = new JSch();\n            Session session = jsch.getSession(\"username\", \"hostname\", 22);\n            session.setPassword(\"password\");\n\n            // Avoid asking for key confirmation\n            java.util.Properties config = new java.util.Properties();\n            config.put(\"StrictHostKeyChecking\", \"no\");\n            session.setConfig(config);\n\n            session.connect();\n\n            // Execute command\n            ChannelExec channel = (ChannelExec) session.openChannel(\"exec\");\n            channel.setCommand(\"ls\");\n            channel.setInputStream(null);\n            channel.setErrStream(System.err);\n\n            InputStream in = channel.getInputStream();\n            channel.connect();\n\n            byte[] tmp = new byte[1024];\n            while (true) {\n                while (in.available() > 0) {\n                    int i = in.read(tmp, 0, 1024);\n                    if (i < 0) break;\n                    System.out.print(new String(tmp, 0, i));\n                }\n                if (channel.isClosed()) {\n                    System.out.println(\"Exit status: \" + channel.getExitStatus());\n                    break;\n                }\n                Thread.sleep(1000);\n            }\n            channel.disconnect();\n            session.disconnect();\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n\n<<<explanation>>>: This code uses the JSch library, a pure Java implementation of SSH2, to establish an SSH connection. The `InputStream.read` method is used to read the output of the executed command from the SSH server. The `read` method reads up to `tmp.length` bytes of data from the input stream into an array of bytes. An attempt is made to read as many as `tmp.length` bytes, but a smaller number may be read. The number of bytes actually read is returned as an integer. This method blocks until input data is available, the end of the stream is detected, or an exception is thrown."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 153,
+        "completion_tokens": 429,
+        "total_tokens": 582
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: SSH library for Java: :Closed. This question does not meet Stack Overflow guidelines. It is not currently accepting answers.                                                             Questions asking us to recommend or find a tool, library or favorite off-site resource are off-topic for Stack Overflow as they tend to attract opinionated answers and spam. Instead, describe the problem and what has been done so far to solve it.Closed 9 years ago.                        Improve this question                    Does anyone have an example of an SSH library connection using Java.\nPlease using this api: InputStream.read.\nAnswer:"
+}

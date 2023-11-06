@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDTSW4rXRmYfbR71TXYLurlWlygP",
+    "object": "chat.completion",
+    "created": 1691964222,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: public class JumpIterator implements Iterator<Integer> {\n    private Iterator<Integer> it;\n    private Integer nextElement;\n\n    public JumpIterator(Iterator<Integer> iterator){\n        this.it = iterator;\n        if(it.hasNext()){\n            nextElement = it.next();\n        }\n    }\n\n    @Override\n    public boolean hasNext() {\n        return nextElement != null;\n    }\n\n    @Override\n    public Integer next() {\n        Integer result = nextElement;\n        if(it.hasNext()){\n            it.next();\n            if(it.hasNext()){\n                nextElement = it.next();\n            } else {\n                nextElement = null;\n            }\n        } else {\n            nextElement = null;\n        }\n        return result;\n    }\n}\n<<<explanation>>>: In this code, we are creating a JumpIterator class that implements the Iterator interface. The constructor takes another iterator as an argument. The next() method is overridden to return every other element from the original iterator. The hasNext() method is also overridden to correctly indicate whether there are more elements to iterate over. The nextElement variable is used to store the next element to be returned, and is updated every time next() is called."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 377,
+        "completion_tokens": 244,
+        "total_tokens": 621
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to implement a jump iterator: :Implement next() and hasNext() of a jump iterator, the constructor was passed with another iterator. The next() function will return iterator.next().next()I have implemented below code, it doesn't look elegant at all.And for list {1, 9, 8, 7, 8, 2, 5}, it will only output 9, 7, 2.Any clue to do it in a better way?Basically this jump iterator is trying to iterator each element with one distance, for example, for 1,2,3,4,5, it will return 1,3,5public class JumpIterator implements Iterator<Integer> {    private Iterator<Integer> it;    public JumpIterator(List<Integer> list){        it = list.iterator();    }    @Override    public boolean hasNext() {        if(!it.hasNext()){            return false;        }else{            it.next();            return it.hasNext();        }    }    @Override    public Integer next() {        return it.next();    }}\nPlease using this api: Iterator.next.\nAnswer:"
+}

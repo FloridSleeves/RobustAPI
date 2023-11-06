@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxriyRJo4krhE6SVmpbg5gzjzDDd",
+    "object": "chat.completion",
+    "created": 1691665894,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```\nArrayList<String> train_schedule_time = new ArrayList<>();\ntrain_schedule_time.add(\"8.2\");\ntrain_schedule_time.add(\"13.55\");\ntrain_schedule_time.add(\"0.45\");\n\nHashMap<String, ArrayList<String>> timeMap = new HashMap<>();\n\nfor (String time : train_schedule_time) {\n    StringTokenizer tokenizer = new StringTokenizer(time, \".\");\n    String hour = tokenizer.nextToken();\n    String minute = tokenizer.nextToken();\n\n    if (timeMap.containsKey(hour)) {\n        timeMap.get(hour).add(minute);\n    } else {\n        ArrayList<String> minutes = new ArrayList<>();\n        minutes.add(minute);\n        timeMap.put(hour, minutes);\n    }\n}\n\nfor (String hour : timeMap.keySet()) {\n    System.out.println(\"Hour: \" + hour);\n    System.out.println(\"Minutes: \" + timeMap.get(hour));\n}\n```\n<<<explanation>>>: \n- First, we create an ArrayList `train_schedule_time` to store the train times.\n- We add the train times to the ArrayList.\n- Then, we create a HashMap `timeMap` to store the hour as the key and an ArrayList of minutes as the value.\n- We iterate through each train time in the `train_schedule_time` ArrayList.\n- For each train time, we create a StringTokenizer to split the time into hour and minute.\n- We check if the hour already exists as a key in the `timeMap`. If it does, we add the minute to the corresponding ArrayList of minutes. If it doesn't, we create a new ArrayList and add the minute to it, then put it in the `timeMap` with the hour as the key.\n- Finally, we iterate through the `timeMap` and print the hour and corresponding minutes.\n\nNote: This code snippet assumes that the train times are in the format \"hour.minute\" and that the hour and minute values are integers. If the train times are in a different format or the hour and minute values are not integers, you may need to modify the code accordingly."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 183,
+        "completion_tokens": 419,
+        "total_tokens": 602
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to group hour with corresponding minutes in android?: :I am doing some train application. In the application I am maintaining train time. From my database I can able to fetch times as String array list like this    train_schedule_time------>[8.2, 13.55, 0.45]Now I want to segregate my array by hour with corresponding minutes like this ...I am using StringTokenizer and split into hour array and minute array. But i can't able to group my hour with multiple minutes and I have to show in list view. How can i do this? Can anybody help me? Thank in advance\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m9kMeapls2x8F4QYSCFcFGUob8Lr",
+    "object": "chat.completion",
+    "created": 1691711566,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\nList<String[]> rows = new ArrayList<String[]>();\ntry {\n    BufferedReader bfr = new BufferedReader(new FileReader(\"matrix.txt\"));\n    String line;\n    while ((line = bfr.readLine()) != null) {\n        StringTokenizer st = new StringTokenizer(line, \" \");\n        String[] row = new String[st.countTokens()];\n        int i = 0;\n        while (st.hasMoreTokens()) {\n            row[i++] = st.nextToken();\n        }\n        rows.add(row);\n    }\n    bfr.close();\n} catch (IOException e) {\n    e.printStackTrace();\n}\n\n// Print the matrix\nfor (String[] row : rows) {\n    System.out.println(Arrays.toString(row));\n}\n\n// Implement the replacement algorithm\nint n = rows.size();\nfor (int i = 0; i < n; i++) {\n    String[] row = rows.get(i);\n    for (int j = 0; j < row.length; j++) {\n        row[j] = rows.get(n - 1 - i)[j];\n    }\n}\n\n// Print the matrix after replacement\nfor (String[] row : rows) {\n    System.out.println(Arrays.toString(row));\n}\n```\n<<<explanation>>>: The given code first reads the matrix from the text file using BufferedReader and StringTokenizer. StringTokenizer is used to split each line into individual elements based on the space delimiter. These elements are then stored in an array, which is added to the list of rows.\n\nAfter reading the matrix, the code implements the replacement algorithm. It iterates over each row and replaces each element with the corresponding element from the row at the position 'n - 1 - i', where 'n' is the total number of rows and 'i' is the current row number.\n\nFinally, the code prints the matrix after the replacement."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 249,
+        "completion_tokens": 376,
+        "total_tokens": 625
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java: :I have a problem with matrix. I have a matrix in txt file. This matrix looks:231 324 123345 565 234657 234 654I want to replacement elements to form:654 234 657234 565 345231 324 123I have a algorithm with replacement elements: 3-1-i, where i is number of choosen element from array. I have a problem how I read file and save elements to array and how implement this loop. This is my try with reading txt file and saving elements to array:    List<String[]> rows = new ArrayList<String[]>();    while ((line = bfr.readLine()) != null) {        String[] row = line.split(\" \");         rows.add(row);       }    System.out.println(rows.toString());  But I get [Ljava.lang.String;@525483cd as result. Can anyone help me with this loop and reading this matrix?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

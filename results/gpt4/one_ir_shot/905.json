@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFgV5778VwlVfAMiQik998WHzJZQ",
+    "object": "chat.completion",
+    "created": 1691972719,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \nString mykey = \"secret\";\nString test = \"test\";\ntry {\n    Mac mac = Mac.getInstance(\"HmacSHA1\");\n    SecretKeySpec secret = new SecretKeySpec(mykey.getBytes(),\"HmacSHA1\");\n    mac.init(secret);\n    byte[] digest = mac.doFinal(test.getBytes());\n    StringBuilder hash = new StringBuilder();\n    for (byte b : digest) {\n        hash.append(String.format(\"%02x\", b));\n    }\n    System.out.println(hash.toString());\n} catch (Exception e) {\n    System.out.println(e.getMessage());\n}\n<<<explanation>>>: The getBytes() method of the String class is used to encode this String into a sequence of bytes using the platform's default charset, storing the result into a new byte array. The SecretKeySpec class is used to construct a secret key from the given byte array. The Mac class provides the functionality of a \"Message Authentication Code\" (MAC) algorithm. The doFinal method processes the given array of bytes and finishes the MAC operation. The resulting MAC value is stored in a new array. The StringBuilder class is used to append each byte in the digest in its hexadecimal form."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 320,
+        "completion_tokens": 243,
+        "total_tokens": 563
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: java equivalent to php's hmac-SHA1: :I'm looking for a java equivalent to this php call:hash_hmac('sha1', \"test\", \"secret\")I tried this, using java.crypto.Mac, but the two do not agree:String mykey = \"secret\";String test = \"test\";try {    Mac mac = Mac.getInstance(\"HmacSHA1\");    SecretKeySpec secret = new SecretKeySpec(mykey.getBytes(),\"HmacSHA1\");    mac.init(secret);    byte[] digest = mac.doFinal(test.getBytes());    String enc = new String(digest);    System.out.println(enc);  } catch (Exception e) {    System.out.println(e.getMessage());}The outputs with key = \"secret\" and test = \"test\" do not seem to match.\nPlease using this api: String.getBytes.\nAnswer:"
+}

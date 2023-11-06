@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxG2R93Da3kQmi0oPq6V0xAYGplu",
+    "object": "chat.completion",
+    "created": 1691663558,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes()\n<<<code>>>: \n```java\nimport javax.crypto.Mac;\nimport javax.crypto.spec.SecretKeySpec;\nimport java.security.InvalidKeyException;\nimport java.security.NoSuchAlgorithmException;\nimport java.util.Base64;\n\npublic class OAuthSignatureGenerator {\n\n    public static String generateSignature(String method, String baseUrl, String parameters, String consumerSecret) throws NoSuchAlgorithmException, InvalidKeyException {\n        String baseString = method + \"&\" + baseUrl + \"&\" + parameters;\n        byte[] keyBytes = consumerSecret.getBytes();\n        SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, \"HmacSHA1\");\n        Mac mac = Mac.getInstance(\"HmacSHA1\");\n        mac.init(secretKeySpec);\n        byte[] signatureBytes = mac.doFinal(baseString.getBytes());\n        return Base64.getEncoder().encodeToString(signatureBytes);\n    }\n}\n```\n\n<<<explanation>>>: \nThis code snippet demonstrates how to generate an HMAC-SHA1 OAuth signature on Android using the given API `String.getBytes()`. The `generateSignature` method takes in the HTTP request method, base URL, parameters, and consumer secret as input. It constructs the signature base string by concatenating the method, base URL, and parameters. It then converts the consumer secret to bytes using `consumerSecret.getBytes()`. It creates a `SecretKeySpec` using the key bytes and initializes a `Mac` instance with the \"HmacSHA1\" algorithm. The base string is converted to bytes and passed to the `doFinal` method of the `Mac` instance to generate the signature bytes. Finally, the signature bytes are encoded using Base64 and returned as the OAuth signature."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 293,
+        "completion_tokens": 334,
+        "total_tokens": 627
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Library for generating HMAC-SHA1 OAuth signature on Android?: :Using the specifications below I need to create an oauth_signature on Android.  I'm looking for a library that handles the boiler plate code in creating a signature for accessing resources via OAuth.Construct a signature \"base string\", which consists of a concatenation of three request elements:The HTTP request method.The base URL the request is being sent to. This URL should not include any query parameters. When signing calls to Google services, refer to the OAuth specification, Section 9.1.2, for relevant instructions.A normalized string of the parameters in the request (excluding the oauth_signature parameter). This includes parameters sent in the request header or body, as well as query parameters added to the request URL. To normalize the string, sort the parameters using lexicographical byte value ordering. For more details on normalizing this string, see Section 9.1.1 of the OAuth specification.Generate an oauth_signature using one of the following sequences:If your application is registered and you're using HMAC-SHA1, use the OAuth \"consumer secret\" value generated during registration; this value is displayed on your domain's registration page.\nPlease using this api: String.getBytes.\nAnswer:"
+}

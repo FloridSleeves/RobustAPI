@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2EUgSL4Cwmau0vwo2aSskT7rbRe",
+    "object": "chat.completion",
+    "created": 1691682682,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\nimport java.io.*;\nimport javax.swing.*;\n\npublic class ProgressBarDemo {\n    public static void main(String[] args) {\n        SwingUtilities.invokeLater(new Runnable() {\n            public void run() {\n                JFrame frame = new JFrame(\"Progress Bar Example\");\n                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\n                JProgressBar progressBar = new JProgressBar();\n                frame.getContentPane().add(progressBar, BorderLayout.NORTH);\n                frame.setSize(300, 200);\n                frame.setVisible(true);\n\n                new Thread(new Runnable() {\n                    public void run() {\n                        try {\n                            File file = new File(\"yourfile.bin\");\n                            FileInputStream fis = new FileInputStream(file);\n                            ObjectInputStream ois = new ObjectInputStream(fis);\n                            progressBar.setMaximum((int) file.length());\n\n                            byte[] buffer = new byte[1024];\n                            int totalRead = 0;\n                            while (totalRead < file.length()) {\n                                int read = fis.read(buffer);\n                                totalRead += read;\n                                progressBar.setValue(totalRead);\n                            }\n\n                            CustomObj test = (CustomObj) ois.readObject();\n                            ois.close();\n                            fis.close();\n                        } catch (Exception ex) {\n                            ex.printStackTrace();\n                        }\n                    }\n                }).start();\n            }\n        });\n    }\n}\n```\n\n<<<explanation>>>: \nIn this code, we first create a JFrame and a JProgressBar. We set the maximum value of the progress bar to the length of the file. Then we start a new thread to read the file. We read the file in chunks of 1024 bytes using the InputStream.read method. After each read, we update the value of the progress bar to the total number of bytes read so far. Finally, we read the object from the ObjectInputStream and close the streams."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 114,
+        "completion_tokens": 366,
+        "total_tokens": 480
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Progressbar of a bin file loading: :how can I show a JProgressBar component like on the loading of a bin file?I can only found solutions for iterative bin read and I'm using an object reading like:CustomObj test = (CustomObj) in.readObject();Cheers\nPlease using this api: InputStream.read.\nAnswer:"
+}

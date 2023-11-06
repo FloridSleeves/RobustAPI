@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2gSJQDbU8m1qdHfzI3SGYVVDEoW",
+    "object": "chat.completion",
+    "created": 1691684416,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\nlong doRead(InputStream in, long rangeStart, long rangeEnd) throws IOException {\n    long range = rangeEnd - rangeStart;\n    long bits, val;\n    do {\n        bits = 0;\n        for (int i = 0; i < 8; i++) {\n            bits = (bits << 8) | (in.read() & 0xff);\n        }\n        val = bits % range;\n    } while (bits - val + (range - 1) < 0);\n    return val + rangeStart;\n}\n```\n<<<explanation>>>: This code reads 8 bytes from the InputStream and combines them into a long. It then calculates the modulus of the range to get a value within the desired range. If the value is not within the desired range, it discards the value and reads another 8 bytes from the InputStream. This process repeats until a suitable value is found. This method avoids wasting random bits and does not bias the results towards lower values."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 566,
+        "completion_tokens": 219,
+        "total_tokens": 785
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Bit-wise efficient uniform random number generation: :I recall reading about a method for efficiently using random bits in an article on a math-oriented website, but I can't seem to get the right keywords in Google to find it anymore, and it's not in my browser history.The gist of the problem that was being asked was to take a sequence of random numbers in the domain [domainStart, domainEnd) and efficiently use the bits of the random number sequence to project uniformly into the range [rangeStart, rangeEnd).  Both the domain and the range are integers (more correctly, longs and not Z). What's an algorithm to do this?Implementation-wise, I have a function with this signature:long doRead(InputStream in, long rangeStart, long rangeEnd);in is based on a CSPRNG (fed by a hardware RNG, conditioned through SecureRandom) that I am required to use; the return value must be between rangeStart and rangeEnd, but the obvious implementation of this is wasteful:long doRead(InputStream in, long rangeStart, long rangeEnd) {    long retVal = 0;    long range = rangeEnd - rangeStart;    // Fill until we get to range    for (int i = 0; (1 << (8 * i)) < range; i++) {        int in = 0;        do {            in = in.read();        // but be sure we don't exceed range        } while(retVal + (in << (8 * i)) >= range);        retVal += in << (8 * i);     }    return retVal + rangeStart;}I believe this is effectively the same idea as (rand() * (max - min)) + min, only we're discarding bits that push us over max. Rather than use a modulo operator which may incorrectly bias the results to the lower values, we discard those bits and try again.  Since hitting the CSPRNG may trigger re-seeding (which can block the InputStream), I'd like to avoid wasting random bits.  Henry points out that this code biases against 0 and 257; Banthar demonstrates it in an example.First edit: Henry reminded me that summation invokes the Central Limit Theorem.  I've fixed the code above to get around that problem.Second edit: Mechanical snail suggested that I look at the source for Random.nextInt().  After reading it for a while, I realized that this problem is similar to the base conversion problem.  See answer below.\nPlease using this api: InputStream.read.\nAnswer:"
+}

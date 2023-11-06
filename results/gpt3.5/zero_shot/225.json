@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lv7PJOmdLd6GwNUes3p2leGeUPgR",
+    "object": "chat.completion",
+    "created": 1691655335,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\npublic static void main(String[] args) throws IOException {\n    Process theProcess = null;\n    try {\n        theProcess = Runtime.getRuntime().exec(\"mvn integration-test -DskipTests -P interactive -e\");\n    } catch(IOException e) {\n        System.err.println(\"Error on exec() method\");\n        e.printStackTrace();\n    }\n    \n    // Read from the called program's standard output stream\n    try (BufferedReader inStream = new BufferedReader(new InputStreamReader(theProcess.getInputStream()))) {\n        String line;\n        while ((line = inStream.readLine()) != null) {\n            System.out.println(line);\n        }\n    } catch(IOException e) {\n        System.err.println(\"Error on inStream.readLine()\");\n        e.printStackTrace();\n    }\n}\n```\n<<<explanation>>>: In the given code, we are using the `Runtime.getRuntime().exec()` method to execute the `mvn` command. We then read the output of the command from the process's input stream using `InputStreamReader` and `BufferedReader`. The `while` loop reads each line of the output until there are no more lines to read. Each line is then printed to the console."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 286,
+        "completion_tokens": 248,
+        "total_tokens": 534
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to run a mvn command from a java program?: :I am building a Java program for automating a procedure in my server side. Normally I cd to Desktop/GIT/ and use this maven command \"mvn integration-test -DskipTests -P interactive -e\".I am building a java program and I am trying to run that command line but so far I wasn't successful. So far, here is the code:public static void main(String[] args) throws FileNotFoundException {// TODO Auto-generated method stub Process theProcess = null;try  {      theProcess = Runtime.getRuntime().exec(\"mvn integration-test -DskipTests -P interactive -e\");  } catch(IOException e)  {     System.err.println(\"Error on exec() method\");     e.printStackTrace();    }// read from the called program's standard output stream  try  {     inStream = new BufferedReader(new InputStreamReader( theProcess.getInputStream()));       System.out.println(inStream.readLine());  }  catch(IOException e)  {     System.err.println(\"Error on inStream.readLine()\");     e.printStackTrace();    }break;    }}in.close();}\nPlease using this api: InputStream.read.\nAnswer:"
+}

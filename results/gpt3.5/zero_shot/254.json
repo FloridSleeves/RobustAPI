@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvCHDjreW1EasoUMNvQbSwv286ie",
+    "object": "chat.completion",
+    "created": 1691655637,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\npublic static void copy(InputStream is, OutputStream os, int start, int length) throws IOException {\n    byte[] buffer = new byte[8192];\n    int bytesRead;\n    int totalBytesRead = 0;\n    int bytesToSkip = start;\n\n    // Skip bytes if necessary\n    while (bytesToSkip > 0) {\n        long skipped = is.skip(bytesToSkip);\n        if (skipped <= 0) {\n            throw new IOException(\"Failed to skip bytes\");\n        }\n        bytesToSkip -= skipped;\n    }\n\n    // Read and write the specified length of bytes\n    while (totalBytesRead < length && (bytesRead = is.read(buffer, 0, Math.min(buffer.length, length - totalBytesRead))) != -1) {\n        os.write(buffer, 0, bytesRead);\n        totalBytesRead += bytesRead;\n    }\n}\n```\n\n<<<explanation>>>: \nThis code uses the `InputStream.read` method to copy a specified length of bytes from an input stream to an output stream. It starts by skipping the specified number of bytes using the `InputStream.skip` method. Then, it reads from the input stream into a buffer and writes the buffer to the output stream until the specified length of bytes is reached or the end of the input stream is reached. The buffer size is set to 8192 bytes, but you can adjust it as needed."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 167,
+        "completion_tokens": 298,
+        "total_tokens": 465
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java copy part of InputStream to OutputStream: :I have a file with 3236000 bytes and I want to read 2936000 from start and write to an OutputStreamInputStream is = new FileInputStream(file1);OutputStream os = new FileOutputStream(file2);AFunctionToCopy(is,os,0,2936000); /* a function or sourcecode to write input stream 0to2936000 bytes */I can read and write byte by byte, but it's to slow (i think) from buffered readingHow can do I copy it?\nPlease using this api: InputStream.read.\nAnswer:"
+}

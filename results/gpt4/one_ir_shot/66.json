@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCX0e8u2EcJ7hVNnqpRB3LPaeYzM",
+    "object": "chat.completion",
+    "created": 1691960598,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Cipher.init\n<<<code>>>: \nbyte[] dataBytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));\nCipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");\nSecretKeySpec keySpec = new SecretKeySpec(\"YourKey\".getBytes(), \"AES\");\nIvParameterSpec ivSpec = new IvParameterSpec(\"YourIV\".getBytes());\ncipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);\nbyte[] cipByte = cipher.doFinal(dataBytes);\nbyte[] encr = Base64.getEncoder().encode(cipByte);\nFiles.write(Paths.get(encryptedFile.getAbsolutePath()), encr); //encr len = 173517\n<<<explanation>>>: The Cipher.init method is used to initialize the Cipher for a certain encryption/decryption mode, key and algorithm parameters. In this case, we are initializing the Cipher for encryption mode using AES algorithm with a SecretKeySpec and IvParameterSpec. After the Cipher is initialized, the doFinal method is used to encrypt the dataBytes. The encrypted bytes are then encoded using Base64 and written to a file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 291,
+        "completion_tokens": 225,
+        "total_tokens": 516
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Java: write byte[] to file (missing bytes): :I am experiencing some problems with my code. When I try to write to file byte[] (eg. of length 173517) using the function Files.write write into file random bytes (eg. 3355) each time, I get a different value. This is my code:byte[] dataBytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));byte[] cipByte = cipher.doFinal(dataBytes);byte[] encr = Base64.getEncoder().encode(cipByte);Files.write(Paths.get(encryptedFile.getAbsolutePath()), encr); //encr len = 173517\nPlease using this api: Cipher.init.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvDoqq6fE2pD0FLMDapqoSn6PhxH",
+    "object": "chat.completion",
+    "created": 1691655732,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next()\n<<<code>>>: \n```java\nIterator<Element> iterator = data.iterator();\ntableEntry.setDate(iterator.next().text());\ntableEntry.setOpen(iterator.next().text());\ntableEntry.setHigh(iterator.next().text());\ntableEntry.setLow(iterator.next().text());\ntableEntry.setClose(iterator.next().text());\ntableEntry.setChangePips(iterator.next().text());\ntableEntry.setChangePercent(iterator.next().text());\n```\n<<<explanation>>>: The issue with the code is that the index variable is not being incremented correctly. Instead of using `index++` for each `data.get(index++)`, you can use an iterator to iterate through the `data` elements. By using `iterator.next().text()`, you can retrieve the text of each element in the `data` list without worrying about the index. This will ensure that you don't get an IndexOutOfBoundsException."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 611,
+        "completion_tokens": 181,
+        "total_tokens": 792
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Extracting table data error: :I've just began a small project of which I will need to gather historical data on global currency pairs. Following a answer from this question Extract Data out of table with JSoup, I have the code pasted below. However I keep receiving an IndexOutOfBoundException, although the 'data' Elements array is of size 7? I've been scratching my head for almost an hour, and would appreciate if someone could point out where I have gone wrong!Main Classimport java.util.ArrayList;import java.util.List;import java.io.IOException;import org.jsoup.*;import org.jsoup.nodes.Document;import org.jsoup.nodes.Element;import org.jsoup.select.Elements;public class MainClass {public static void main(String[] args) throws IOException{    Document doc = Jsoup.connect(\"http://www.myfxbook.com/forex-market/currencies/GBPUSD-historical-data\").get();    Element table = doc.getElementById(\"symbolMarket\");    List<Entry> entries = new ArrayList<Entry>();    for(Element row : table.select(\"tr\")){        int index = 0;        Entry tableEntry = new Entry();        Elements data = row.select(\"td\");        tableEntry.setDate(data.get(index++).text());        tableEntry.setOpen(data.get(index++).text());        tableEntry.setHigh(data.get(index++).text());        tableEntry.setLow(data.get(index++).text());        tableEntry.setClose(data.get(index++).text());        tableEntry.setChangePips(data.get(index++).text());        tableEntry.setChangePercent(data.get(index++).text());        entries.add(tableEntry);    }}}Entries Classpublic class Entry {private String date;private String open;private String high;private String low;private String close;private String changePips;private String changePercent;public String getDate() {    return date;}public void setDate(String date) {    this.date = date;}public String getOpen() {    return open;}public void setOpen(String open) {    this.open = open;}public String getHigh() {    return high;}public void setHigh(String high) {    this.high = high;}public String getLow() {    return low;}public void setLow(String low) {    this.low = low;}public String getClose() {    return close;}public void setClose(String close) {    this.close = close;}public String getChangePips() {    return changePips;}public void setChangePips(String changePips) {    this.changePips = changePips;}public String getChangePercent() {    return changePercent;}public void setChangePercent(String changePercent) {    this.changePercent = changePercent;}}\nPlease using this api: Iterator.next.\nAnswer:"
+}

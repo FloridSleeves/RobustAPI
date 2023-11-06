@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCaujsIjIlk9HtCD9eymnfzuGiRI",
+    "object": "chat.completion",
+    "created": 1691960840,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \nKeyPairGenerator kpGen = KeyPairGenerator.getInstance(\"DSA\", \"BC\");\nkpGen.initialize(1024, new SecureRandom());\nKeyPair keypair = kpGen.generateKeyPair();\nPublicKey pubKey = keypair.getPublic();\n\nByteArrayOutputStream byteOs = new ByteArrayOutputStream();\nDataOutputStream dos = new DataOutputStream(byteOs);\ndos.writeInt(\"ssh-dss\".getBytes().length);\ndos.write(\"ssh-dss\".getBytes());\nbyte[] keyBytes = pubKey.getEncoded();\ndos.writeInt(keyBytes.length);\ndos.write(keyBytes);\ndos.close();\n\nbyte[] encodedPublicKey = byteOs.toByteArray();\nString publicKeyString = \"ssh-dss \" + Base64.getEncoder().encodeToString(encodedPublicKey);\n<<<explanation>>>: The code first generates a DSA key pair. Then it creates a ByteArrayOutputStream and a DataOutputStream to write the public key in the correct format. It writes the string \"ssh-dss\" and the public key bytes to the DataOutputStream. After that, it converts the ByteArrayOutputStream to a byte array and encodes it to a Base64 string. The final public key string is in the format \"ssh-dss \" followed by the Base64 encoded public key. This string can be added to the authorized_keys file in Linux."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 267,
+        "completion_tokens": 261,
+        "total_tokens": 528
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to do I convert the PublicKey to OpenSSH authorized_keys format: :Here is the code to get the public key. I need to convert the public key to OpenSSH format to add it to the authorized_keys file in Linux. How can I do that?KeyPairGenerator kpGen = KeyPairGenerator.getInstance(\"DSA\", \"BC\");kpGen.initialize(1024, new SecureRandom());KeyPair keypair = kpGen.generateKeyPair();I did use PEMWriter. But it didn't give the output string in proper format.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

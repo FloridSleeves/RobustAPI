@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lyMtkTj63Qa2vX1oNoKVn36rZdgE",
+    "object": "chat.completion",
+    "created": 1691667827,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: BufferedReader.readLine\n<<<code>>>: public static void sortScoresFromFile(String filePath) {\n    try {\n        // Read the file\n        FileReader fileReader = new FileReader(filePath);\n        BufferedReader bufferedReader = new BufferedReader(fileReader);\n        List<String> lines = new ArrayList<>();\n        String line;\n        while ((line = bufferedReader.readLine()) != null) {\n            lines.add(line);\n        }\n        bufferedReader.close();\n\n        // Sort the lines by score\n        Collections.sort(lines, new Comparator<String>() {\n            @Override\n            public int compare(String line1, String line2) {\n                int score1 = Integer.parseInt(line1.split(\" \")[1]);\n                int score2 = Integer.parseInt(line2.split(\" \")[1]);\n                return Integer.compare(score2, score1);\n            }\n        });\n\n        // Output the sorted lines\n        for (String sortedLine : lines) {\n            System.out.println(sortedLine);\n        }\n    } catch (IOException e) {\n        e.printStackTrace();\n    }\n}\n<<<explanation>>>: The code reads the lines from the file, splits each line into name and score, sorts the lines based on the score in descending order, and then outputs the sorted lines."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 497,
+        "completion_tokens": 245,
+        "total_tokens": 742
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: I am trying to read lines of text from the console. The number of lines is not known in advance. The BufferedReader.readLine() method reads a line but after the last line it waits for input from the console. What should be done in order to avoid this?\nPlease using this api: BufferedReader.readLine.\nAnswer:<<<api>>>: BufferedReader.readLine\n<<<code>>>: public static String[] getLinesFromConsole() {\n    String strLine = \"\";\n    try {\n    // Get the object of DataInputStream\n    InputStreamReader isr = new InputStreamReader(System.in);\n    BufferedReader br = new BufferedReader(isr);\n    String line = \"\";\n    while ((line = br.readLine()) != null && !line.equals(\"exit\") )\n        strLine += br.readLine() + \"~\";\n        isr.close();                                                        \n    } catch (IOException ioe) {\n        ioe.printStackTrace();                                \n    }\n    return strLine.split(\"~\");\n}\n<<<explanation>>>: The below code might fix, replace text exit with your requirement specific string.\nQuestion: sorting lines of a text file by number present and output the whole lines in descending order: :I am trying to make a high score system by saving the names and score to a textfile using this code.String text = name.getText().toString() + \" \" + score.getText().toString();            appendLog(text);        }    });}public void appendLog(String text){          File logFile = new File(\"sdcard/logger.file\");   if (!logFile.exists())   {      try      {         logFile.createNewFile();      }       catch (IOException e)      {         // TODO Auto-generated catch block         e.printStackTrace();      }   }   try   {      //BufferedWriter for performance, true to set append to file flag      BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));       buf.append(text);      buf.newLine();      buf.close();   }   catch (IOException e)   {      // TODO Auto-generated catch block      e.printStackTrace();   }Is there a way for me to sort the scores present in each line and output name with its corresponding score? Can anyone please help me how to do it? thank you.\nPlease using this api: BufferedReader.readLine.\nAnswer:"
+}

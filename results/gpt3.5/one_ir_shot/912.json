@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDaiGxZSop7UQdTvfauloDFG7dun",
+    "object": "chat.completion",
+    "created": 1691964672,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: String filePath = \"src/lt/test.txt\";\nString textToAppend = \"Jennifer\";\n\n// Read the existing file content\nbyte[] fileContent = Files.readAllBytes(Paths.get(filePath));\n\n// Create a new byte array with the size of the existing content plus the length of the text to append\nbyte[] newContent = new byte[fileContent.length + textToAppend.getBytes().length];\n\n// Copy the text to append to the beginning of the new byte array\nSystem.arraycopy(textToAppend.getBytes(), 0, newContent, 0, textToAppend.getBytes().length);\n\n// Copy the existing file content to the new byte array, starting from the length of the text to append\nSystem.arraycopy(fileContent, 0, newContent, textToAppend.getBytes().length, fileContent.length);\n\n// Write the new content to the file\nFiles.write(Paths.get(filePath), newContent);\n  \n<<<explanation>>>: The code reads the existing content of the file into a byte array using the Files.readAllBytes() method. Then, it creates a new byte array with the size of the existing content plus the length of the text to append. It uses the System.arraycopy() method to copy the text to append to the beginning of the new byte array, and then copies the existing file content to the new byte array, starting from the length of the text to append. Finally, it writes the new content to the file using the Files.write() method."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 560,
+        "completion_tokens": 305,
+        "total_tokens": 865
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Java. How to append text to top of file.txt: :This question already has answers here:                                                            Writing in the beginning of a text file Java                                (6 answers)                            Closed 9 years ago.I need to add text to beggining of text file via Java.For example I have test.txt file with data:PeterJohnAliceI need to add(to top of file):Jennifer It should be:JenniferPeterJohnAliceI have part of code, but It append data to end of file, I need to make It that added text to top of file:    public static void irasymas(String irasymai){        try {         File file = new File(\"src/lt/test.txt\");                if (!file.exists()) {                file.createNewFile();            }            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);            BufferedWriter bw = new BufferedWriter(fw);            bw.write(irasymai+ \"\\r\\n\");            bw.close();}        catch (IOException e) {        e.printStackTrace();                        }    }I have tried this, but this only deletes all data from file and not insert any text:public static void main(String[] args) throws IOException {        BufferedReader reader = null;        BufferedWriter writer = null;        ArrayList list = new ArrayList();        try {            reader = new BufferedReader(new FileReader(\"src/lt/test.txt\"));            String tmp;            while ((tmp = reader.readLine()) != null)                list.add(tmp);            OUtil.closeReader(reader);            list.add(0, \"Start Text\");            list.add(\"End Text\");            writer = new BufferedWriter(new FileWriter(\"src/lt/test.txt\"));            for (int i = 0; i < list.size(); i++)                writer.write(list.get(i) + \"\\r\\n\");        } catch (Exception e) {            e.printStackTrace();        } finally {            OUtil.closeReader(reader);            OUtil.closeWriter(writer);        }    }Thank you for help.\nPlease using this api: String.getBytes.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDVZi5O7bl9tV5IzsSeR3hxJuczS",
+    "object": "chat.completion",
+    "created": 1691964353,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \nMap<String, Integer> sortedMap = map.entrySet().stream()\n    .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())\n    .limit(20)\n    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));\n\nIterator<Map.Entry<String, Integer>> iterator = sortedMap.entrySet().iterator();\nwhile(iterator.hasNext()){\n    Map.Entry<String, Integer> entry = iterator.next();\n    System.out.println(entry.getKey() + \" occurs \" + entry.getValue() + \" times\");\n}\n<<<explanation>>>: This code first sorts the map entries in descending order by their values using a stream, then limits the stream to the top 20 entries. It then collects these entries into a new LinkedHashMap, which maintains the order of its entries. Finally, it uses an Iterator to iterate over the entries of the sorted map, and prints each key and value. This approach has a time complexity of O(n log n), which is better than the original approach's O(n^2)."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 281,
+        "completion_tokens": 230,
+        "total_tokens": 511
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Find top 20 values in descendent order of a big map: :here's m codeInteger max = Collections.max(map.values());int count = 20;while(count>0){    for (Map.Entry<String, Integer> e : map.entrySet())        if(e.getValue() == max)        {            System.out.println(e.getKey() + \"occurs\" + e.getValue() + \"times\");            count--;        }        max--;}This program runs in theta of n square time complexity. Is there a better way to display entries in the max which have top 20 maximum values in descending order?\nPlease using this api: Iterator.next.\nAnswer:"
+}

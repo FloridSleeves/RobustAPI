@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDzA4R7C47eESzOOggLFxxFfFqsd",
+    "object": "chat.completion",
+    "created": 1691966188,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: String html = \"<html><body><style>body{background:#FFC}p{background:red}body, p{font-weight:bold}</style><p>...</p></body></html>\";\nString inlineStyle = \"\";\nStringTokenizer tokenizer = new StringTokenizer(html, \"{};\");\nwhile (tokenizer.hasMoreTokens()) {\n    String token = tokenizer.nextToken().trim();\n    if (token.startsWith(\"#\")) {\n        inlineStyle += \"background:\" + token + \";\";\n    } else if (token.startsWith(\"font-weight\")) {\n        inlineStyle += \"font-weight:\" + token.split(\":\")[1].trim() + \";\";\n    }\n}\nhtml = html.replace(\"<style>\", \"<body style=\\\"\" + inlineStyle + \"\\\">\").replace(\"</style>\", \"</body>\");\n<<<explanation>>>: The code uses the StringTokenizer class to split the HTML string into tokens based on the delimiters \"{};\". It then checks each token to see if it starts with \"#\" or \"font-weight\" and appends the corresponding inline style to the \"inlineStyle\" string. Finally, it replaces the \"<style>\" and \"</style>\" tags with the modified \"<body>\" tag containing the inline style."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 322,
+        "completion_tokens": 245,
+        "total_tokens": 567
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Automatically convert Style Sheets to inline style: :Don't have to worry about linked style or hover style.I want to automatically convert files like this<html><body><style>body{background:#FFC}p{background:red}body, p{font-weight:bold}</style><p>...</p></body></html>to files like this<html><body style=\"background:red;font-weight:bold\"><p style=\"background:#FFC;font-weight:bold\">...</p></body></html>I would be even more interested if there was an HTML parser that would do this.The reason I want to do this is so I can display emails that use global style sheets without their style sheets messing up the rest of my web page. I also would like to send the resulting style to web based rich text editor for reply and original message.\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

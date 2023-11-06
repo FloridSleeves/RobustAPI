@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxShOwqHbEY4QCVHRXkNaGdq9mBt",
+    "object": "chat.completion",
+    "created": 1691664343,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes()\n<<<code>>>: \n```java\npublic static void main(String[] args){\n    URL serverURL = null;\n    try {\n        serverURL = new URL(\"http://127.0.0.1:18332/\");\n    } catch (MalformedURLException e) {\n        System.err.println(e.getMessage());\n        return;\n    }\n    \n    String username = \"user\";\n    String password = \"pass\";\n    String authString = username + \":\" + password;\n    byte[] authBytes = authString.getBytes();\n    String encodedAuth = Base64.getEncoder().encodeToString(authBytes);\n    String authHeaderValue = \"Basic \" + encodedAuth;\n    \n    JSONRPC2Session mySession = new JSONRPC2Session(serverURL);\n    mySession.setRequestProperty(\"Authorization\", authHeaderValue);\n    \n    String method = \"getinfo\";\n    int requestID = 0;\n    JSONRPC2Request request = new JSONRPC2Request(method, requestID);\n    JSONRPC2Response response = null;\n    \n    try {\n        response = mySession.send(request);\n    } catch (JSONRPC2SessionException e) {\n        System.err.println(e.getMessage());\n        return;\n    }\n    \n    if (response.indicatesSuccess())\n        System.out.println(response.getResult());\n    else\n        System.out.println(response.getError().getMessage());\n}\n```\n<<<explanation>>>: To configure basic access authentication for your JSON RPC calls, you can use the `String.getBytes()` method to convert your username and password into bytes. Then, you can encode the bytes using Base64 encoding and include the encoded value in the `Authorization` header of your JSONRPC2Session request. This will set the username and password for basic access authentication."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 386,
+        "completion_tokens": 351,
+        "total_tokens": 737
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: how to set username and password?: :I am using the Java library for JSON-RPC 2.0 from dzhuvinov. I am having problems setting my username and password for basic access authenticaition for the calls. My code looks like:public static void main(String[] args){    URL serverURL = null;    try {        serverURL = new URL(\"http://user:pass@127.0.0.1:18332/\");    } catch (MalformedURLException e) {        System.err.println(e.getMessage());        return;    }     JSONRPC2Session mySession = new JSONRPC2Session(serverURL);     String method = \"getinfo\";     int requestID = 0;     JSONRPC2Request request = new JSONRPC2Request(method, requestID);     JSONRPC2Response response = null;     try {             response = mySession.send(request);     } catch (JSONRPC2SessionException e) {             System.err.println(e.getMessage());             return;     }     if (response.indicatesSuccess())        System.out.println(response.getResult());    else        System.out.println(response.getError().getMessage());}And I get a response of:Network exception: Server returned HTTP response code: 401 for URL: http://user:pass@127.0.0.1:18332/Trying a similar code in Python I get a proper result:access = jsonrpc.ServiceProxy(\"http://user:pass@127.0.0.1:18332/\")print access.getinfo()How can I configure the basic access authentication for my JSON RPC calls?\nPlease using this api: String.getBytes.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lwGD6VDgnrl8YpJ13fV21sXbR02K",
+    "object": "chat.completion",
+    "created": 1691659725,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Map.get\n<<<code>>>: \n```java\npublic class array {\n    public static void main(String[] args) throws IOException {\n        BufferedReader reader = new BufferedReader(new FileReader(\"fruit.txt\"));\n        System.out.println(\"Enter the fruit you want to search\");\n        Scanner input = new Scanner(System.in);\n        String fruit = input.nextLine();\n        String line;\n        Map<String, Integer> fruitMap = new HashMap<String, Integer>();\n        \n        while((line=reader.readLine()) !=null) {\n            String[] parts = line.split(\" \");\n            String fruitName = parts[0];\n            int quantity = Integer.parseInt(parts[1]);\n            fruitMap.put(fruitName, quantity);\n        }\n        \n        reader.close();\n        \n        if(fruitMap.containsKey(fruit)) {\n            int quantity = fruitMap.get(fruit);\n            System.out.println(\"You have \" + fruit + \" \" + quantity + \" of them and status is \" + getStatus(quantity));\n        } else {\n            System.out.println(\"Fruit not found\");\n        }\n    }\n    \n    public static String getStatus(int quantity) {\n        if(quantity > 0) {\n            return \"good\";\n        } else {\n            return \"not good\";\n        }\n    }\n}\n```\n<<<explanation>>>: \n1. We create a `HashMap` called `fruitMap` to store the fruit names as keys and their quantities as values.\n2. Inside the while loop, we split each line of the file into two parts: the fruit name and the quantity.\n3. We convert the quantity from a string to an integer using `Integer.parseInt()`.\n4. We then add the fruit name and quantity to the `fruitMap`.\n5. After reading all the lines from the file, we check if the `fruitMap` contains the user input fruit.\n6. If it does, we retrieve the quantity using `fruitMap.get(fruit)`.\n7. We then print the desired output using the retrieved quantity and the `getStatus()` method, which returns the status based on the quantity.\n8. If the `fruitMap` does not contain the user input fruit, we print \"Fruit not found\"."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 256,
+        "completion_tokens": 442,
+        "total_tokens": 698
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: method to read array list to find certain string and value: :public class array {    public static void main(String[] args) throws IOException {         BufferedReader reader = new BufferedReader(new FileReader(\"fruit.txt\"));          System.out.println(\"enter the fruit you want to search\");               Scanner input =  new Scanner(System.in);          String fruit = input.nextLine();          String line;          List<String> list = new ArrayList<String>();          while((line=reader.readLine()) !=null)          {              list.add(line);          }          reader.close();          for (String s : list) {                  System.out.println(s);           }    }}I have fruit.txtapple 20 goodorange 30 goodbanana 40 needmorehow do I retrieve how many oranges I have from the array list.I want the program to read the user input in this case \"orange\" and display out 30 and the status is not good.ideal output isYou have orange 30 of them and status is good\nPlease using this api: Map.get.\nAnswer:"
+}

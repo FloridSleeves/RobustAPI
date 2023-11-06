@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2JC0FzuhIh7CIzjfFyyJhxWreCD",
+    "object": "chat.completion",
+    "created": 1691682974,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\nimport java.io.*;\n\npublic class ConstrainedInputStream extends InputStream {\n    private final InputStream in;\n    private long remaining;\n\n    public ConstrainedInputStream(InputStream in, long size) {\n        this.in = in;\n        this.remaining = size;\n    }\n\n    @Override\n    public int read() throws IOException {\n        if (remaining == 0) {\n            return -1;  // EOF\n        }\n        remaining--;\n        return in.read();\n    }\n\n    @Override\n    public int read(byte[] b, int off, int len) throws IOException {\n        if (remaining == 0) {\n            return -1;  // EOF\n        }\n        len = (int) Math.min(len, remaining);\n        int result = in.read(b, off, len);\n        if (result != -1) {\n            remaining -= result;\n        }\n        return result;\n    }\n\n    @Override\n    public void close() throws IOException {\n        in.close();\n    }\n}\n```\n\n<<<explanation>>>: This code creates a new class `ConstrainedInputStream` that extends `InputStream`. It overrides the `read` methods to limit the number of bytes read from the input stream. The `remaining` variable keeps track of how many bytes are left to read. When `remaining` reaches 0, the `read` methods return -1 to indicate the end of the file (EOF). The `read(byte[] b, int off, int len)` method also ensures that it does not read more bytes than remaining. The `close` method is overridden to close the underlying input stream when done."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 118,
+        "completion_tokens": 338,
+        "total_tokens": 456
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I create constrained InputStream to read only part of the file?: :I want to create an InputStream that is limited to a certain range of bytes in file, e.g. to bytes from position 0 to 100. So that the client code should see EOF once 100th byte is reached.\nPlease using this api: InputStream.read.\nAnswer:"
+}

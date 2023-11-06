@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEtPdsuJ5fySnTRcYlpZpiEeRK4u",
+    "object": "chat.completion",
+    "created": 1691731347,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: RandomAccessFile.read\n<<<code>>>: \nint n = 4; // number of files to split into\nRandomAccessFile raf = new RandomAccessFile(\"file.csv\", \"r\");\nlong sourceSize = raf.length();\nlong bytesPerSplit = sourceSize/n;\nlong remainingBytes = sourceSize % n;\n\nint maxReadBufferSize = 8 * 1024; //8KB\nfor(int destIx=1; destIx <= n; destIx++) {\n    BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(\"split.\"+destIx+\".csv\"));\n    if(bytesPerSplit > maxReadBufferSize) {\n        long numReads = bytesPerSplit/maxReadBufferSize;\n        long numRemainingRead = bytesPerSplit % maxReadBufferSize;\n        for(int i=0; i<numReads; i++) {\n            readWrite(raf, bw, maxReadBufferSize);\n        }\n        if(numRemainingRead > 0) {\n            readWrite(raf, bw, numRemainingRead);\n        }\n    }else {\n        readWrite(raf, bw, bytesPerSplit);\n    }\n    bw.close();\n}\nif(remainingBytes > 0) {\n    BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(\"split.\"+(n+1)+\".csv\"));\n    readWrite(raf, bw, remainingBytes);\n    bw.close();\n}\nraf.close();\n\npublic static void readWrite(RandomAccessFile raf, BufferedOutputStream bw, long numBytes) throws IOException {\n    byte[] buf = new byte[(int) numBytes];\n    int val = raf.read(buf);\n    if(val != -1) {\n        bw.write(buf);\n    }\n}\n<<<explanation>>>: This code reads the file using RandomAccessFile and splits it into n files. It calculates the number of bytes each split file should contain, then reads and writes these bytes into each new file. If the source file size is not a multiple of n, the remaining bytes are written to an additional file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 407,
+        "completion_tokens": 410,
+        "total_tokens": 817
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How do I read the last \"n\" bytes of a file in Java: How do I read the last n number of bytes from a file, without using RandomAccessFile. The last 6 bytes in my files contain crucial information when writing the files back. I need to write my original files, and then append the last 6 bytes elsewhere. Any guidance? Thanks\nPlease using this api: RandomAccessFile.read.\nAnswer:<<<api>>>: RandomAccessFile.read\n<<<code>>>: RandomAccessFile randomAccessFile = new RandomAccessFile(your_file, \"r\");randomAccessFile.seek(your_file.length() - n);try{randomAccessFile.read(byteArray, 0, n);} catch(IOException e) {e.printStackTrace();} \n<<<explanation>>>: You have to do it by using RandomAccessFile. Instances of this class support both reading and writing to a random access file. A random access file behaves like a large array of bytes stored in the file system. \nQuestion: Read file and split into multiple files: :I have a file which I would like to read in Java and split this file into n (user input) output files. Here is how I read the file:int n = 4;BufferedReader br = new BufferedReader(new FileReader(\"file.csv\"));try {    String line = br.readLine();    while (line != null) {        line = br.readLine();    }} finally {    br.close();}How do I split the file - file.csv into n files?Note - Since the number of entries in the file are of the order of 100k, I can't store the file content into an array and then split it and save into multiple files.\nPlease using this api: RandomAccessFile.read.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDt0fzhEPhbo4xZt268gnkx1t0qx",
+    "object": "chat.completion",
+    "created": 1691965806,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \nMap<String, List<String>> map = new LinkedHashMap<>();\nString[] lines = input.split(\"\\n\");\n\nfor (String line : lines) {\n    String[] pairs = line.split(\", \");\n\n    for (String pair : pairs) {\n        String[] keyValue = pair.split(\"=\");\n        map.computeIfAbsent(keyValue[0], k -> new ArrayList<>()).add(keyValue[1]);\n    }\n}\n\nfor (Map.Entry<String, List<String>> entry : map.entrySet()) {\n    System.out.println(entry.getKey() + \" \" + entry.getValue());\n}\n<<<explanation>>>: The code first splits the input string into lines, then each line into key-value pairs. For each pair, it splits the pair into a key and a value. It then adds the value to the list of values for the key in the map. If the key does not exist in the map, it creates a new list for it. Finally, it prints out the keys and their corresponding lists of values. The Iterator.next API is used implicitly when iterating over the map entries."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 332,
+        "completion_tokens": 223,
+        "total_tokens": 555
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: convert comma (with a space) delimited string into columns under the matching values from the string itself: :I have an output in the console from my code like the sample given below,... columns=20xs, viewport_supported=true, wta=false, ..., mmf=false... columns=11xs, viewport_supported=false, wta=false, ..., mmf=true ... columns=15xs, viewport_supported=true, wta=false, ..., mmf=falseI want to re-arrange it by extracting the common string left to the '=' sign and put it as the column header and its values in its column. How to start doing this in Java?I am looking for the output like below:columns      viewport_supported        wta     and so on  20xs              true              false  11xs              false             false  15xs              true              false\nPlease using this api: Iterator.next.\nAnswer:"
+}

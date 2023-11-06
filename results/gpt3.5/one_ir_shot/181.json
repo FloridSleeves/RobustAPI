@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCYlItydph6nRcfPjzhG64TgNUsL",
+    "object": "chat.completion",
+    "created": 1691960707,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: public List<String> ExecuteCommand(String command) {\n    List<String> result = new ArrayList<>();\n    try {\n        OutputStream outputStream = _channel.getOutputStream();\n        outputStream.write(command.getBytes());\n        outputStream.flush();\n        \n        InputStream inputStream = _channel.getInputStream();\n        byte[] buffer = new byte[1024];\n        StringBuilder stringBuilder = new StringBuilder();\n        int bytesRead;\n        \n        while ((bytesRead = inputStream.read(buffer)) != -1) {\n            stringBuilder.append(new String(buffer, 0, bytesRead));\n            if (stringBuilder.toString().endsWith(\"\\n\")) {\n                result.add(stringBuilder.toString().trim());\n                stringBuilder.setLength(0);\n            }\n        }\n        \n        if (stringBuilder.length() > 0) {\n            result.add(stringBuilder.toString().trim());\n        }\n    } catch (IOException e) {\n        e.printStackTrace();\n    }\n    \n    return result;\n}\n<<<explanation>>>: In the ExecuteCommand method, we first get the output stream from the channel and write the command to it. Then, we get the input stream from the channel and read the response in chunks using a buffer. We append the read bytes to a StringBuilder and check if the response ends with a newline character. If it does, we add the trimmed response to the result list and clear the StringBuilder. Finally, we return the result list."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 540,
+        "completion_tokens": 278,
+        "total_tokens": 818
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: JSch shell returns into StringArray: :I am trying to relearn Java after 10 years of not touching it.  I want to create a library using JSch from some other apps I am looking to write.  I have the connections ironed out but I am using stdin and stdout right now.I am looking to have a method that accepts a single command in a String and returns an ArrayList with the results.Any assistance would be great!//This vars are in the class.private JSch _jsch;private Session _session;private Channel _channel;Here is my connection methodpublic boolean Connect () throws JSchException{    try {        _jsch = new JSch();        _session = _jsch.getSession(_user, _hostname, _port);              _session.setPassword(_password);        _session.setConfig(\"StrictHostKeyChecking\", \"no\");          _channel = _session.openChannel(\"shell\");        //((ChannelShell)_channel).setPtyType(\"vt100\");        _channel.setInputStream(bais);        _channel.setOutputStream(baos);        _channel.connect(3000);                         }//try to connect    catch (JSchException ex)    {        throw ex;    }    return true;}The goal is once I open the connection I can send this method a command and return the results in an array.  Act based on the results and send more commands.  I don't want to close the connection each time as they will build on the commands that come before it. I am not sure how to work with the Inputs and Output Streams enough to get the results I am looking for.  If you can assist with filling out the following method, I would be grateful.public List<String> ExecuteCommand (String command) {    //run command to existing connection    //Get returned lines to Array List and return the list}Thanks \nPlease using this api: InputStream.read.\nAnswer:"
+}

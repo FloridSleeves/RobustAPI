@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCj2JPkKnNSZUS8jRyoAS4YqGXHR",
+    "object": "chat.completion",
+    "created": 1691961344,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \n// Server-thread sending code\ntry{\n    out.println(\"AcceptFile,\");\n    FileInputStream fis = new FileInputStream(fn);\n    byte[] buffer = new byte[fis.available()];\n    fis.read(buffer);\n    DataOutputStream dos = new DataOutputStream(socket.getOutputStream());\n    dos.write(buffer, 0, buffer.length);\n    dos.flush();\n}catch(Exception c){\n    System.err.println(\"exc\" + c);\n}\n\n// Client-thread receiving code\ntry{\n    DataInputStream dis = new DataInputStream(socket.getInputStream());\n    byte[] buffer = new byte[4096];\n    int read;\n    String pic=\"copy\"+studId+\".pdf\";\n    System.out.println(pic);\n    FileOutputStream fos = new FileOutputStream(pic);\n    while ((read = dis.read(buffer)) != -1) {\n        fos.write(buffer, 0, read);\n    }\n    fos.flush();\n    fos.close();\n}catch(Exception e){\n    System.out.println(\"Exception writing\");\n}\n<<<explanation>>>: In the server-thread sending code, we use DataOutputStream.write method to write the byte array to the output stream. In the client-thread receiving code, we use DataInputStream.read method to read the byte array from the input stream and then write it to a file using FileOutputStream.write method. The buffer size is set to 4096 bytes to handle large files and improve performance. The while loop continues reading and writing until there is no more data to read (read returns -1)."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 410,
+        "completion_tokens": 300,
+        "total_tokens": 710
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: server sends file to clients java: :I have a server and multiple clients and i am trying to make the server-thread send a file to the all connected clients at the same time.The weird thing is,sometimes the files are written correctly and sometimes the laptop makes noise and the files are written in the console and no files are created.I don`t do any changes in the code between the trials.Could anyone help me about that? Thanks in advance.Here is the sending server-thread codetry{       out.println(\"AcceptFile,\");    FileInputStream fis = new FileInputStream(fn);    byte[] buffer = new byte[fis.available()];    fis.read(buffer);    ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()) ;    oos.writeObject(buffer);    oos.flush();}catch(Exception c){    System.err.println(\"exc\" + c);}Here is the Client-thread receivingtry{    ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());                    byte[] buffer = (byte[])ois.readObject();                    String pic=\"copy\"+studId+\".pdf\";                    System.out.println(pic);                    FileOutputStream fos = new FileOutputStream(pic);                    fos.write(buffer);                      fos.flush();                    fos.close();    }catch(Exception e){    System.out.println(\"Exception writing\");}\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

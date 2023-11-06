@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCa2s0ENUOToWxk6330Zb2gy7w1Y",
+    "object": "chat.completion",
+    "created": 1691960786,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \ntry {\n    byte[] pcmData = Files.readAllBytes(Paths.get(\"input.pcm\"));\n    try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(\"output.wav\"))) {\n        // Write WAV header\n        dos.writeBytes(\"RIFF\");\n        dos.writeInt(Integer.reverseBytes(36 + pcmData.length));\n        dos.writeBytes(\"WAVE\");\n        dos.writeBytes(\"fmt \");\n        dos.writeInt(Integer.reverseBytes(16));\n        dos.writeShort(Short.reverseBytes((short) 1));\n        dos.writeShort(Short.reverseBytes((short) 1));\n        dos.writeInt(Integer.reverseBytes(16000));\n        dos.writeInt(Integer.reverseBytes(32000));\n        dos.writeShort(Short.reverseBytes((short) 2));\n        dos.writeShort(Short.reverseBytes((short) 16));\n        dos.writeBytes(\"data\");\n        dos.writeInt(Integer.reverseBytes(pcmData.length));\n\n        // Write PCM data\n        for (byte b : pcmData) {\n            dos.writeByte(b);\n        }\n    }\n} catch (IOException e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: This code reads the PCM data from a file, then writes a new WAV file with a proper header and the PCM data. The DataOutputStream.write method is used to write the bytes to the output file. The header of the WAV file contains information about the file format, sample rate, number of channels, and other necessary information. After writing the header, the PCM data is written to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 190,
+        "completion_tokens": 318,
+        "total_tokens": 508
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: java pcm to wav: :I have a pcm file, and I want to convert it to a wav file.Is there any suitable api or code for this?\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

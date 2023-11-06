@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nEV6lvgu27Bngub6xwBRMDNtaQZ0",
+    "object": "chat.completion",
+    "created": 1691968168,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: JsonElement.getAsString\n<<<code>>>: \nGson gson = new GsonBuilder().registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {\n    DateFormat df1 = new SimpleDateFormat(\"MMM dd, yyyy\");\n    DateFormat df2 = new SimpleDateFormat(\"MMM dd, yyyy HH:mm:ss\");\n\n    @Override\n    public Date deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)\n            throws JsonParseException {\n        try {\n            return df1.parse(json.getAsString());\n        } catch (ParseException e) {\n            try {\n                return df2.parse(json.getAsString());\n            } catch (ParseException e1) {\n                throw new JsonParseException(\"Unparseable date: \\\"\" + json.getAsString()\n                        + \"\\\". Supported formats: \\\"MMM dd, yyyy\\\" and \\\"MMM dd, yyyy HH:mm:ss\\\"\");\n            }\n        }\n    }\n}).create();\n<<<explanation>>>: This code creates a Gson object with a custom deserializer for Date class. The deserializer tries to parse the date string in the JSON using the first format (\"MMM dd, yyyy\"). If it fails, it catches the ParseException and tries to parse the date string using the second format (\"MMM dd, yyyy HH:mm:ss\"). If it still fails, it throws a JsonParseException with a message indicating the supported formats."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 291,
+        "completion_tokens": 272,
+        "total_tokens": 563
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Gson to json conversion with two DateFormat: :My server JSON is returning with two different type of DateFormat.\"MMM dd, yyyy\" and \"MMM dd, yyyy HH:mm:ss\"When I convert the JSON with the following it is fine:Gson gson = new GsonBuilder().setDateFormat(\"MMM dd, yyyy\").create();But when I want the detailed date format and changed it to this, it throws exception com.google.gson.JsonSyntaxException: Mar 21, 2013 Gson gson = new GsonBuilder().setDateFormat(\"MMM dd, yyyy HH:mm:ss\").create();Is there a way for gson to handle two different DateFormat for its Json conversion?\nPlease using this api: JsonElement.getAsString.\nAnswer:"
+}

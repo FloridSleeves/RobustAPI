@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m423vP1bujrPTa8DtMCZgi045IIR",
+    "object": "chat.completion",
+    "created": 1691689599,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nimport java.util.*;\n\npublic class JoinedIterator<T> implements Iterator<T> {\n    private final Queue<Iterator<T>> iterators;\n\n    public JoinedIterator(List<Iterator<T>> iterators) {\n        this.iterators = new LinkedList<>(iterators);\n    }\n\n    @Override\n    public boolean hasNext() {\n        while (!iterators.isEmpty()) {\n            if (iterators.peek().hasNext()) {\n                return true;\n            } else {\n                iterators.poll();\n            }\n        }\n        return false;\n    }\n\n    @Override\n    public T next() {\n        if (!hasNext()) {\n            throw new NoSuchElementException();\n        }\n        return iterators.peek().next();\n    }\n}\n```\n<<<explanation>>>: This code defines a new class `JoinedIterator` that implements the `Iterator` interface. It takes a list of iterators and stores them in a queue. When `hasNext()` is called, it checks if the first iterator in the queue has a next element. If it does, it returns true. If it doesn't, it removes the iterator from the queue and checks the next one. When `next()` is called, it first checks if there is a next element using `hasNext()`. If there is, it returns the next element from the first iterator in the queue. If there isn't, it throws a `NoSuchElementException`. This way, it iterates through the iterators in the order they were given, but within each iterator, it only advances when `next()` is called."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 140,
+        "completion_tokens": 318,
+        "total_tokens": 458
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: join multiple iterators in java: :Does anybody know how to join multiple iterators in Java? The solution I found iterate through one iterator first, and then move on to the next one. However, what I want is when next() gets called, it first returns the first element from the first iterator. Next time when next() gets called, it returns the first element from the second iterator, and so on.Thanks\nPlease using this api: Iterator.next.\nAnswer:"
+}

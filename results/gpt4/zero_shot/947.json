@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8TT3jUHGuSXgIqoMkg0xIiIDX6W",
+    "object": "chat.completion",
+    "created": 1691706675,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \n```java\nimport gnu.io.CommPortIdentifier;\nimport gnu.io.SerialPort;\n\npublic class SerialComm {\n    static SerialPort serialPort;\n\n    public static void main(String[] args) {\n        try {\n            CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(\"COM3\");\n            if (portIdentifier.isCurrentlyOwned()) {\n                System.out.println(\"Port in use!\");\n            } else {\n                serialPort = (SerialPort) portIdentifier.open(\"SerialComm\", 2000);\n                serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);\n                serialPort.setDTR(true); // This is how you handle the DTR line\n\n                String message = \"Hello Arduino!\";\n                byte[] bytes = message.getBytes(); // This is how you use the getBytes API\n                serialPort.getOutputStream().write(bytes);\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n        } finally {\n            if (serialPort != null) {\n                serialPort.close();\n            }\n        }\n    }\n}\n```\n<<<explanation>>>: This code opens a serial port connection to an Arduino device on COM3. It sets the DTR (Data Terminal Ready) line to true, which is necessary for some devices to start communication. It then sends a string message to the Arduino by first converting the string to bytes using the getBytes() method, and then writing these bytes to the serial port's output stream. The serial port is closed in the finally block to ensure it gets closed even if an exception occurs."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 162,
+        "completion_tokens": 342,
+        "total_tokens": 504
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Handling handshake lines in RS232 DB9 using rxtxComm: :I used rxtxComm to communicate(send and receive data) with Arduino (USB-Serial port). How do i handle the handshake lines like DTR using the rxtxComm library?  Can you give me some tutorial on this or some sample code???Note: I use win7 OS. I bought a USB-Serial(DB9) adapter today(21-4-2012); planning to connect a led array directly to rs232...\nPlease using this api: String.getBytes.\nAnswer:"
+}

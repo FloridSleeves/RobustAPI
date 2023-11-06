@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8kw0wZF460YkpJvLJP2XgX3ogkG",
+    "object": "chat.completion",
+    "created": 1691707758,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n\n<<<code>>>: \n```java\nimport java.security.MessageDigest;\nimport java.security.NoSuchAlgorithmException;\nimport org.json.JSONObject;\n\npublic class Hash {\n    private JSONObject jsonObject;\n    private String string;\n\n    public Hash(JSONObject jsonObject, String string) {\n        this.jsonObject = jsonObject;\n        this.string = string;\n    }\n\n    public String generateHash() {\n        try {\n            MessageDigest digest = MessageDigest.getInstance(\"SHA-256\");\n            byte[] hash = digest.digest((jsonObject.toString() + string).getBytes(\"UTF-8\"));\n            StringBuilder hexString = new StringBuilder();\n\n            for (byte b : hash) {\n                String hex = Integer.toHexString(0xff & b);\n                if(hex.length() == 1) hexString.append('0');\n                hexString.append(hex);\n            }\n\n            return hexString.toString();\n        } catch(Exception ex){\n            throw new RuntimeException(ex);\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nIn the given code, we are creating a class named `Hash` which takes a `JSONObject` and a `String` as parameters in its constructor. We have a method named `generateHash()` which generates the SHA-256 hash of the combined string representation of the `JSONObject` and the `String`. \n\nThe `MessageDigest.getInstance(\"SHA-256\")` method is used to get an instance of `MessageDigest` that implements the SHA-256 hash function. \n\nThe `digest.digest((jsonObject.toString() + string).getBytes(\"UTF-8\"))` line is used to compute the hash of the input data. We are converting the `JSONObject` to a string and appending the `String` to it. Then we are converting this combined string to bytes using the `getBytes(\"UTF-8\")` method and passing it to the `digest()` method.\n\nFinally, we are converting the byte array to a hexadecimal string and returning it. If any exception occurs during this process, we are throwing a `RuntimeException`."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 134,
+        "completion_tokens": 405,
+        "total_tokens": 539
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Generate SHA 256 Hash using multiple values in Java/Android: :I have two objects based on which SHA 256 Hash needs to be generated.First value is a JSONObjectSecond value is a String variable.Ideally, what i need isHash hash= new Hash(JSONObject, String);I couldn't find any hash generation methods which takes two values.Could anyone help me with this?.\nPlease using this api: String.getBytes.\nAnswer:"
+}

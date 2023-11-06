@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDaY8FQ6YNUEOeR5I9eiyJMGAfcm",
+    "object": "chat.completion",
+    "created": 1691964662,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: public static String generateSignature(String secret, String pathAndQuery){\n    String encoded = null;\n    try {\n        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(\"UTF-8\"), \"HmacSHA256\");\n        Mac mac = Mac.getInstance(\"HmacSHA256\");\n        mac.init(secretKeySpec);\n        byte[] digest = mac.doFinal(pathAndQuery.getBytes(\"UTF-8\"));\n        encoded = Base64.getEncoder().encodeToString(digest);\n    } catch (Exception e) {\n        e.printStackTrace();\n    }\n    return encoded;\n}\n<<<explanation>>>: In the given PHP code, the Zend_Crypt_Hmac::compute method is used to compute the HMAC-SHA256 hash of the given secret and pathAndQuery. In Java, you can achieve the same using the javax.crypto.Mac class. First, create a SecretKeySpec object using the secret key bytes and \"HmacSHA256\" algorithm. Then, initialize a Mac object with the secret key spec and call the doFinal method to compute the HMAC-SHA256 hash of the pathAndQuery. Finally, encode the hash using Base64.getEncoder().encodeToString to get the same result as the PHP code."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 418,
+        "completion_tokens": 252,
+        "total_tokens": 670
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Understanding piece of code written in PHP using Zend framework: :I am java developer and I am trying to use one WEB Service API (ticketutils) where they have explained two examples first one with PHP and second one with C#. Unfortunately I am not able to get any of them. I have mentioned PHP example below.  public function GenerateSignature($Secret,$PathAndQuery)     {       return base64_encode(\\Zend_Crypt_Hmac::compute($Secret, 'sha256',       $PathAndQuery, \\Zend_Crypt_Hmac::BINARY));     }Can anyone please explain me how can I achieve the same with Java code? I have tried below code but it seems it's not generating proper outcome. public static String generateSignature(String secrete, String pathAndQuery){        String encoded = null;        try {            MessageDigest md = MessageDigest.getInstance(\"SHA-256\");            md.update(secrete.getBytes(\"UTF-8\"));            md.update(pathAndQuery.getBytes(\"UTF-8\"));            byte[] digest = md.digest();            encoded = Base64.getEncoder().encodeToString(digest);        } catch (Exception e) {            e.printStackTrace();        }        return encoded;    }NOTE : I have used Java-8 for while writing above code. \nPlease using this api: String.getBytes.\nAnswer:"
+}

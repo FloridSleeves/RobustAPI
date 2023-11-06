@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m6k1K1eNqeaFacIPSwOfHjxNmKoK",
+    "object": "chat.completion",
+    "created": 1691700013,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\nimport java.io.PrintWriter;\nimport java.io.StringWriter;\nimport javax.xml.parsers.DocumentBuilder;\nimport javax.xml.parsers.DocumentBuilderFactory;\nimport org.w3c.dom.Document;\nimport org.w3c.dom.Node;\nimport org.w3c.dom.NodeList;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        String xml = \"<some tag> <some_nested_tag attr=\\\"Hello\\\"> Text </some_nested_tag> Hello world Hello Programming</some tag>\";\n        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();\n        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();\n        Document doc = dBuilder.parse(new InputSource(new StringReader(xml)));\n        replaceText(doc.getDocumentElement(), \"Hello\", \"HI\");\n        StringWriter writer = new StringWriter();\n        PrintWriter printWriter = new PrintWriter(writer);\n        printWriter.write(doc.toString());\n        printWriter.close();\n    }\n\n    private static void replaceText(Node node, String search, String replacement) {\n        if (node.getNodeType() == Node.TEXT_NODE) {\n            node.setTextContent(node.getTextContent().replace(search, replacement));\n        }\n        NodeList nodeList = node.getChildNodes();\n        for (int i = 0; i < nodeList.getLength(); i++) {\n            replaceText(nodeList.item(i), search, replacement);\n        }\n    }\n}\n```\n<<<explanation>>>: This code first parses the XML string into a Document object. It then calls a recursive function replaceText on the root node of the document. This function checks if the node is a text node, and if so, replaces all occurrences of the search string with the replacement string in the text content of the node. It then calls itself on all child nodes of the current node. Finally, it writes the modified document back to a string using a PrintWriter."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 207,
+        "completion_tokens": 374,
+        "total_tokens": 581
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Replace words within xml: :I have the following xml<some tag>    <some_nested_tag attr=\"Hello\"> Text </some_nested_tag>    Hello world Hello Programming</some tag>From the above xml, I want to replace the occurances of the word \"Hello\" which are part of the tag content but not part of tag attribute.I want the following output (Replacing Hello by HI):<some tag>    <some_nested_tag attr=\"Hello\"> Text </some_nested_tag>    HI world HI Programming</some tag>I tried java regex and also some of the DOM parser tutorials, but without any luck. I am posting here for help as I have limited time available to fix this in my project. Help would be appreciated.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

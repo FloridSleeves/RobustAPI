@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m4RVyegYec1xtLcwSd6FaqLkcgYx",
+    "object": "chat.completion",
+    "created": 1691691177,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = Arrays.asList(\n                \"columns=20xs, viewport_supported=true, wta=false, mmf=false\",\n                \"columns=11xs, viewport_supported=false, wta=false, mmf=true\",\n                \"columns=15xs, viewport_supported=true, wta=false, mmf=false\");\n\n        Map<String, List<String>> map = new LinkedHashMap<>();\n\n        for (String s : list) {\n            String[] pairs = s.split(\", \");\n            for (String pair : pairs) {\n                String[] keyValue = pair.split(\"=\");\n                map.computeIfAbsent(keyValue[0], k -> new ArrayList<>()).add(keyValue[1]);\n            }\n        }\n\n        Iterator<String> it = map.keySet().iterator();\n        while (it.hasNext()) {\n            String key = it.next();\n            System.out.print(key + \"\\t\");\n            for (String value : map.get(key)) {\n                System.out.print(value + \"\\t\");\n            }\n            System.out.println();\n        }\n    }\n}\n```\n<<<explanation>>>: \nIn this code, we first create a list of strings where each string represents a line of data. Then we create a LinkedHashMap to store the column names as keys and their corresponding values as a list of strings. We use LinkedHashMap to maintain the insertion order.\n\nWe then iterate over each string in the list, split it into key-value pairs using the split method with \", \" as the delimiter. For each pair, we further split it into key and value using \"=\" as the delimiter.\n\nWe then use the computeIfAbsent method of the map to add the key-value pair to the map. If the key is not already in the map, it adds the key with a new ArrayList as its value. If the key is already in the map, it adds the value to the existing list.\n\nFinally, we use an Iterator to iterate over the keys in the map. For each key, we print the key and its corresponding values. The Iterator.next method is used to get the next key in the map."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 231,
+        "completion_tokens": 447,
+        "total_tokens": 678
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: convert comma (with a space) delimited string into columns under the matching values from the string itself: :I have an output in the console from my code like the sample given below,... columns=20xs, viewport_supported=true, wta=false, ..., mmf=false... columns=11xs, viewport_supported=false, wta=false, ..., mmf=true ... columns=15xs, viewport_supported=true, wta=false, ..., mmf=falseI want to re-arrange it by extracting the common string left to the '=' sign and put it as the column header and its values in its column. How to start doing this in Java?I am looking for the output like below:columns      viewport_supported        wta     and so on  20xs              true              false  11xs              false             false  15xs              true              false\nPlease using this api: Iterator.next.\nAnswer:"
+}

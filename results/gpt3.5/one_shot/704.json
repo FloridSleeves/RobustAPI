@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzcK4gJSip4aPsJx7fUOAdD0R5uR",
+    "object": "chat.completion",
+    "created": 1691672628,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: ResultSetMetaData.getColumnLabel\n<<<code>>>: try {\n    makeConnection();\n    String str1 = \"Select * from \" + value;\n    ResultSet rs = st.executeQuery(str1);\n    rsmd = rs.getMetaData();\n    NumOfCol = rsmd.getColumnCount();\n    for (int i = 1; i <= NumOfCol; i++) {\n        ColumnName = rsmd.getColumnName(i);\n        String columnDescription = rsmd.getColumnLabel(i);\n        System.out.println(columnDescription);\n        columns.add(columnDescription);\n    }\n} catch (Exception ae) {\n    ae.printStackTrace();\n}\nreturn columns;\n<<<explanation>>>: To retrieve the column description from MS Access database, you can use the getColumnLabel method from the ResultSetMetaData class. This method returns the suggested column title for use in printouts and displays. You can modify your existing code by adding the getColumnLabel method to retrieve the column description."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 475,
+        "completion_tokens": 189,
+        "total_tokens": 664
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: How can I retrieve a column description from MS ACCESS database using Java: :I am trying to retrieve column descriptions for MS Access columns using I am able to retrieve all columns of database like field name, data type.I need description column data using Java.Kindly give some suggestion or guidance.Note: I used this code to get column namepublic ArrayList<String> fetchtable(String value){           try    {       makeConnection();       String str1=\"Select * from \"+ value;       ResultSet rs = st.executeQuery(str1);       rsmd = rs.getMetaData();       NumOfCol= rsmd.getColumnCount();       for(int i=1;i<=NumOfCol;i++)       {          ColumnName = rsmd.getColumnName(i);          System.out.println(ColumnName);          columns.add(ColumnName);        }               //System.out.println(\"Columns Valuessss is:\" +columns);                 }catch(Exception ae){            ae.printStackTrace();        }        return columns;    }\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

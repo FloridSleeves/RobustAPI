@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEDZr6vIWLh8r2LyRmgcAFZMUCWC",
+    "object": "chat.completion",
+    "created": 1691728753,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \npublic void save(View view) {\n    text=data.getText().toString();\n    PrintWriter writer=null;\n    try {\n        writer=new PrintWriter(new FileOutputStream(new File(context.getFilesDir(), filename), true));\n        writer.write(text);\n        writer.flush();\n        writer.close();\n        msg.setText(\"Data Saved Successfully\");\n    } catch (FileNotFoundException e) {\n        msg.setText(\"FileNotFoundException\");\n    }\n}\n<<<explanation>>>: Yes, you can use PrintWriter to save a string in a file in an Android app. The problem in your code is that you are not providing the correct file path. In Android, you need to use the getFilesDir() method to get the path to the internal directory where you can save private files for your app. Also, you should use the write() method of PrintWriter to write the string to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 406,
+        "completion_tokens": 178,
+        "total_tokens": 584
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Can we use PrintWriter Class for saving a string in a file in an Android App? If yes, then how?: :If we can use PrintWriter Class in making an Android App, then what is the mistake in the following code? My app stops working on pressing the button 'save'public void save(View view)    {        text=data.getText().toString();        PrintWriter writer=null;        try {            writer=new PrintWriter(filename);        } catch (FileNotFoundException e) {            msg.setText(\"FileNotFoundException\");            }        writer.print(text);        writer.flush();        writer.close();        msg.setText(\"Data Saved Successfully\");    }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

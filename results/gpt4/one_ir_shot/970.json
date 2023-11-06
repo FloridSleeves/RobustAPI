@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFvBF13OxvBREZYc8EP5WiZXHBtU",
+    "object": "chat.completion",
+    "created": 1691973629,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \ntry {\n    ServerSocket serverSocket = new ServerSocket(6000);\n    Socket socket = serverSocket.accept();\n\n    String policy = \"<cross-domain-policy><allow-access-from domain=\\\"*\\\" to-ports=\\\"6000\\\" /></cross-domain-policy>\\0\";\n    byte[] bytes = policy.getBytes(\"UTF-8\");\n\n    OutputStream out = socket.getOutputStream();\n    out.write(bytes);\n    out.flush();\n\n} catch (IOException e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: The getBytes() method of the String class is used to encode the string into a sequence of bytes using the named charset, storing the result into a new byte array. In this case, we are sending a cross-domain-policy to the client as soon as the connection is established. The policy is sent as a byte array, which is created by calling getBytes() on the policy string. The byte array is then written to the socket's output stream."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 328,
+        "completion_tokens": 201,
+        "total_tokens": 529
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Socket Connection from live Flash to local java: :I'm trying to get a live flash that lives on a webserver to talk to a local java server, that will live on the clients PC. I'm trying to achieve this with a socket connection. (port 6000)Now, at first flash was able to connect, but it just sends <policy-file-request/>. After this nothing happens.Now, some people at Kirupa suggested to send an cross-domain-policy xml as soon as any connection is established from the java side. http://www.kirupa.com/forum/showthread.php?t=301625However, my java server just throws the following:End Exception: java.net.SocketException: Software caused connection abort: recv failedI've already spend a great amount of time on this subject, and was wondering if anyone here knows what to do?\nPlease using this api: String.getBytes.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD1yVCcgQH8gUkhtgQjDbJQPJE5I",
+    "object": "chat.completion",
+    "created": 1691962518,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \nimport com.jcraft.jsch.*;\n\nJSch jsch = new JSch();\nSession session = jsch.getSession(\"user\", \"host\", 22);\nsession.setPassword(\"password\");\n\nProperties config = new Properties();\nconfig.put(\"StrictHostKeyChecking\", \"no\");\nsession.setConfig(config);\n\nsession.connect();\n\nChannel channel = session.openChannel(\"shell\");\nInputStream in = channel.getInputStream();\nchannel.connect();\n\nbyte[] tmp = new byte[1024];\nwhile (true) {\n  while (in.available() > 0) {\n    int i = in.read(tmp, 0, 1024);\n    if (i < 0) break;\n    System.out.print(new String(tmp, 0, i));\n  }\n  if (channel.isClosed()){\n    System.out.println(\"exit-status: \" + channel.getExitStatus());\n    break;\n  }\n  try{Thread.sleep(1000);}catch(Exception ee){}\n}\n\nchannel.disconnect();\nsession.disconnect();\n<<<explanation>>>: This code uses the JSch library to establish an SSH connection. The InputStream.read method is used to read the output from the SSH session. The read method blocks until input data is available, the end of the stream is detected, or an exception is thrown. The method reads up to len bytes of data from the input stream into an array of bytes. An attempt is made to read as many as len bytes, but a smaller number may be read. The number of bytes actually read is returned as an integer."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 254,
+        "completion_tokens": 312,
+        "total_tokens": 566
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: SSH library for Java: :Closed. This question does not meet Stack Overflow guidelines. It is not currently accepting answers.                                                             Questions asking us to recommend or find a tool, library or favorite off-site resource are off-topic for Stack Overflow as they tend to attract opinionated answers and spam. Instead, describe the problem and what has been done so far to solve it.Closed 9 years ago.                        Improve this question                    Does anyone have an example of an SSH library connection using Java.\nPlease using this api: InputStream.read.\nAnswer:"
+}

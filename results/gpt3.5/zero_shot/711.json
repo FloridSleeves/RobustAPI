@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lwP62BUVE3V7jYp4xFTvl2OXPjWX",
+    "object": "chat.completion",
+    "created": 1691660276,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\nimport java.io.BufferedReader;\nimport java.io.FileReader;\nimport java.io.FileWriter;\nimport java.io.IOException;\nimport java.io.PrintWriter;\n\npublic class FileSplitter {\n    public static void main(String[] args) {\n        String inputFile = \"input.txt\";\n        String outputFilePrefix = \"output\";\n        int rowsPerFile = 2000;\n        int fileCount = 5;\n\n        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {\n            String line;\n            int rowCount = 0;\n            int fileIndex = 1;\n            PrintWriter writer = null;\n\n            while ((line = reader.readLine()) != null) {\n                if (rowCount % rowsPerFile == 0) {\n                    if (writer != null) {\n                        writer.close();\n                    }\n                    writer = new PrintWriter(new FileWriter(outputFilePrefix + fileIndex + \".txt\"));\n                    fileIndex++;\n                }\n                writer.write(line + \"\\n\");\n                rowCount++;\n            }\n\n            if (writer != null) {\n                writer.close();\n            }\n\n            System.out.println(\"File splitting completed successfully.\");\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nThis code reads the input file line by line using a BufferedReader. It creates a new output file every time the number of rows written to the current file reaches the desired limit (rowsPerFile). The output file names are generated using the outputFilePrefix and a file index. The PrintWriter is used to write each line to the output file. Finally, the code closes the PrintWriter and displays a success message."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 129,
+        "completion_tokens": 334,
+        "total_tokens": 463
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Split Flat File using Java: :I am fairly new to java and need some help.  I have flat file with 10 columns and a total of, lets say, 9750 rows.  All the rows are pipe delimited.  I need to split the file into 2000 rows each (5 files). How do I do this in Java?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

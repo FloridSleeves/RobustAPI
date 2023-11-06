@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m59Ok9WZtLAtLxcU8Iv60UvhDvc3",
+    "object": "chat.completion",
+    "created": 1691693898,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\npublic class SafeLinkedHashMap<K, V> extends LinkedHashMap<K, V> {\n    private final int MAX_ENTRIES;\n    private final Object lock = new Object();\n\n    public SafeLinkedHashMap(int maxEntries) {\n        super(maxEntries, 0.75f, true);\n        this.MAX_ENTRIES = maxEntries;\n    }\n\n    @Override\n    protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {\n        return size() > MAX_ENTRIES;\n    }\n\n    @Override\n    public V put(K key, V value) {\n        synchronized (lock) {\n            return super.put(key, value);\n        }\n    }\n\n    @Override\n    public V get(Object key) {\n        synchronized (lock) {\n            return super.get(key);\n        }\n    }\n\n    public void readAndClear() {\n        synchronized (lock) {\n            Iterator<Map.Entry<K, V>> iterator = entrySet().iterator();\n            while (iterator.hasNext()) {\n                Map.Entry<K, V> entry = iterator.next();\n                // push to db\n            }\n            clear();\n        }\n    }\n}\n```\n<<<explanation>>>: \nIn this code, we are extending the LinkedHashMap class to create a thread-safe version of it. We are using a lock object to synchronize the put, get, and readAndClear methods. The put and get methods are synchronized to ensure that only one thread can modify or access the map at a time. The readAndClear method is also synchronized and uses the Iterator.next API to iterate over the entries in the map. This method reads all the entries, pushes them to the database, and then clears the map. The removeEldestEntry method is overridden to ensure that the map never contains more than MAX_ENTRIES entries. If the size of the map exceeds MAX_ENTRIES, the oldest entry is removed."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 194,
+        "completion_tokens": 383,
+        "total_tokens": 577
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: thread safe LinkedHashMap without Collections.synchronized: :I am using a LinkedHashMap and the environment is multi threaded so this structure needs to be thread safe. During specific events I need to read the entire map push to db and clear all. Most of time only writes happen to this map. This map has a limit 50 entries.I am using Oracle MAF and it does not have Collections.syncronizedMap available. So, what are things I need to put in synchronized blocks to make sure writing and reading doesn't hit me concurrentModificationException etcFew requirements:I need to behave it like a circular queue so Overriding removeEldestEntry method of the LinkedHashMap. I need to preserve the order\nPlease using this api: Iterator.next.\nAnswer:"
+}

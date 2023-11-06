@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCiKy1I5E6AX52iTo5LCfSc3gxV9",
+    "object": "chat.completion",
+    "created": 1691961300,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: private class SequenceSelector implements Selector {\n    private Iterator<T> iterator = items.iterator();\n    private T obj = iterator.next();\n    \n    public boolean end() {\n        return !iterator.hasNext();\n    }\n    \n    public T current() {\n        return obj;\n    }\n    \n    public void next() {\n        if (iterator.hasNext()) {\n            obj = iterator.next();\n        }\n    }\n}\n<<<explanation>>>: In the original code, the iterator is not moving because the next() method is always called on a new iterator object. To fix this, you need to store the iterator object as a member variable and call next() on the same iterator object in the next() method. This will move the iterator to the next element in the sequence."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 327,
+        "completion_tokens": 161,
+        "total_tokens": 488
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Infinite loop because the iterator doesn't move: :There is a some class which implementing an interface Selector. I should use iterator() in its methods. private class SequenceSelector implements Selector {    private T obj = items.iterator().next();    public boolean end() { return !items.iterator().hasNext(); }    public T current() { return obj; }    public void next() { obj = items.iterator().next(); }}items is a ArrayList. obj is a value in order to save the first sequence member before the first next() using.With a following code the program goes into an infinite loop in which is printed only the first member of sequence. while(!selector.end()) {      System.out.print(selector.current() + \" \");      selector.next();}Why does this happens? Though I use next() method, the iterator doesn't move.\nPlease using this api: Iterator.next.\nAnswer:"
+}

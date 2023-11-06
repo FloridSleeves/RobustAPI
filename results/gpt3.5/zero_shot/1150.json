@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7ly7GwyqiLMyOgpFLfalIf8whSdT8",
+    "object": "chat.completion",
+    "created": 1691666858,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \npublic static String filter(String s, String open, String close){\n    StringTokenizer st = new StringTokenizer(s, open + close);\n    StringBuilder filtered = new StringBuilder();\n    while (st.hasMoreTokens()) {\n        filtered.append(st.nextToken()).append(\", \");\n    }\n    return filtered.substring(0, filtered.length() - 2);\n}\n\n<<<explanation>>>: \nYou can use the StringTokenizer class to split the string into tokens based on the delimiters. In this case, the delimiters are the opening and closing strings. By using the StringTokenizer, you can avoid the issue of the start and end indices being the same. The code above demonstrates how to use the StringTokenizer to achieve the desired result."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 348,
+        "completion_tokens": 151,
+        "total_tokens": 499
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Finding the part of a String that is wrapped in delimeters: :Say I have a String like this: String s=\"social network such as '''[http://www.facebook.com Facebook]''' , \"+\"'''[http://www.twitter.com Twitter]''' and '''[http://www.tumblr.com tumblr]'''\";and I need to retrieve only those Strings within '''[ and ]'''.example output:http://www.facebook.com Facebook, http://www.twitter.com Twitter, http://www.tumblr.com   tumblrI'm having a difficulty doing this using regex, so I came with this idea using recursion:System.out.println(filter(s, \"'''[\",  \"]'''\"));....public static String filter(String s, String open, String close){     int start = s.indexOf(open);  int end = s.indexOf(close);  filtered = filtered + s.substring(start + open.length(), end) + \", \";  s = s.substring(end + close.length(), s.length());  if(s.indexOf(open) >= 0 && s.indexOf(close) >= 0)     return filter(s, open, close);  else     return filtered.substring(0, filtered.length() - 2);}but in some case, where I need to retrieve words within the same pattern of the String such as within ''' and ''', it will say String index out of range because start and end will hold the same value.How can I overcome this? Is regex the only solution?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

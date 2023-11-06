@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m4vfneJXs8LrpT5VQAwwIR57XTkC",
+    "object": "chat.completion",
+    "created": 1691693047,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n\n<<<code>>>: \n```java\nimport java.io.FileInputStream;\nimport java.io.IOException;\nimport java.sql.Connection;\nimport java.sql.DriverManager;\nimport java.sql.PreparedStatement;\nimport java.util.Iterator;\n\nimport org.apache.poi.ss.usermodel.Cell;\nimport org.apache.poi.ss.usermodel.Row;\nimport org.apache.poi.xssf.usermodel.XSSFSheet;\nimport org.apache.poi.xssf.usermodel.XSSFWorkbook;\n\npublic class ExcelToDatabase {\n    public static void main(String[] args) throws IOException {\n        FileInputStream fis = new FileInputStream(\"path_to_your_excel_file.xlsx\");\n\n        XSSFWorkbook workbook = new XSSFWorkbook(fis);\n        XSSFSheet sheet = workbook.getSheetAt(0);\n\n        Iterator<Row> rowIterator = sheet.iterator();\n\n        try {\n            Class.forName(\"com.mysql.jdbc.Driver\");\n            Connection con = DriverManager.getConnection(\"jdbc:mysql://localhost:3306/your_database\", \"username\", \"password\");\n            PreparedStatement pstm = null;\n\n            while (rowIterator.hasNext()) {\n                Row row = rowIterator.next();\n\n                if (row.getRowNum() == 0) continue; // Skip the header row\n\n                String query = \"INSERT INTO your_table (ID, IP1, IP2, USER, TKTNO) VALUES(?,?,?,?,?)\";\n                pstm = con.prepareStatement(query);\n\n                Iterator<Cell> cellIterator = row.cellIterator();\n                while (cellIterator.hasNext()) {\n                    Cell cell = cellIterator.next();\n                    int columnIndex = cell.getColumnIndex();\n\n                    switch (columnIndex + 1) {\n                        case 1:\n                            pstm.setString(1, cell.getStringCellValue());\n                            break;\n                        case 2:\n                            pstm.setString(2, cell.getStringCellValue());\n                            break;\n                        case 3:\n                            pstm.setString(3, cell.getStringCellValue());\n                            break;\n                        case 4:\n                            pstm.setString(4, cell.getStringCellValue());\n                            break;\n                        case 5:\n                            pstm.setString(5, cell.getStringCellValue());\n                            break;\n                    }\n                }\n                pstm.executeUpdate();\n            }\n            con.commit();\n            pstm.close();\n            con.close();\n            fis.close();\n        } catch (Exception e) {\n            System.out.println(e);\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nThis code reads an Excel file using Apache POI library and inserts the data into a MySQL database. It uses the Iterator.next method to iterate over the rows and cells of the Excel file. For each row, it prepares a SQL insert statement and sets the values of the statement parameters based on the cell values. It then executes the statement to insert the data into the database. The connection to the database is established using JDBC. Please replace \"path_to_your_excel_file.xlsx\", \"your_database\", \"username\", \"password\", and \"your_table\" with your actual file path, database name, username, password, and table name."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 151,
+        "completion_tokens": 588,
+        "total_tokens": 739
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: how to read excel file and insert those data into database using java and poi or any other libraray?: :i am using servlet and trying to read the user uploaded excel file and insert into database.my excel is in this format:ID IP1 IP2 USER TKTNO(these are headings in excel & database table as well)under those heading i have data in excel file which i have to read and insert into database.please desperately need help....thank you\nPlease using this api: Iterator.next.\nAnswer:"
+}

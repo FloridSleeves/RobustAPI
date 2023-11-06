@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDRPYsJPriZQcRxLRj4wnQut9j3E",
+    "object": "chat.completion",
+    "created": 1691964095,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: import java.io.File;\nimport java.io.FileOutputStream;\nimport java.io.IOException;\nimport java.io.PrintWriter;\nimport com.itextpdf.text.pdf.PdfReader;\nimport com.itextpdf.text.pdf.SimpleFontMapper;\n\npublic class CheckEmbeddedFonts {\n    public static void main(String[] args) {\n        try {\n            PdfReader reader = new PdfReader(\"input.pdf\");\n            PrintWriter writer = new PrintWriter(new FileOutputStream(\"output.txt\"));\n            \n            for (int i = 1; i <= reader.getNumberOfPages(); i++) {\n                SimpleFontMapper fontMapper = new SimpleFontMapper();\n                String[] fonts = fontMapper.getFonts(reader.getPageResources(i));\n                \n                writer.write(\"Fonts on page \" + i + \":\\n\");\n                for (String font : fonts) {\n                    writer.write(font + \"\\n\");\n                }\n                writer.write(\"\\n\");\n            }\n            \n            writer.close();\n            reader.close();\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n<<<explanation>>>: The code reads an existing PDF file using the PdfReader class from the iText library. It then uses the SimpleFontMapper class to get the list of fonts embedded in each page of the PDF. The results are written to an output.txt file using the PrintWriter.write method."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 268,
+        "completion_tokens": 271,
+        "total_tokens": 539
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Check if fonts are embedded in an existing PDF?: :How can I check if the fonts are embedded in an existing PDF?That is, read an existing PDF and list out the results in a .txt fileI went through the following example:http://itextpdf.com/examples/iia.php?id=287The above example tries to create a new PDF, but I want to read a PDF file and check if the fonts are embedded or not.I am more of a PHP guy so having a hard time to tweak the code. Any help would be appreciated\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

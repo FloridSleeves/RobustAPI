@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m8NKkrN9ibPYfylEWFiW4PIGqxP3",
+    "object": "chat.completion",
+    "created": 1691706294,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n\n<<<code>>>: \n```java\nimport javax.crypto.Mac;\nimport javax.crypto.spec.SecretKeySpec;\nimport java.nio.charset.StandardCharsets;\nimport java.util.Base64;\n\npublic class HMACExample {\n    public static void main(String[] args) {\n        try {\n            String secret = \"secret\";\n            String message = \"Message\";\n\n            Mac sha256_HMAC = Mac.getInstance(\"HmacSHA256\");\n            SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), \"HmacSHA256\");\n            sha256_HMAC.init(secret_key);\n\n            String hash = Base64.getEncoder().encodeToString(sha256_HMAC.doFinal(message.getBytes(StandardCharsets.UTF_8)));\n            System.out.println(hash);\n        } catch (Exception e){\n            System.out.println(\"Error\");\n        }\n    }\n}\n```\n\n<<<explanation>>>: HMAC (Hash Message Authentication Code) is a specific type of message authentication code (MAC) involving a cryptographic hash function and a secret cryptographic key. It is used to verify both the data integrity and the authenticity of a message at the same time.\n\nIn the provided Java code, we are using the `String.getBytes` method to convert our secret key and message into byte arrays, which are required for the HMAC process. We are using the `HmacSHA256` algorithm, but other algorithms like `HmacSHA1` or `HmacMD5` could also be used. \n\nThe `Mac.getInstance(\"HmacSHA256\")` method is used to get a `Mac` instance of the specified algorithm. The `SecretKeySpec` class is used to create a secret key from the given byte array. The `Mac.init(secret_key)` method is used to initialize the `Mac` instance with the given key.\n\nFinally, `sha256_HMAC.doFinal(message.getBytes(StandardCharsets.UTF_8))` is used to compute the HMAC of the given data, and the result is then encoded into a string using `Base64.getEncoder().encodeToString()`."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 90,
+        "completion_tokens": 415,
+        "total_tokens": 505
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: what is keyed-HMAC (Hash Message Authentication Code): :what is keyed-HMAC (Hash Message Authentication Code)? And how to write HMAC in web service using java?\nPlease using this api: String.getBytes.\nAnswer:"
+}

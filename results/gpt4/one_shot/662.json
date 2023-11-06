@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mDzif3gWa3i746sI3iP6TclHm19B",
+    "object": "chat.completion",
+    "created": 1691727894,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \npublic void run () {\n    byte[] buffer = new byte[1024];\n    int len = -1;\n    try {\n        PrintWriter data = new PrintWriter(new FileOutputStream(\"test.txt\", true));\n        while ( ( len = this.in.read(buffer)) > -1 ) {\n            String gpsInfo = new String(buffer,0,len);\n            data.println(gpsInfo);\n            System.out.print(gpsInfo);\n        }\n        data.close();\n    } catch ( IOException e ) {\n        e.printStackTrace();\n    }\n}\n<<<explanation>>>: The problem is that you are creating a new PrintWriter for each iteration of the loop, which overwrites the file each time. You should create the PrintWriter outside of the loop. Also, you need to close the PrintWriter after the loop to ensure that all data is written to the file. The 'true' parameter in the FileOutputStream constructor enables the append mode, which allows data to be written at the end of the file rather than overwriting it."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 432,
+        "completion_tokens": 210,
+        "total_tokens": 642
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Write String to a text file: :I have this code that gets GPS data from input stream make the test file but there is nothing inside. Can you please tell me what is the problem in here? public void run ()        {            byte[] buffer = new byte[1024];            int len = -1;            try            {                while ( ( len = this.in.read(buffer)) > -1 )                {                    String gpsInfo = new String(buffer,0,len);                    PrintWriter data = new PrintWriter(\"test.txt\");                    data.println(gpsInfo);                    System.out.print(gpsInfo);                }            }            catch ( IOException e )            {                e.printStackTrace();            }                    }I am getting the right console output.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

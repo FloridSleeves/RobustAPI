@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m43h9zs8MUntncykxbJPFTkV9t0g",
+    "object": "chat.completion",
+    "created": 1691689701,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n\n<<<code>>>: \n```java\nimport java.io.FileInputStream;\nimport java.io.IOException;\nimport java.sql.Connection;\nimport java.sql.DriverManager;\nimport java.sql.PreparedStatement;\nimport java.sql.SQLException;\nimport java.util.Iterator;\n\nimport org.apache.poi.ss.usermodel.Cell;\nimport org.apache.poi.ss.usermodel.Row;\nimport org.apache.poi.ss.usermodel.Sheet;\nimport org.apache.poi.ss.usermodel.Workbook;\nimport org.apache.poi.xssf.usermodel.XSSFWorkbook;\n\npublic class ExcelToDatabase {\n    public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {\n        String jdbcURL = \"jdbc:mysql://localhost:3306/testdb\";\n        String username = \"root\";\n        String password = \"root\";\n\n        String excelFilePath = \"Students.xlsx\";\n\n        FileInputStream inputStream = new FileInputStream(excelFilePath);\n\n        Workbook workbook = new XSSFWorkbook(inputStream);\n\n        Sheet firstSheet = workbook.getSheetAt(0);\n        Iterator<Row> rowIterator = firstSheet.iterator();\n\n        Class.forName(\"com.mysql.jdbc.Driver\");\n        Connection connection = DriverManager.getConnection(jdbcURL, username, password);\n\n        connection.setAutoCommit(false);\n\n        String sql = \"INSERT INTO STUDENTS (name, email, date_of_birth, salary) VALUES (?, ?, ?, ?)\";\n        PreparedStatement statement = connection.prepareStatement(sql);\n\n        while (rowIterator.hasNext()) {\n            Row nextRow = rowIterator.next();\n            Iterator<Cell> cellIterator = nextRow.cellIterator();\n\n            while (cellIterator.hasNext()) {\n                Cell nextCell = cellIterator.next();\n\n                int columnIndex = nextCell.getColumnIndex();\n\n                switch (columnIndex) {\n                case 0:\n                    String name = nextCell.getStringCellValue();\n                    statement.setString(1, name);\n                    break;\n                case 1:\n                    String email = nextCell.getStringCellValue();\n                    statement.setString(2, email);\n                    break;\n                case 2:\n                    Date dob = nextCell.getDateCellValue();\n                    statement.setDate(3, new java.sql.Date(dob.getTime()));\n                    break;\n                case 3:\n                    double salary = nextCell.getNumericCellValue();\n                    statement.setDouble(4, salary);\n                    break;\n                }\n\n            }\n\n            statement.executeUpdate();\n        }\n\n        workbook.close();\n\n        connection.commit();\n        connection.close();\n    }\n}\n```\n\n<<<explanation>>>: This code reads data from an Excel file using Apache POI and writes it to a MySQL database. It uses the Iterator.next method to iterate over rows and cells in the Excel file. For each row, it creates a new PreparedStatement for the SQL insert statement. For each cell, it gets the cell value based on the cell type and sets it as a parameter in the PreparedStatement. After setting all parameters, it executes the update to insert the row into the database. The connection.commit() is used to save all changes made since the previous commit/rollback."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 131,
+        "completion_tokens": 573,
+        "total_tokens": 704
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Conversion of excel data to MySql tables: :I am developing an application in spring and hibernate with Eclipse as IDE.I want to convert Excel file data to MySql table.I have referred following link.http://www.coderanch.com/t/608700/JDBC/databases/import-data-excel-files-databaseCan anybody send me an useful link or simple java code for the same?\nPlease using this api: Iterator.next.\nAnswer:"
+}

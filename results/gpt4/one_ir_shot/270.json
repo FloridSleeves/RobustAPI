@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDS65Yw2NEyevP8DofYOgEtZjflw",
+    "object": "chat.completion",
+    "created": 1691964138,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \nimport org.apache.poi.ss.usermodel.*;\nimport java.io.*;\nimport java.util.Iterator;\n\npublic class ExcelToCSV {\n    public static void main(String[] args) throws Exception {\n        FileInputStream fis = new FileInputStream(new File(\"Excel.xlsx\"));\n        Workbook workbook = WorkbookFactory.create(fis);\n        Sheet sheet = workbook.getSheetAt(0);\n        Iterator<Row> rowIterator = sheet.iterator();\n        FileWriter csvWriter = new FileWriter(\"CSV.csv\");\n\n        while (rowIterator.hasNext()) {\n            Row row = rowIterator.next();\n            Iterator<Cell> cellIterator = row.cellIterator();\n            while (cellIterator.hasNext()) {\n                Cell cell = cellIterator.next();\n                switch (cell.getCellType()) {\n                    case STRING:\n                        csvWriter.append(cell.getStringCellValue());\n                        break;\n                    case NUMERIC:\n                        csvWriter.append(String.valueOf(cell.getNumericCellValue()));\n                        break;\n                    default:\n                }\n                csvWriter.append(\",\");\n            }\n            csvWriter.append(\"\\n\");\n        }\n        csvWriter.flush();\n        csvWriter.close();\n        fis.close();\n    }\n}\n<<<explanation>>>: This code reads an Excel file using Apache POI library, iterates over the rows and cells using Iterator.next method, and writes the cell values to a CSV file. The switch statement is used to handle different cell types. After writing each cell value, a comma is appended to separate the values in the CSV file. After each row, a new line is added. Finally, the FileWriter and FileInputStream are closed to free up resources."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 198,
+        "completion_tokens": 316,
+        "total_tokens": 514
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to write csv file on the basis of Excel using java?: :I have spreadsheet with certain data. I would like to programmatically dump this to CSV file. How can I do this using java?\nPlease using this api: Iterator.next.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lv2GTVcSpApjJ41FuK6WtEF9wTUj",
+    "object": "chat.completion",
+    "created": 1691655016,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\nimport java.io.BufferedReader;\nimport java.io.FileReader;\nimport java.io.IOException;\n\npublic class XMLParser {\n    public static void main(String[] args) {\n        try {\n            BufferedReader reader = new BufferedReader(new FileReader(\"input.txt\"));\n            StringBuilder xmlBuilder = new StringBuilder();\n            String line;\n            while ((line = reader.readLine()) != null) {\n                xmlBuilder.append(line);\n            }\n            String xml = xmlBuilder.toString();\n            String[] xmlDocuments = xml.split(\"<DOC>\");\n            for (String xmlDocument : xmlDocuments) {\n                if (xmlDocument.contains(\"<TEXT>\")) {\n                    int startIndex = xmlDocument.indexOf(\"<TEXT>\") + \"<TEXT>\".length();\n                    int endIndex = xmlDocument.indexOf(\"</TEXT>\");\n                    String textValue = xmlDocument.substring(startIndex, endIndex);\n                    System.out.println(textValue);\n                }\n            }\n            reader.close();\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n<<<explanation>>>: \nTo parse multiple consecutive XML files in one document, you can use the `InputStream.read` API in Java. In the provided code, we use a `BufferedReader` to read the input file line by line. We then append each line to a `StringBuilder` to build the complete XML string.\n\nOnce we have the complete XML string, we split it using the `<DOC>` tag as the delimiter. This gives us an array of individual XML documents. We iterate over each document and check if it contains the `<TEXT>` tag. If it does, we extract the value between the `<TEXT>` and `</TEXT>` tags using the `indexOf` and `substring` methods.\n\nFinally, we print the extracted text value for each document."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 212,
+        "completion_tokens": 361,
+        "total_tokens": 573
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to parse multiple, consecutive xml files in one document?: :I have a big text file that is a sequence of XML-valid documents that looks something like this:<DOC>   <TEXT> ... </TEXT>    ...</DOC><DOC>    <TEXT> ... </TEXT>    ...</DOC>etc. There is no <?xml version=\"1.0\">, the <DOC></DOC> delimits each separate xml. What's the best way to parse this in Java and get the values under <TEXT> in each <DOC>?If I pass the whole thing to a DocumentBuilder, I get an error saying the document is not well formed. Is there a better solution than simply traversing through, a building a string for each <DOC>?\nPlease using this api: InputStream.read.\nAnswer:"
+}

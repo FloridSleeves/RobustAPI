@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m5lbwl6COEpxc62fUWI4zo9vhywv",
+    "object": "chat.completion",
+    "created": 1691696267,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: JsonElement.getAsString\n<<<code>>>: \n```java\nimport com.google.gson.JsonArray;\nimport com.google.gson.JsonElement;\nimport com.google.gson.JsonParser;\n\nimport java.util.HashSet;\nimport java.util.Set;\n\npublic class Main {\n    public static void main(String[] args) {\n        String tags2 = \"[[\\\"pdf\\\",\\\"java\\\",\\\"c++\\\"],[\\\"perl\\\",\\\"pdf\\\",\\\"c\\\"],[\\\"java\\\",\\\"c++\\\"]]\";\n        JsonArray jsonArray = new JsonParser().parse(tags2).getAsJsonArray();\n\n        Set<String> uniqueTags = new HashSet<>();\n        for (JsonElement element : jsonArray) {\n            JsonArray innerArray = element.getAsJsonArray();\n            for (JsonElement tag : innerArray) {\n                uniqueTags.add(tag.getAsString());\n            }\n        }\n\n        for (String tag : uniqueTags) {\n            System.out.println(tag);\n        }\n    }\n}\n```\n<<<explanation>>>: \nIn the provided code, we first parse the JSON string into a JsonArray using the JsonParser. Then, we create a HashSet to store the unique tags. We iterate over each JsonElement in the JsonArray, and for each element, we get it as a JsonArray and iterate over its elements. For each tag, we add it to the HashSet using the getAsString method of JsonElement. Since a HashSet only stores unique elements, this automatically removes any duplicates. Finally, we print out each unique tag."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 234,
+        "completion_tokens": 296,
+        "total_tokens": 530
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to split json object extracted from mongodb using java: :Closed. This question does not meet Stack Overflow guidelines. It is not currently accepting answers.                                                             Questions asking for code must demonstrate a minimal understanding of the problem being solved. Include attempted solutions, why they didn't work, and the expected results. See also: Stack Overflow question checklistClosed 9 years ago.                        Improve this question                    I have stored some JSON objects in MongoDB collections and using Mongo jar and Java I did full text search, and I am extracting one of my DB fields using below code:String tags2=dbo.getString(\"Tags\");Result:[[\"pdf\",\"java\",\"c++\"][\"perl\",\"pdf\",\"c\"][\"java\",\"c++\"]]My requirement is to split all the words and remove duplicates. I require the following output:pdfjavac++cperlCan you please suggest a way to get this?\nPlease using this api: JsonElement.getAsString.\nAnswer:"
+}

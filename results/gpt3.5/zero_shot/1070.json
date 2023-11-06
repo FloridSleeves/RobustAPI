@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxcaqHOpY0brbm63cca0NuuSgdqY",
+    "object": "chat.completion",
+    "created": 1691664956,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: java.util.StringTokenizer\n<<<code>>>: \npublic static ArrayList<String> dataRead() throws FileNotFoundException {\n    Scanner s = new Scanner(new File(\"c:\\\\stats.txt\")).useDelimiter(\"\\r\");\n    ArrayList<String> array = new ArrayList<String>();\n    while (s.hasNextLine()) {\n        String currentLine = s.nextLine();\n        StringTokenizer st = new StringTokenizer(currentLine, \"\\t\");\n        while (st.hasMoreTokens()) {\n            System.out.print(st.nextToken() + \" \");\n        }\n        System.out.println();\n    }\n    s.close();\n    return array;\n}\n<<<explanation>>>: \nTo properly end the file scanner while loop, you can use the `hasNextLine()` method of the `Scanner` class to check if there is another line in the file. This ensures that the loop will terminate when there are no more lines to read. Inside the loop, you can use the `nextLine()` method to read the current line as a string. Then, you can use the `StringTokenizer` class to split the line into tokens using the tab delimiter. The `hasMoreTokens()` method of `StringTokenizer` is used to check if there are more tokens in the current line. Finally, you can use the `nextToken()` method to retrieve the next token from the line."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 306,
+        "completion_tokens": 266,
+        "total_tokens": 572
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to end a file scanner while loop with undetermined length correctly in java: :I wrote a function that scans a tab delimited file of baseball stats.public static ArrayList dataRead() throws FileNotFoundException {    //ArrayList array = new ArrayList<ArrayList>();    Scanner s = new Scanner(new File(\"c:\\\\stats.txt\")).useDelimiter(\"\\r\");    ArrayList<String> array = new ArrayList<String>();    int i = 0;    while(s.next() != null) {        String currentLine = s.next();        Scanner split = new Scanner(currentLine).useDelimiter(\"\\t\");        for(int j = 0; j < 16; j++) {            System.out.print(split.next() + \" \");            j++;        }        System.out.println(\"\\r\");    }    s.close();    return array;}This function works until the end of the file. To my knowledge the while loop should close at the end of the file because it returns null, but I keep getting a noSuchElement error instead. If I could guarantee the file size, I would just use a for loop with the size, but I can't because team size could technically vary. How would I properly end the file scanner while loop so I can close the scanner?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

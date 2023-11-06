@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lziRY7It999HeceBovpiVvoqPM1R",
+    "object": "chat.completion",
+    "created": 1691673007,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: You can use the following code in your servlet to handle the file upload:\n\nprotected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {\n    // Get the file from the request\n    Part filePart = request.getPart(\"file\");\n    \n    // Get the filename\n    String fileName = filePart.getSubmittedFileName();\n    \n    // Get the input stream of the file\n    InputStream fileInputStream = filePart.getInputStream();\n    \n    // Create a file output stream to save the file\n    FileOutputStream fileOutputStream = new FileOutputStream(\"path/to/save/\" + fileName);\n    \n    // Create a byte array to read the file in chunks\n    byte[] buffer = new byte[4096];\n    int bytesRead;\n    \n    // Read the file and write it to the output stream\n    while ((bytesRead = fileInputStream.read(buffer)) != -1) {\n        fileOutputStream.write(buffer, 0, bytesRead);\n    }\n    \n    // Close the streams\n    fileInputStream.close();\n    fileOutputStream.close();\n    \n    // Send a response back to the client\n    PrintWriter out = response.getWriter();\n    out.println(\"File uploaded successfully\");\n}\n\nThis code uses the Part interface to get the file from the request. It then reads the file in chunks and writes it to a FileOutputStream. Finally, it sends a response back to the client indicating that the file was uploaded successfully."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 333,
+        "completion_tokens": 287,
+        "total_tokens": 620
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Android, upload a file in the tomcat server: :I am looking for code that can quickly upload an image from my android application in tomcat server.At the moment I have not found the java code to place in the tomcat server (servlet)\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

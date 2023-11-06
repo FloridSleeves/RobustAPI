@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lydGy55cHej8rFkMC0EcCLPyc8MP",
+    "object": "chat.completion",
+    "created": 1691668842,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: ChannelExec channel = (ChannelExec) session.openChannel(\"exec\");\nchannel.setCommand(\"your command here\");\nchannel.connect();\n\nInputStream in = channel.getInputStream();\nbyte[] buffer = new byte[1024];\nint bytesRead = -1;\nwhile ((bytesRead = in.read(buffer)) != -1) {\n    String output = new String(buffer, 0, bytesRead);\n    // do something with the output\n}\n\nchannel.disconnect();\nsession.disconnect();\n<<<explanation>>>: To run a command over SSH with JSch, you can use the ChannelExec class. First, open a new channel of type \"exec\" using session.openChannel(\"exec\"). Set the command you want to run using channel.setCommand(\"your command here\"). Then, connect to the channel using channel.connect(). Next, get the input stream from the channel using channel.getInputStream(). Read from the input stream using the read() method, which will return the number of bytes read. Convert the bytes to a string and do something with the output. Finally, disconnect the channel and session using channel.disconnect() and session.disconnect()."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 525,
+        "completion_tokens": 228,
+        "total_tokens": 753
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Android InputStream.read() horribly slow:I'm working on an Android app that needs to communicate with a server (running on my PC) which is also written by me. The problem is that InputStream.read() takes an eternity, processing 200kb takes something around 30 seconds. My code: client = new Socket(\"192.168.1.1\", 1235);\nclient.setTcpNoDelay(true);\nclient.setReceiveBufferSize(1048576);\nInputStream is = client.getInputStream();\n\nbyte[] buffer = new byte[1048576];\nint i = 0;\nint length = -1;\n\nwhile (true)\n{\n    int b = is.read();\n    if (b == -1)\n    {\n        success = false;\n        break;\n    }\n    buffer[i] = (byte) b;\n\n    if (i == length)\n        break;\n\n                                    if (i == 3)\n                                    {\n                                                length = buffer[0] | buffer[1] << 8 | buffer[2] << 16 | buffer[3] << 24;\n                                                    \n                                        }\n\n                                        i++;\n\n        }\nPlease using this api: InputStream.read.\nAnswer:<<<api>>>: InputStream.read\n<<<code>>>: final byte[] lengthBuffer = new byte[3];\ntry{\n    int b = is.read(lengthBuffer);\n    // make sure b was 3 and do your length calculation\n    final byte buffer = new byte[length];\n    b = is.read(buffer);\n    // check b and then you have your bytes}\nexcept {System.out.println(\"Something went wrong.\");\")}\n<<<explanation>>>: Why are you reading each byte individually? It looks like you really want to read the first 3 bytes and figure out your length and then read that block. Then you can at least get the optimizations that Inputstream can provide for reading blocks of data rather than one byte at a time. And you are not allocating that mega array like you currently have.\nQuestion: Run a command over SSH with JSch: :I'm trying to run a command over SSH with JSch, but JSch has virtually no documentation and the examples I've found are terrible. For example, this one doesn't show code for handling the output stream. And, this one uses an ugly hack to know when to stop reading from the output stream.\nPlease using this api: InputStream.read.\nAnswer:"
+}

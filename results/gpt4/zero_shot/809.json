@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m7NzRpgK8p8Ixz2mVUPTiA5TUdLX",
+    "object": "chat.completion",
+    "created": 1691702491,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n\n<<<code>>>: \n```java\n@Controller\npublic class AutocompleteController {\n\n    @Autowired\n    private LdapTemplate ldapTemplate;\n\n    @RequestMapping(value = \"/getLdapData\", method = RequestMethod.GET)\n    public void getLdapData(HttpServletResponse response) {\n        PrintWriter out = null;\n        try {\n            out = response.getWriter();\n            List<String> ldapData = ldapTemplate.search(\n                    \"\", \"(objectClass=person)\",\n                    (AttributesMapper<String>) attrs -> (String) attrs.get(\"cn\").get());\n            String json = new Gson().toJson(ldapData);\n            out.write(json);\n        } catch (IOException e) {\n            e.printStackTrace();\n        } finally {\n            if (out != null) {\n                out.close();\n            }\n        }\n    }\n}\n```\n```javascript\n$(function() {\n    $(\"#ldapAutocomplete\").autocomplete({\n        source: function(request, response) {\n            $.ajax({\n                url: \"/getLdapData\",\n                dataType: \"json\",\n                data: {\n                    term: request.term\n                },\n                success: function(data) {\n                    response(data);\n                }\n            });\n        }\n    });\n});\n```\n\n<<<explanation>>>: In the given code, we are using Spring's LdapTemplate to query the LDAP server. The query is searching for all objects of class 'person' and retrieving their 'cn' (common name) attribute. This data is then converted to JSON format using Google's Gson library and written to the HttpServletResponse's PrintWriter. This data is then sent to the client.\n\nOn the client side, we are using jQuery's autocomplete widget. The source option is set to a function that makes an AJAX request to the server to retrieve the LDAP data. This data is then used to populate the autocomplete suggestions."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 128,
+        "completion_tokens": 370,
+        "total_tokens": 498
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Spring 3, ldap and Query autocomplete text field: :I would like to have an autocompliting input (text) field on my Spring 3 form. The suggested values should come from ldap. I should use JQuery for this, but so far that's all I know. I have found some examples with data txt.files, but not ldap.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

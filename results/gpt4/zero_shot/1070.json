@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m9NItxlUGiHl4WN3yFiaMDkLcvTa",
+    "object": "chat.completion",
+    "created": 1691710136,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\npublic static ArrayList<String> dataRead() throws FileNotFoundException {\n    Scanner s = new Scanner(new File(\"c:\\\\stats.txt\")).useDelimiter(\"\\r\");\n    ArrayList<String> array = new ArrayList<String>();\n    while(s.hasNext()) {\n        String currentLine = s.next();\n        StringTokenizer st = new StringTokenizer(currentLine, \"\\t\");\n        while(st.hasMoreTokens()) {\n            System.out.print(st.nextToken() + \" \");\n        }\n        System.out.println(\"\\r\");\n    }\n    s.close();\n    return array;\n}\n```\n<<<explanation>>>: The problem with your code is that you are calling `s.next()` twice in your while loop. The first call is in the condition of the while loop and the second call is inside the loop. This means that you are skipping every other line in your file. Instead, you should use `s.hasNext()` in your while loop condition. This will return true if there is another line in the file and false if there isn't. Inside the loop, you can then safely call `s.next()` to get the next line. \n\nFor splitting the line into tokens, you can use `StringTokenizer` class. You create a new `StringTokenizer` for each line, specifying \"\\t\" as the delimiter. Then, you can use `st.hasMoreTokens()` in a while loop to check if there are more tokens in the line and `st.nextToken()` to get the next token. This way, you don't need to know the number of tokens in advance."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 306,
+        "completion_tokens": 319,
+        "total_tokens": 625
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to end a file scanner while loop with undetermined length correctly in java: :I wrote a function that scans a tab delimited file of baseball stats.public static ArrayList dataRead() throws FileNotFoundException {    //ArrayList array = new ArrayList<ArrayList>();    Scanner s = new Scanner(new File(\"c:\\\\stats.txt\")).useDelimiter(\"\\r\");    ArrayList<String> array = new ArrayList<String>();    int i = 0;    while(s.next() != null) {        String currentLine = s.next();        Scanner split = new Scanner(currentLine).useDelimiter(\"\\t\");        for(int j = 0; j < 16; j++) {            System.out.print(split.next() + \" \");            j++;        }        System.out.println(\"\\r\");    }    s.close();    return array;}This function works until the end of the file. To my knowledge the while loop should close at the end of the file because it returns null, but I keep getting a noSuchElement error instead. If I could guarantee the file size, I would just use a for loop with the size, but I can't because team size could technically vary. How would I properly end the file scanner while loop so I can close the scanner?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

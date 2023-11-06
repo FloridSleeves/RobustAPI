@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCRAQeoAj5L0dmwIqBK0Jxymskr4",
+    "object": "chat.completion",
+    "created": 1691960236,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: String message = \"T\u00e4ss\u00e4\";\nURL url = new URL(\"own_url\");\nHttpURLConnection con = (HttpURLConnection)url.openConnection();\ncon.setRequestMethod(\"POST\");\ncon.setRequestProperty(\"User-Agent\", \"\");\ncon.setRequestProperty(\"Accept-Language\", \"fi, en-US,fi;q=0.6, en;q=0.5\");\ncon.setRequestProperty(\"Accept-Charset\", \"UTF-8\");\ncon.setDoOutput(true);\nDataOutputStream wr = new DataOutputStream(con.getOutputStream());\nwr.write(message.getBytes(\"UTF-8\"));\nwr.flush();\nwr.close();\n<<<explanation>>>: The DataOutputStream.write() method writes the specified byte array to the output stream. In this case, we convert the string message to bytes using the UTF-8 encoding and write it to the output stream. This ensures that the scandinavian characters are correctly encoded and sent to the PHP server."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 483,
+        "completion_tokens": 190,
+        "total_tokens": 673
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: What is wrong when i try to post String with scandinavian characters from Android to Php, like \u00c5\u00c4\u00d6: :I can't find any reason why my scandinavian characters passed to php isn't shown and stored correctly. When I use my web application, scandinavian characters works correctly with php and database.If i write message to database from webapp and load it to android app, characters comes correctly.In androidString message = \"T\u00e4ss\u00e4\"try {    // open a connection to the site    URL url = new URL(\"own_url\");    HttpURLConnection con = (HttpURLConnection)url.openConnection();    con.setRequestMethod(\"POST\");    con.setRequestProperty(\"User-Agent\", \"\");    con.setRequestProperty(\"Accept-Language\", \"fi, en-US,fi;q=0.6, en;q=0.5\");    con.setRequestProperty(\"Accept-Charset\", \"UTF-8\");    // Send post request    con.setDoOutput(true);    String urlParameters = \"message=\" + message;In PHP$message = $_POST['message'];error_log($message);error_log shows it like T\\xe4ss\\xe4mysqli_set_charset($con, 'utf8');date_default_timezone_set('UTC');$sql = \"INSERT INTO messages SET message='$message'\";mysqli_query($con, $sql);In database it is T?ssEDIT Changed query generation to prevent SQL-injection, thanks to user2864740 suggestion.$stmt = $con->prepare(\"INSERT INTO messages (message) VALUES (?)\");$stmt->bind_param(\"s\", $message);$stmt->execute();\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

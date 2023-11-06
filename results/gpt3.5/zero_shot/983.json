@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxOpU5An3mh3utHLP84t3DgP5dHi",
+    "object": "chat.completion",
+    "created": 1691664103,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes()\n<<<code>>>: \n```\nimport java.security.MessageDigest;\nimport java.security.NoSuchAlgorithmException;\nimport org.json.JSONObject;\n\npublic class Hash {\n    public static String generateHash(JSONObject jsonObject, String string) {\n        try {\n            // Concatenate the JSON object and string\n            String data = jsonObject.toString() + string;\n            \n            // Create a MessageDigest object with SHA-256 algorithm\n            MessageDigest digest = MessageDigest.getInstance(\"SHA-256\");\n            \n            // Get the bytes of the concatenated data\n            byte[] bytes = data.getBytes();\n            \n            // Generate the hash value\n            byte[] hashBytes = digest.digest(bytes);\n            \n            // Convert the hash bytes to hexadecimal string\n            StringBuilder hexString = new StringBuilder();\n            for (byte b : hashBytes) {\n                String hex = Integer.toHexString(0xff & b);\n                if (hex.length() == 1) {\n                    hexString.append('0');\n                }\n                hexString.append(hex);\n            }\n            \n            // Return the hash value as a string\n            return hexString.toString();\n        } catch (NoSuchAlgorithmException e) {\n            e.printStackTrace();\n        }\n        \n        return null;\n    }\n}\n```\n<<<explanation>>>: \n1. Concatenate the JSON object and string into a single string.\n2. Create a MessageDigest object with SHA-256 algorithm.\n3. Get the bytes of the concatenated data using `String.getBytes()`.\n4. Generate the hash value using `digest.digest(bytes)`.\n5. Convert the hash bytes to a hexadecimal string.\n6. Return the hash value as a string."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 134,
+        "completion_tokens": 328,
+        "total_tokens": 462
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Generate SHA 256 Hash using multiple values in Java/Android: :I have two objects based on which SHA 256 Hash needs to be generated.First value is a JSONObjectSecond value is a String variable.Ideally, what i need isHash hash= new Hash(JSONObject, String);I couldn't find any hash generation methods which takes two values.Could anyone help me with this?.\nPlease using this api: String.getBytes.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFqjdmDOmrqOdDZqN9h9SKnhLsV4",
+    "object": "chat.completion",
+    "created": 1691973353,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \n// AES Encryption\nimport javax.crypto.Cipher;\nimport javax.crypto.spec.SecretKeySpec;\nimport java.util.Base64;\n\npublic class AES {\n    private static String key = \"aesEncryptionKey\";\n    private static String initVector = \"encryptionIntVec\";\n\n    public static String encrypt(String value) {\n        try {\n            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(\"UTF-8\"), \"AES\");\n            Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");\n            cipher.init(Cipher.ENCRYPT_MODE, skeySpec);\n            byte[] encrypted = cipher.doFinal(value.getBytes());\n            return Base64.getEncoder().encodeToString(encrypted);\n        } catch (Exception ex) {\n            ex.printStackTrace();\n        }\n        return null;\n    }\n}\n\n// Twofish Encryption\nimport org.bouncycastle.crypto.engines.TwofishEngine;\nimport org.bouncycastle.crypto.params.KeyParameter;\nimport org.bouncycastle.util.encoders.Hex;\n\npublic class Twofish {\n    private static String key = \"twofishEncryptionKey\";\n\n    public static String encrypt(String value) {\n        try {\n            TwofishEngine engine = new TwofishEngine();\n            KeyParameter keyParam = new KeyParameter(key.getBytes());\n            engine.init(true, keyParam);\n            byte[] plaintext = value.getBytes();\n            byte[] ciphertext = new byte[engine.getBlockSize()];\n            engine.processBlock(plaintext, 0, ciphertext, 0);\n            return new String(Hex.encode(ciphertext));\n        } catch (Exception ex) {\n            ex.printStackTrace();\n        }\n        return null;\n    }\n}\n<<<explanation>>>: For AES encryption, we first create a SecretKeySpec from the key string using the getBytes() method. Then we initialize a Cipher instance with the key spec and encrypt the input string. The encrypted bytes are then encoded into a string using Base64 encoding.\n\nFor Twofish encryption, we first create a TwofishEngine and a KeyParameter from the key string using the getBytes() method. We then initialize the engine with the key parameter and encrypt the input string. The encrypted bytes are then encoded into a string using Hex encoding."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 246,
+        "completion_tokens": 451,
+        "total_tokens": 697
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Algorithm AES And Algorithm Twofish: :I have a project to make an encryption and decryption for string input in java. I've been stucked for a week doing some research in it. I really appreciate if you have sample source code or function method for Algorithm AES and Algorithm Twofish in java that I may use in my project. I really need your help ... hope someone out there could be my savior. Thanks very much.\nPlease using this api: String.getBytes.\nAnswer:"
+}

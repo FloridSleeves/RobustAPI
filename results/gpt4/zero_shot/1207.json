@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mAIMb1ICQvRUs2n8WI91waDsQm0e",
+    "object": "chat.completion",
+    "created": 1691713674,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: TypedArray.getString\n<<<code>>>: \n```java\npublic class MyTextView extends TextView{\n    public MyTextView(Context context, AttributeSet attrs, int defStyle)\n    {\n        super(context, attrs, defStyle);\n        init(attrs);\n    }\n\n    public MyTextView(Context context, AttributeSet attrs)\n    {\n        super(context, attrs);\n        init(attrs);\n    }\n\n    public MyTextView(Context context)\n    {\n        super(context);\n        init(null);\n    }\n\n    public void init(AttributeSet attrs)\n    {\n        String font_name = \"\";\n        if(attrs != null){\n            TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.MyTextView, 0, 0);\n            try {\n                font_name = a.getString(R.styleable.MyTextView_fontname);\n            } finally {\n                a.recycle();\n            }\n        }\n\n        if (!isInEditMode())\n        {\n            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), \"fonts/\"+font_name);\n            setTypeface(tf);\n        }\n    }\n}\n```\nIn Xml File\n```xml\n<com.Example.MyTextView\n    android:id=\"@+id/header\"\n    android:layout_width=\"wrap_content\"\n    android:layout_height=\"wrap_content\"\n    app:fontname=\"font.ttf\"\n    android:text=\"Header\" />\n```\nIn res/values/attrs.xml\n```xml\n<declare-styleable name=\"MyTextView\">\n    <attr name=\"fontname\" format=\"string\" />\n</declare-styleable>\n```\n<<<explanation>>>: The TypedArray.getString method is used to retrieve the font name from the custom attribute in the XML layout file. This is done in the init() method where we first check if the AttributeSet is not null. If it's not null, we obtain the styled attributes from the context's theme, then try to get the string value of the custom attribute using the resource ID R.styleable.MyTextView_fontname. After that, we recycle the TypedArray. If the view is not in edit mode, we create a Typeface from the font file in the assets directory and set it to the TextView."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 298,
+        "completion_tokens": 430,
+        "total_tokens": 728
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: get a custom attribute of custom textview from XML: :How to get custom fontname Attributes of Custom TextView for Set font to Textview.Based on Attributes value set Font in TextViewpublic class MyTextView extends TextView{    public MyTextView(Context context, AttributeSet attrs, int defStyle)    {        super(context, attrs, defStyle);        init();    }    public MyTextView(Context context, AttributeSet attrs)    {        super(context, attrs);        init();    }    public MyTextView(Context context)    {        super(context);        init();    }    public void init()    {          // set font_name based on attribute value of textview in xml file          String font_name = \"\";        if (!isInEditMode())        {            Typeface tf = Typeface.createFromAsset(getContext().getAssets(),                    \"fonts/\"+font_name);            setTypeface(tf);        }    }In Xml File<com.Example.MyTextView             android:id=\"@+id/header\"            android:layout_width=\"wrap_content\"            android:layout_height=\"wrap_content\"            fontname=\"font.ttf\"            android:text=\"Header\"   />I also Put font.ttf file in assets->fontsThank You\nPlease using this api: TypedArray.getString.\nAnswer:"
+}

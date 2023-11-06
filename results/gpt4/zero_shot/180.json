@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2TnzVs4V7lbnFshP3KRQ3iQ6UNb",
+    "object": "chat.completion",
+    "created": 1691683631,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\npublic boolean streamContainsString(InputStream inputStream, String searchString) throws IOException {\n    byte[] searchBytes = searchString.getBytes(StandardCharsets.UTF_8);\n    int searchByteIndex = 0;\n    int readByte;\n\n    while ((readByte = inputStream.read()) != -1) {\n        if (readByte == searchBytes[searchByteIndex]) {\n            searchByteIndex++;\n            if (searchByteIndex == searchBytes.length) {\n                return true;\n            }\n        } else {\n            searchByteIndex = 0;\n        }\n    }\n\n    return false;\n}\n```\n<<<explanation>>>: This code reads the stream byte by byte using the InputStream.read() method. It compares each byte to the corresponding byte in the search string. If it finds a match, it increments the search index. If it reaches the end of the search string (i.e., if the search index equals the length of the search string), it returns true, indicating that the search string was found in the stream. If it encounters a byte that does not match the current search byte, it resets the search index to 0. If it reaches the end of the stream without finding the search string, it returns false. This approach avoids loading the entire stream into memory and allows the search to span the boundary of the buffer."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 381,
+        "completion_tokens": 279,
+        "total_tokens": 660
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Efficient way to search a stream for a string: :Let's suppose that have a stream of text (or Reader in Java) that I'd like to check for a particular string. The stream of text might be very large so as soon as the search string is found I'd like to return true and also try to avoid storing the entire input in memory.Naively, I might try to do something like this (in Java):public boolean streamContainsString(Reader reader, String searchString) throws IOException {    char[] buffer = new char[1024];    int numCharsRead;    while((numCharsRead = reader.read(buffer)) > 0) {        if ((new String(buffer, 0, numCharsRead)).indexOf(searchString) >= 0)            return true;    }    return false;}Of course this fails to detect the given search string if it occurs on the boundary of the 1k buffer:Search text: \"stackoverflow\"Stream buffer 1: \"abc.........stack\"Stream buffer 2: \"overflow.......xyz\"How can I modify this code so that it correctly finds the given search string across the boundary of the buffer but without loading the entire stream into memory?Edit: Note when searching a stream for a string, we're trying to minimise the number of reads from the stream (to avoid latency in a network/disk) and to keep memory usage constant regardless of the amount of data in the stream. Actual efficiency of the string matching algorithm is secondary but obviously, it would be nice to find a solution that used one of the more efficient of those algorithms.\nPlease using this api: InputStream.read.\nAnswer:"
+}

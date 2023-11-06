@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nEo7LebBpe9DuThjApTjkvwCnP3V",
+    "object": "chat.completion",
+    "created": 1691969347,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \nSocket socket = new Socket(\"localhost\", 8080);\nPrintWriter out = new PrintWriter(socket.getOutputStream(), true);\nout.write(\"Request\");\nout.close();\nBufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nString response = in.readLine();\nin.close();\nsocket.close();\n<<<explanation>>>: When you create a PrintWriter with a Socket's OutputStream and then close it, it will close the underlying OutputStream of the Socket. This is because PrintWriter's close() method will close the underlying stream. When the OutputStream of a Socket is closed, the Socket itself is closed too. That's why the subsequent read operation fails. If you want to close the PrintWriter but keep the Socket open, you should use the Socket's shutdownOutput() method. This method disables the output stream for this socket. For a TCP socket, any previously written data will be sent followed by TCP's normal connection termination sequence."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 278,
+        "completion_tokens": 190,
+        "total_tokens": 468
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Behavior of Java sockets when closing output stream: :Can someone explain the following behavior in Java sockets:The general idea is this:Open socket, Obtain I/O streams.Write request, Close out streamRead Response, Close in streamClose socket.Here's my question / issue.If I use a PrintWriter for output, and then close it, It closes the whole socket, and the subsequent read operation fails miserably.Instead if I directly use the socket's shutdownOutput() method, it correctly closes the output stream channel, while keeping the socket alive.Why would closing the PrintWriter object take the whole socket down with it?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

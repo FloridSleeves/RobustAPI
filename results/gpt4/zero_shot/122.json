@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m1wS00za9HKbUVtJLSXfMvOvGiaR",
+    "object": "chat.completion",
+    "created": 1691681564,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \nJava side:\n```java\nbyte[] imgBytes = ((DataBufferByte)msg.getImage().getData().getDataBuffer()).getData();\nDataOutputStream out = new DataOutputStream(socket.getOutputStream());\nout.writeInt(imgBytes.length);\nout.write(imgBytes);\nout.flush();\n```\nAndroid side:\n```java\nDataInputStream in = new DataInputStream(socket.getInputStream());\nint imgSize = in.readInt();\nbyte[] imgBytes = new byte[imgSize];\nin.readFully(imgBytes);\nBitmapFactory.Options imgOptions = new BitmapFactory.Options();\nimgOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;\nBitmap img = BitmapFactory.decodeByteArray(imgBytes, 0, imgSize, imgOptions);\n```\n<<<explanation>>>: On the Java side, we are using DataOutputStream to write the size of the image and the image data to the output stream. The method writeInt() is used to write the size of the image and the method write() is used to write the image data. On the Android side, we are using DataInputStream to read the size of the image and the image data from the input stream. The method readInt() is used to read the size of the image and the method readFully() is used to read the image data. The BitmapFactory.decodeByteArray() method is then used to convert the byte array into a Bitmap. The Bitmap.Config.ARGB_8888 configuration is used because it matches the TYPE_4BYTE_ABGR type of the BufferedImage on the Java side."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 352,
+        "completion_tokens": 309,
+        "total_tokens": 661
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Send Java BufferedImage to Bitmap Android: :Hi I am trying to send a BufferedImage I have on my Java application through a tcp socket to an Android Device. I currently get the raster in a byte[] from the BufferedImage and then ship this through a plain OutputStream to the device. This works fine and I get the same byte array on the Android side. When I call Bitmap.decodeByteArray() however, I only get null. Here is the code I have to send my picture in Java. The image type of the BufferedImage is TYPE_4BYTE_ABGR byte[] imgBytes =    ((DataBufferByte)msg.getImage().getData().getDataBuffer()).getData();lineBytes = (String.valueOf(imgBytes.length) + '\\n').getBytes();        out.write(lineBytes);out.write(imgBytes);out.write((int)'\\n');out.flush();The first thing I write out is the size of the image so I know how big to make the byte[] on Android.Here's the code I'm trying to use to create the Android Bitmap.currLine = readLine(in);int imgSize = Integer.parseInt(currLine);byte[] imgBytes = new byte[imgSize];in.read(imgBytes);BitmapFactory.Options imgOptions = new BitmapFactory.Options();imgOptions.inPreferredConfig = Bitmap.Config.ARGB_4444;Bitmap img = BitmapFactory.decodeByteArray(imgBytes, 0, imgSize, imgOptions);The bytes arrive fine.. They just don't work for the Bitmap.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

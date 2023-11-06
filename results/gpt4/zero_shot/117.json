@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m1tsb6S2wobDd5ep0IbIMBMtaDV4",
+    "object": "chat.completion",
+    "created": 1691681404,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n\n<<<code>>>: \n```java\nimport java.io.DataOutputStream;\nimport java.io.FileOutputStream;\nimport java.io.IOException;\nimport java.security.KeyPair;\nimport java.security.KeyPairGenerator;\nimport java.security.NoSuchAlgorithmException;\nimport java.security.PrivateKey;\nimport java.security.PublicKey;\n\npublic class Main {\n    public static void main(String[] args) throws NoSuchAlgorithmException, IOException {\n        KeyPairGenerator generator;\n        generator = KeyPairGenerator.getInstance(\"RSA\");\n        generator.initialize(2048);\n        KeyPair keyPair = generator.genKeyPair();\n\n        PrivateKey privateKey = keyPair.getPrivate();\n        PublicKey publicKey = keyPair.getPublic();\n\n        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(\"id_rsa\"))) {\n            dos.write(privateKey.getEncoded());\n        }\n\n        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(\"id_rsa.pub\"))) {\n            dos.write(publicKey.getEncoded());\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nIn this code, we first generate a KeyPair using the RSA algorithm and a key size of 2048 bits. We then get the PrivateKey and PublicKey from the KeyPair. \n\nWe use the DataOutputStream.write method to write the byte representation of the PrivateKey and PublicKey to the files \"id_rsa\" and \"id_rsa.pub\" respectively. \n\nThe getEncoded method of the PrivateKey and PublicKey returns the key in its primary encoding format, which is suitable for transmission or storage. \n\nPlease note that this will not generate a file in the exact format as the ssh-keygen tool. The output will be in binary format, not the base64-encoded format that ssh-keygen produces. If you need the keys in that format, you will need to base64 encode the output and add the appropriate headers and footers."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 165,
+        "completion_tokens": 368,
+        "total_tokens": 533
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to generate ssh compatible id_rsa(.pub) from Java: :I'm looking for a way to programmatically create ssh compatible id_rsa and id_rsa.pub files in Java. I got as far as creating the KeyPair:KeyPairGenerator generator;generator = KeyPairGenerator.getInstance(\"RSA\");// or: generator = KeyPairGenerator.getInstance(\"DSA\");generator.initialize(2048);keyPair = generator.genKeyPair();I can't figure out however how to create the String representation of the PrivateKey and PublicKey in the KeyPair.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

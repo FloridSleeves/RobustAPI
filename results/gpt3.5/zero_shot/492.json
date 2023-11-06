@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvqKbdL6xFAd7WHsrtekB6rZFsKl",
+    "object": "chat.completion",
+    "created": 1691658120,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: java.util.LinkedHashMap\n<<<code>>>: \nTo make the LinkedHashMap thread-safe without using Collections.synchronizedMap, you can use the java.util.concurrent.ConcurrentHashMap class. Here's an example of how you can modify your code:\n\nimport java.util.concurrent.ConcurrentHashMap;\n\npublic class ThreadSafeLinkedHashMap<K, V> extends LinkedHashMap<K, V> {\n    private final int maxSize;\n    private final ConcurrentHashMap<K, V> concurrentMap;\n\n    public ThreadSafeLinkedHashMap(int maxSize) {\n        super(maxSize, 0.75f, true);\n        this.maxSize = maxSize;\n        this.concurrentMap = new ConcurrentHashMap<>();\n    }\n\n    @Override\n    public V put(K key, V value) {\n        synchronized (this) {\n            V oldValue = super.put(key, value);\n            if (size() > maxSize) {\n                Iterator<Entry<K, V>> iterator = entrySet().iterator();\n                if (iterator.hasNext()) {\n                    Entry<K, V> eldestEntry = iterator.next();\n                    iterator.remove();\n                    concurrentMap.remove(eldestEntry.getKey());\n                }\n            }\n            concurrentMap.put(key, value);\n            return oldValue;\n        }\n    }\n\n    @Override\n    public V get(Object key) {\n        return concurrentMap.get(key);\n    }\n\n    @Override\n    public V remove(Object key) {\n        synchronized (this) {\n            V removedValue = super.remove(key);\n            concurrentMap.remove(key);\n            return removedValue;\n        }\n    }\n\n    public void pushToDbAndClear() {\n        synchronized (this) {\n            // Push to DB logic here\n            clear();\n            concurrentMap.clear();\n        }\n    }\n}\n\n<<<explanation>>>: \nIn this solution, we extend the LinkedHashMap class and use a ConcurrentHashMap as a concurrent backing map. The ConcurrentHashMap provides thread-safe operations for put, get, and remove.\n\nTo ensure thread safety, we use synchronized blocks around the put, get, and remove operations to prevent concurrent modifications. We also use a synchronized block in the pushToDbAndClear method to ensure that the entire operation is atomic.\n\nThe removeEldestEntry method is not needed in this solution because the LinkedHashMap is already configured to remove the eldest entry when the size exceeds the specified maxSize.\n\nNote that the get method uses the concurrentMap to retrieve the value, ensuring that reads are also thread-safe.\n\nOverall, this implementation provides thread-safe read and write operations for the LinkedHashMap while preserving the order and behaving like a circular queue."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 194,
+        "completion_tokens": 500,
+        "total_tokens": 694
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: thread safe LinkedHashMap without Collections.synchronized: :I am using a LinkedHashMap and the environment is multi threaded so this structure needs to be thread safe. During specific events I need to read the entire map push to db and clear all. Most of time only writes happen to this map. This map has a limit 50 entries.I am using Oracle MAF and it does not have Collections.syncronizedMap available. So, what are things I need to put in synchronized blocks to make sure writing and reading doesn't hit me concurrentModificationException etcFew requirements:I need to behave it like a circular queue so Overriding removeEldestEntry method of the LinkedHashMap. I need to preserve the order\nPlease using this api: Iterator.next.\nAnswer:"
+}

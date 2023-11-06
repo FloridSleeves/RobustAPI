@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7ly8BtmESMXmhMZ0FhSk9ixsDc6KB",
+    "object": "chat.completion",
+    "created": 1691666915,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \nReplace the following line of code:\n```java\nScanner scanner = new Scanner(aLine);\n```\nwith:\n```java\nStringTokenizer tokenizer = new StringTokenizer(aLine, \"=\");\n```\nReplace the following lines of code:\n```java\nscanner.useDelimiter(\"=\");\nif (scanner.hasNext()){\n    String name = scanner.next();\n    String value = scanner.next();\n    log(\"Name is : \" + quote(name.trim()) + \", and Value is : \" + quote(value.trim()));\n}\n```\nwith:\n```java\nif (tokenizer.hasMoreTokens()){\n    String name = tokenizer.nextToken();\n    String value = tokenizer.nextToken();\n    log(\"Name is : \" + quote(name.trim()) + \", and Value is : \" + quote(value.trim()));\n}\n```\n<<<explanation>>>: \nThe `StringTokenizer` class is used to break a string into tokens based on a specified delimiter. In this case, we are using the \"=\" character as the delimiter. By using `StringTokenizer.nextToken()`, we can retrieve the next token from the string. This allows us to parse the content of each line in the desired format."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 583,
+        "completion_tokens": 236,
+        "total_tokens": 819
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java parse .txt file: :I am trying to run the below file TemplateMaker.java in Netbeans IDE 8.0.2 and am running into the following error message. Netbeans shows no red indicators for me to fix. Please help.Exception in thread \"main\" java.util.NoSuchElementException    at java.util.Scanner.throwFor(Scanner.java:907)    at java.util.Scanner.next(Scanner.java:1416)    at templatemaker.TemplateMaker.processLine(TemplateMaker.java:48)    at templatemaker.TemplateMaker.processLineByLine(TemplateMaker.java:35)    at templatemaker.TemplateMaker.main(TemplateMaker.java:17)Java Result: 1Here is my source code:package templatemaker;import java.io.IOException;import java.nio.charset.Charset;import java.nio.charset.StandardCharsets;import java.nio.file.Path;import java.nio.file.Paths;import java.util.Scanner;public class TemplateMaker {        public static void main(String [] args) throws IOException {    TemplateMaker parser = new TemplateMaker(\"Book1.txt\");    parser.processLineByLine();    log(\"Done.\");  }  /**   Constructor.   @param aFileName full name of an existing, readable file.  */  public TemplateMaker(String aFileName){    fFilePath = Paths.get(aFileName);  }  /** Template method that calls {@link #processLine(String)}.     * @throws java.io.IOException */  public final void processLineByLine() throws IOException {    try (Scanner scanner =  new Scanner(fFilePath, ENCODING.name())){      while (scanner.hasNextLine()){        processLine(scanner.nextLine());      }          }  }  protected void processLine(String aLine){    //use a second Scanner to parse the content of each line     Scanner scanner = new Scanner(aLine);    scanner.useDelimiter(\"=\");    if (scanner.hasNext()){      //assumes the line has a certain structure      String name = scanner.next();      String value = scanner.next();      log(\"Name is : \" + quote(name.trim()) + \", and Value is : \" + quote(value.trim()));    }    else {      log(\"Empty or invalid line. Unable to process.\");    }  }  // PRIVATE   private final Path fFilePath;  private final static Charset ENCODING = StandardCharsets.UTF_8;    private static void log(Object aObject){    System.out.println(String.valueOf(aObject));  }  private String quote(String aText){    String QUOTE = \"'\";    return QUOTE + aText + QUOTE;  }} \nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

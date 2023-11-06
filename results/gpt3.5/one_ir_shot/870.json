@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDWyPoK6tkcgr5T8rKL5V5Hf7sgF",
+    "object": "chat.completion",
+    "created": 1691964440,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: SQLiteDatabase.query\n<<<code>>>: SQLiteDatabase db = this.getReadableDatabase();\nUserInfo userInfo = null;\nCursor cursor = db.query(TABLE_NAME, new String[]{COLUMN_APP_ID, COLUMN_USERNAME, COLUMN_PASSWORD}, COLUMN_USERNAME + \"=? AND \" + COLUMN_PASSWORD + \"=?\", new String[]{username, password}, null, null, null);\nwhile (cursor.moveToNext()) {\n    String appId = cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID));\n    String username = cursor.getString(cursor.getColumnIndex(COLUMN_USERNAME));\n    String password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));\n    userInfo = new UserInfo(appId, username, password);\n}\n<<<explanation>>>: The query() method of the SQLiteDatabase class is used to retrieve data from a database table. In this case, we are querying the table with the specified columns and conditions. We retrieve the values of the desired fields (appId, username, password) from the cursor and create a new UserInfo object with these values."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 319,
+        "completion_tokens": 194,
+        "total_tokens": 513
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: retrieve more than one field from SQLite database and compare with these field: :i want compare user name and password from database if exists than it success if not than throws error  i use SQLiteOpenHelper to don a task i can get one field from database now how can i retrieve multiple fields public UserInfo get_user_by_id(String id) {        SQLiteDatabase db = this.getReadableDatabase();        UserInfo userInfo = null;        Cursor cursor = db.query(TABLE_NAME, new String[]{COLUMN_APP_ID}, COLUMN_APP_ID + \"=?\", new String[]{id + \"\"}, null, null, null);           while (cursor.moveToNext()) {               //userInfo.setAppId(cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID)));               userInfo = new UserInfo(cursor.getString(cursor.getColumnIndex(COLUMN_APP_ID)));           }Please help me thanks in advance \nPlease using this api: SQLiteDatabase.query.\nAnswer:"
+}

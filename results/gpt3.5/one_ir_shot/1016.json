@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDkIHI5p1KQd0whvnujH2aPXwSrG",
+    "object": "chat.completion",
+    "created": 1691965266,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: private Map<String, Double> createElementMassMap(String filePath) {\n    Map<String, Double> elementMap = new HashMap<>();\n    try (Scanner sc = new Scanner(new FileReader(filePath))) {\n        sc.useDelimiter(Pattern.compile(\"(, ) | (\\r\\n)\"));\n        sc.useLocale(Locale.US);\n        while(sc.hasNextLine()) {\n            String line = sc.nextLine();\n            StringTokenizer st = new StringTokenizer(line, \", \");\n            String name = st.nextToken();\n            System.out.println(name);\n            double mass = Double.parseDouble(st.nextToken());\n            System.out.println(mass);\n            elementMap.put(name, mass);\n        }\n    } catch (IOException e) {\n        e.printStackTrace();\n        JOptionPane.showMessageDialog(self, \"Error loading ElementMasses file.\", \"IOException\", JOptionPane.ERROR_MESSAGE);\n    }\n    return elementMap;\n}\n<<<explanation>>>: The NoSuchElementException occurs because the scanner is trying to read a double value using sc.nextDouble() but there is no more input available. To fix this, you can use StringTokenizer to tokenize each line of the file and extract the name and mass separately. This way, you can avoid using sc.nextDouble() and prevent the NoSuchElementException."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 396,
+        "completion_tokens": 243,
+        "total_tokens": 639
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: java.util.NoSuchElementException from Scanner: :I'm having trouble with my scanner when it's reading a file. It's suppose to make a new token when there's a comma followed by a space or when a new line is created, but after the 4 tokens, it throws the NoSuchElementException.    private Map<String, Double> createElementMassMap(String filePath) {    Map<String, Double> elementMap = new HashMap<>();    try (Scanner sc = new Scanner(new FileReader(filePath))) {        sc.useDelimiter(Pattern.compile(\"(, ) | (\\r\\n)\"));        sc.useLocale(Locale.US);        while(sc.hasNext()) {            String name = sc.next();            System.out.println(name);            double mass = sc.nextDouble();            System.out.println(mass);            elementMap.put(name, mass);        }    } catch (IOException e) {        e.printStackTrace();        JOptionPane.showMessageDialog(self, \"Error loading ElementMasses file.\", \"IOException\", JOptionPane.ERROR_MESSAGE);    }     return elementMap;}Here's the file it's trying to readH, 1.00O, 16.00and i made sure there isn't an empty line in the file.\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

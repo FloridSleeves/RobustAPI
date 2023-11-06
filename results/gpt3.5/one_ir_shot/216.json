@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCc87IQbpFu0L7eaawON86i0VfZb",
+    "object": "chat.completion",
+    "created": 1691960916,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: public class XSSRequestWrapper extends HttpServletRequestWrapper {\n    private final String body;\n\n    public XSSRequestWrapper(HttpServletRequest request) throws IOException {\n        super(request);\n        StringBuilder stringBuilder = new StringBuilder();\n        BufferedReader bufferedReader = null;\n        try {\n            InputStream inputStream = request.getInputStream();\n            if (inputStream != null) {\n                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));\n                char[] charBuffer = new char[128];\n                int bytesRead;\n                while ((bytesRead = bufferedReader.read(charBuffer)) != -1) {\n                    stringBuilder.append(charBuffer, 0, bytesRead);\n                }\n            } else {\n                stringBuilder.append(\"\");\n            }\n        } catch (IOException ex) {\n            throw ex;\n        } finally {\n            if (bufferedReader != null) {\n                try {\n                    bufferedReader.close();\n                } catch (IOException ex) {\n                    throw ex;\n                }\n            }\n        }\n        body = stringBuilder.toString();\n    }\n\n    @Override\n    public ServletInputStream getInputStream() throws IOException {\n        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes());\n        return new ServletInputStream() {\n            public int read() throws IOException {\n                return byteArrayInputStream.read();\n            }\n        };\n    }\n\n    @Override\n    public BufferedReader getReader() throws IOException {\n        return new BufferedReader(new InputStreamReader(this.getInputStream()));\n    }\n\n    @Override\n    public String getParameter(String name) {\n        String value = super.getParameter(name);\n        if (value != null) {\n            value = value.replaceAll(\"<\", \"&lt;\").replaceAll(\">\", \"&gt;\");\n        }\n        return value;\n    }\n}\n<<<explanation>>>: In this code, we create a custom HttpServletRequestWrapper called XSSRequestWrapper. This wrapper reads the request body and stores it in a StringBuilder. We then override the getInputStream() and getReader() methods to return a new InputStream and BufferedReader respectively, using the stored request body. We also override the getParameter() method to sanitize the parameter value by replacing \"<\" with \"&lt;\" and \">\" with \"&gt;\". This helps protect against XSS attacks."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 200,
+        "completion_tokens": 424,
+        "total_tokens": 624
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to change servlet request body in java filter?: :How can I change request body in java filter to protect from XSS attack?I build HttpServletRequestWrapper and use getparameter for change body butget stream close exception.\nPlease using this api: InputStream.read.\nAnswer:"
+}

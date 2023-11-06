@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzln41ADGmYtJySk1rauYtLcmWkb",
+    "object": "chat.completion",
+    "created": 1691673215,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.append\n<<<code>>>: try {\n    String savestr = \"mysave.sav\";\n    File f = new File(savestr);\n    PrintWriter out;\n    if (f.exists() && !f.isDirectory()) {\n        out = new PrintWriter(new FileOutputStream(new File(savestr), true));\n        out.append(mapstring);\n    } else {\n        out = new PrintWriter(savestr);\n        out.println(mapstring);\n    }\n    out.close();\n} catch (Exception e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: The issue is that you are creating a new PrintWriter object every time, which overwrites the existing data. To append data to an existing file, you need to use the PrintWriter.append method instead of creating a new PrintWriter object."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 469,
+        "completion_tokens": 157,
+        "total_tokens": 626
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: PrintWriter to append data if file exist: :I have a savegame file called mysave.sav and I want to add data to this file if the file already exists. If the file doesn't exists, I want to create the file and then add the data.Adding data works fine. But appending data overwrites existing data. I followed the instructions of axtavt here (PrintWriter append method not appending).     String savestr = \"mysave.sav\";     File f = new File(savestr);    PrintWriter out = new PrintWriter(savestr);    if ( f.exists() && !f.isDirectory() ) {        out = new PrintWriter(new FileOutputStream(new File(savestr), true));        out.append(mapstring);        out.close();    }    else {        out.println(mapstring);        out.close();    }where mapstring is the string I want to append. Can you help me? Thank you!\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

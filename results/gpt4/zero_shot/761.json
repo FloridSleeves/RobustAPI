@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m72KNAIl9SSS5Su4DzqhNBHaHyS9",
+    "object": "chat.completion",
+    "created": 1691701148,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\nimport org.apache.commons.fileupload.FileItemIterator;\nimport org.apache.commons.fileupload.FileItemStream;\nimport org.apache.commons.fileupload.util.Streams;\nimport org.apache.commons.fileupload.servlet.ServletFileUpload;\n\nimport javax.servlet.http.HttpServletRequest;\nimport java.io.*;\n\npublic void uploadFile(HttpServletRequest request) {\n    try {\n        boolean isMultipart = ServletFileUpload.isMultipartContent(request);\n        if (isMultipart) {\n            ServletFileUpload upload = new ServletFileUpload();\n            FileItemIterator iter = upload.getItemIterator(request);\n            while (iter.hasNext()) {\n                FileItemStream item = iter.next();\n                String name = item.getFieldName();\n                InputStream stream = item.openStream();\n                if (!item.isFormField()) {\n                    String fileName = item.getName();\n                    String fileExtension = fileName.substring(fileName.lastIndexOf('.'));\n                    File file = new File(\"/path/to/directory/\" + fileName);\n                    PrintWriter writer = new PrintWriter(new FileOutputStream(file));\n                    int len;\n                    byte[] buffer = new byte[8192];\n                    while ((len = stream.read(buffer, 0, buffer.length)) != -1) {\n                        writer.write(new String(buffer, 0, len));\n                    }\n                    writer.close();\n                    stream.close();\n                }\n            }\n        }\n    } catch (Exception e) {\n        e.printStackTrace();\n    }\n}\n```\n<<<explanation>>>: This code uses the Apache Commons FileUpload library to handle the file upload. It first checks if the request is multipart/form-data, which is used for file uploads. It then creates a ServletFileUpload object and gets an iterator for the items in the form data. It iterates over these items, and if the item is a file (not a form field), it gets the file name and extension. It then creates a new File object for the uploaded file and a PrintWriter to write to this file. It reads from the input stream of the uploaded file and writes to the PrintWriter, effectively saving the uploaded file to the specified directory."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 155,
+        "completion_tokens": 417,
+        "total_tokens": 572
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: how to upload a file using commons file upload streaming api: :I am following the example provided in the commons file upload site about streaming API. I am stuck trying to figure out how to get the file extension of the uploaded file, how to write the file to a directory and the worst part is where the person who wrote the example comments // Process the input stream... It leaves me wondering if it's something so trivial that I'm the only one  who doesn't know how to. \nPlease using this api: PrintWriter.write.\nAnswer:"
+}

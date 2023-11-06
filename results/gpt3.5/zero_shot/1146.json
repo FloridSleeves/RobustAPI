@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7ly6n8g6AqfJPmVHCUJFX24FASQzZ",
+    "object": "chat.completion",
+    "created": 1691666829,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \npublic void createList() {\n    FileIO readFile = new FileIO();\n    readFile.openInputFile();\n    String pointLine = null;\n    StringTokenizer stringSplit = null;\n    while(readFile.hasInputLine()) {\n        pointLine = readFile.readInputLine();\n        stringSplit = new StringTokenizer(pointLine);\n        double pointX = Double.parseDouble(stringSplit.nextToken());\n        double pointY = Double.parseDouble(stringSplit.nextToken());\n        Point2DDemo newPoints = new Point2DDemo(pointX, pointY);\n        Points.add(newPoints);\n    }\n    for(int i = 0; i < Points.size(); i++) {\n        System.out.println(Points.get(i));\n    }\n    readFile.closeInputFile();\n}\n\n<<<explanation>>>: In your code, you are reusing the same instance of Point2DDemo object for all elements in the ArrayList. This is why all elements in the ArrayList end up being the same as the last element added.\n\nTo fix this issue, you need to create a new instance of Point2DDemo for each element in the ArrayList. In the code above, I have moved the creation of newPoints inside the loop, so that a new instance is created for each pair of points read from the file. This ensures that each element in the ArrayList is a separate object with its own values."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 522,
+        "completion_tokens": 280,
+        "total_tokens": 802
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: filling array list with objects, causing all elements to be the same in list: :This question already has answers here:                                                            Why does my ArrayList contain N copies of the last item added to the list?                                (5 answers)                            Closed 9 years ago.I am trying to fill an arrayList with objects created from reading integers from a text file that represent points (two integers per line).  I'm attempting to do this in a loop.  The ArrayList seems to fill, but when I print it out after, all the elements in each index are the same as the last element added to the ArrayList.  This seems to have something to do with each arrayList index pointing to the object (my newbie guess).  Do I have to create a unique object for each arrayList entry? Is there an easy way to add to this code to do this?public class Point2DDemo extends Point2D<Double>{    ArrayList<Point2DDemo> Points = new ArrayList<Point2DDemo>(7);    /**     * Constructor for objects of class Point2DDemo     */    public Point2DDemo()    {    }    public Point2DDemo(double first, double second)    {        setFirst(first);        setSecond(second);    }    public void putPair(double point1, double point2){        this.setFirst(point1);        this.setSecond(point2);    }    /**     *      *      * @param  y   a sample parameter for a method     * @return     the sum of x and y      */    public void createList()    {        FileIO readFile = new FileIO();        readFile.openInputFile();        String pointLine = null;        Point2DDemo newPoints = new Point2DDemo();        StringTokenizer stringSplit = null;        while(readFile.hasInputLine())        {           pointLine = readFile.readInputLine();           stringSplit = new StringTokenizer(pointLine);           double pointX = Double.parseDouble(stringSplit.nextToken());           double pointY = Double.parseDouble(stringSplit.nextToken());           newPoints.putPair(pointX, pointY);           Points.add(newPoints);        }        for(int i = 0; i < Points.size(); i++)         System.out.println(Points.get(i));         readFile.closeInputFile();    }\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

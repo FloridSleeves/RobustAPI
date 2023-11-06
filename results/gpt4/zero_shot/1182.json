@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mA6WQawNwI3udMaD6xALfZff53fZ",
+    "object": "chat.completion",
+    "created": 1691712940,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\nimport java.util.StringTokenizer;\n\nString ip_h = request.getRemoteAddr();\nString host_h = request.getRemoteHost();\n\nString iplist[] = new String[1];\niplist[0] = \"127.0.0.1\";\niplist[1] = \"10.217.106.248\";\n\nint count = iplist.length;\nboolean flag = false;\nint zz = 0;\n\nSystem.out.println(host_h);\n\nwhile ( (flag==false) && ( zz < count) ) {\n    StringTokenizer st = new StringTokenizer(iplist[zz], \".\");\n    String subnet = st.nextToken() + \".\" + st.nextToken();\n    if (ip_h.startsWith(subnet) || host_h.startsWith(subnet)) {\n        flag = true;\n    }\n    zz++;\n}\n```\n<<<explanation>>>: The StringTokenizer.nextToken method is used to split the IP address into its individual components (octets). The first two octets are then concatenated to form the subnet. The startsWith method is then used to check if the IP address or host name starts with the subnet. If it does, the flag is set to true, indicating that the IP address or host name is within the allowed subnet."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 266,
+        "completion_tokens": 256,
+        "total_tokens": 522
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: IP subnet verification in JSP: :I have the following JSP code, that protects my web page and displays it only to know IP'sString ip_h = request.getRemoteAddr();  String host_h = request.getRemoteHost();  String iplist[] = new String[1];  iplist[0] = \"127.0.0.1\";  iplist[1] = \"10.217.106.248\";  int count = iplist.length;  boolean flag = false;  int zz = 0;  //return;System.out.println(host_h);  while ( (flag==false) && ( zz < count) )  {     if (ip_h.equals(iplist[zz]) || host_h.equals(iplist[zz]) )     {        flag = true;     }     zz++;  }However, I would to rather check for subnet ranges, i.e. all users belonging to 10.217.0.0/16 are allowed.How do I do this?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

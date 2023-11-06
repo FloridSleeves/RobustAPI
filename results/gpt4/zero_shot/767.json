@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m750vH7cJ59IEXEsLucSCrptWZrE",
+    "object": "chat.completion",
+    "created": 1691701314,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\nimport java.io.PrintWriter;\nimport java.util.logging.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Logger logger = Logger.getLogger(Main.class.getName());\n        SimpleFormatter formatter = new SimpleFormatter() {\n            @Override\n            public synchronized String format(LogRecord lr) {\n                return String.format(\"%1$tF %1$tT %2$s - %3$s: %4$s %n\", \n                                     lr.getMillis(), \n                                     lr.getSourceClassName(), \n                                     lr.getLevel().getLocalizedName(), \n                                     lr.getMessage());\n            }\n        };\n        try {\n            Handler handler = new StreamHandler(new PrintWriter(System.out, true), formatter);\n            logger.addHandler(handler);\n            logger.log(Level.INFO, \"MyLogMessageHere\");\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n<<<explanation>>>: In this code, we are using the java.util.logging API to log messages. We create a custom formatter by extending the SimpleFormatter class and overriding the format method. This method takes a LogRecord object and formats it into a string. We use String.format to format the date, source class name, log level, and log message into a single line. We then create a StreamHandler with a PrintWriter that writes to System.out, and set the formatter of the handler to our custom formatter. Finally, we add the handler to the logger and log a message. The output will be in the format you specified."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 149,
+        "completion_tokens": 312,
+        "total_tokens": 461
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How do I get java logging output to appear on a single line?: :At the moment a default entry looks something like this:Oct 12, 2008 9:45:18 AM myClassInfoHereINFO: MyLogMessageHereHow do I get it to do this?Oct 12, 2008 9:45:18 AM myClassInfoHere - INFO: MyLogMessageHereClarification I'm using java.util.logging\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

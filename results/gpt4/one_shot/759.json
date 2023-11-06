@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEQUmthRmqx5yBEXTBOt7yplpb38",
+    "object": "chat.completion",
+    "created": 1691729554,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```\nprivate final Object lock = new Object();\n\npublic void run() {\n    synchronized(lock) {\n        File file = new File(fileName);\n        if (file.exists()) {\n            Log.debug(\"creating new file\");\n            openFileWriter(file);\n        }\n    }\n}\n\nprivate synchronized void writeLine(String line) throws InterruptedException {\n    synchronized(lock) {\n        writer.println(line);\n    }\n}\n```\n<<<explanation>>>: You can use a lock object to synchronize the file writing and file creation. By using the synchronized block, you ensure that the file creation and writing operations are mutually exclusive. This means that while one thread is executing a synchronized block of code, all other threads that wish to execute the same block of code will be blocked until the first thread finishes its execution."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 520,
+        "completion_tokens": 168,
+        "total_tokens": 688
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Java: creating file every number of seconds: :I'm using ScheduledThreadPoolExecutor to create a file every fileIntervalInSeconds seconds:executorService = new ScheduledThreadPoolExecutor(1);        executorService.scheduleAtFixedRate(new Runnable()        {            @Override            public void run()            {                    File file = new File(fileName);                    if (file.exists())                    {                        Log.debug(\"creating new file\");                        openFileWriter(file);                    }            }        }, fileIntervalInSeconds, fileIntervalInSeconds, TimeUnit.SECONDS);    }private void openFileWriter() throws FileSystemNotificationException{        // 1 - close exist writer        writer.close();        // 2 - rename to backup file name          ...        // 3 - create new file              FileWriter writerFile = new FileWriter(fileName, true);        writer = new PrintWriter(writerFile);}And i'm writing alert Messages to the file all the time:private synchronized void writeLine(String line) throws InterruptedException{    writer.println(line);}My problem is:how can i ensure that i'm using writer when it is not closed? (writer.close())How can i wait to the ScheduledThreadPoolExecutor to finish creating the file before start writing\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m3eT7SLysvYXPcprrJQF7mrr4X6b",
+    "object": "chat.completion",
+    "created": 1691688137,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```java\nif (response != null) {\n    try {\n        JSONObject object = new JSONObject(response);\n        Iterator<String> enu = object.keys();\n        LinkedHashMap<String, String> locationMap = new LinkedHashMap<String, String>();\n        while(enu.hasNext()) {\n            String key = enu.next();\n            locationMap.put(key, object.getString(key));\n        }\n        callerContext.DisplayLocations(new ArrayList<>(locationMap.values()));\n    } catch (JSONException e) {\n        Toast.makeText(callerContext, callerContext.getResources().getString(R.string.error_message), Toast.LENGTH_LONG).show();\n    }\n}\n```\n<<<explanation>>>: \nThe problem you are facing is due to the fact that a JSONObject does not maintain the order of insertion. To maintain the order of insertion, you can use a LinkedHashMap instead of a JSONObject. A LinkedHashMap is a hash table and linked list implementation of the Map interface, with predictable iteration order. It maintains a doubly-linked list running through all of its entries. This linked list defines the iteration ordering, which is normally the order in which keys were inserted into the map (insertion-order). Note that insertion order is not affected if a key is re-inserted into the map. \n\nIn the provided code, we create a LinkedHashMap and then add the keys and values from the JSONObject to the LinkedHashMap. This will maintain the order of insertion. Then, we convert the values of the LinkedHashMap to an ArrayList and pass it to the DisplayLocations method."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 341,
+        "completion_tokens": 307,
+        "total_tokens": 648
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to iterate through all the json values in order as when they were inserted?: :In my android app, I get a json value and iterate through them by doing this    if (response != null) {        try {            JSONObject object = new JSONObject(response);            Iterator enu = object.keys();            ArrayList<String> locationList = new ArrayList<String>();            while(enu.hasNext()) {                locationList.add(object.getString((String) enu.next()));            }            callerContext.DisplayLocations(locationList);        } catch (JSONException e) {            Toast.makeText(callerContext, callerContext.getResources().getString(R.string.error_message), Toast.LENGTH_LONG).show();        }    }The problem is the ArrayList if I then iterate through that, the values are in a different order then when I insert then in the php code...How do I loop through the json object in the same order as when they were inserted?Thanks.EDIT:PHP            $data = array();            for ($i = 0; $i < $num_records; $i++) {                array_push($data,                     array(\"id{$i}\" => mysql_result($recordset, $i, 'id')),                     array(\"location{$i}\" => mysql_result($recordset, $i, 'location')),                     array(\"date{$i}\" => mysql_result($recordset, $i, 'date added'))                );            }\nPlease using this api: Iterator.next.\nAnswer:"
+}

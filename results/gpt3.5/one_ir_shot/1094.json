@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDrqp2GSsG0VOOydE7uQfpCOmEr9",
+    "object": "chat.completion",
+    "created": 1691965734,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: try {\n    String csvFile = \"Data.txt\";\n    BufferedReader br = new BufferedReader(new FileReader(csvFile));\n    String line = \"\";\n    StringTokenizer st = null;\n    int lineNumber = 0;\n    int tokenNumber = 0;\n    \n    while ((line = br.readLine()) != null) {\n        lineNumber++;\n        st = new StringTokenizer(line, \"=\");\n        while (st.hasMoreTokens()) {\n            tokenNumber++;\n            String token = st.nextToken().trim();\n            if (token.equals(\"NoScans\") || token.equals(\"NoPixels\") || token.equals(\"ProdULLat\") || token.equals(\"ProdULLon\") || token.equals(\"ProdLRLat\") || token.equals(\"ProdLRLon\")) {\n                System.out.print(st.nextToken().trim() + \"  \");\n            } else {\n                st.nextToken();\n            }\n        }\n        System.out.println();\n        tokenNumber = 0;\n    }\n} catch (Exception e) {\n    System.err.println(\"CSV file cannot be read : \" + e);\n}\n<<<explanation>>>: In this code, we are using the StringTokenizer class to tokenize each line of the file based on the \"=\" delimiter. We then check if the token is one of the selected contents (\"NoScans\", \"NoPixels\", \"ProdULLat\", \"ProdULLon\", \"ProdLRLat\", \"ProdLRLon\"). If it is, we display the next token (the value corresponding to the selected content). If it is not, we skip to the next token."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 730,
+        "completion_tokens": 320,
+        "total_tokens": 1050
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: usage of stringtokenizer in java to display selected contents from a file: :Can any one suggest, how to use string-tokens in java, to read all data in a file, and display only some of its contents. Like, if i have apple = 23456, mango = 12345, orange= 76548, guava = 56734I need to select apple, and the value corresponding to apple should be displayed in the output.This is the codeimport java.io.BufferedReader;import java.io.FileReader;import java.util.StringTokenizer;public class ReadFile {public static void main(String[] args) {try { String csvFile = \"Data.txt\";   //create BufferedReader to read csv file   BufferedReader br = new BufferedReader(new FileReader(csvFile));   String line = \"\";   StringTokenizer st = null;   int lineNumber = 0;    int tokenNumber = 0;   //read comma separated file line by line   while ((line = br.readLine()) != null) {     lineNumber++;     //use comma as token separator     st = new StringTokenizer(line, \",\");     while (st.hasMoreTokens()) {       tokenNumber++;       //display csv values       System.out.print(st.nextToken() + \"  \");     }     System.out.println();     //reset token number     tokenNumber = 0;   }  } catch (Exception e) {   System.err.println(\"CSV file cannot be read : \" + e);  }  }     }this is the file I'm working on :ImageFormat=GeoTIFFProcessingLevel=GEOResampCode=CCNoScans=10496NoPixels=10944MapProjection=UTM Ellipsoid=WGS_84Datum=WGS_84MapOriginLat=0.00000000MapOriginLon=0.00000000ProdULLat=18.54590200ProdULLon=73.80059300ProdURLat=18.54653200ProdURLon=73.90427600ProdLRLat=18.45168500ProdLRLon=73.90487900ProdLLLat=18.45105900ProdLLLon=73.80125300ProdULMapX=373416.66169100ProdULMapY=2051005.23286800ProdURMapX=384360.66169100ProdURMapY=2051005.23286800ProdLRMapX=373416.66169100ProdLRMapY=2040509.23286800ProdLLMapX=384360.66169100ProdLLMapY=2040509.23286800Out of this, i need to display only the following :     NoScans    NoPixels    ProdULLat    ProdULLon    ProdLRLat    ProdLRLon\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

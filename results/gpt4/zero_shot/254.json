@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m37jquViQAOxOS1BsQMKbZtdzds2",
+    "object": "chat.completion",
+    "created": 1691686107,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\nvoid AFunctionToCopy(InputStream is, OutputStream os, int start, int end) throws IOException {\n    byte[] buffer = new byte[1024];\n    int bytesRead;\n    int totalBytesRead = 0;\n\n    // Skip the start bytes\n    if (start > 0) {\n        long skippedBytes = is.skip(start);\n        if (skippedBytes != start) {\n            throw new IOException(\"Failed to skip the first \" + start + \" bytes\");\n        }\n    }\n\n    // Read and write bytes from the input stream to the output stream\n    while ((bytesRead = is.read(buffer, 0, Math.min(buffer.length, end - totalBytesRead))) != -1) {\n        os.write(buffer, 0, bytesRead);\n        totalBytesRead += bytesRead;\n        if (totalBytesRead >= end) {\n            break;\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nThis function reads from the InputStream and writes to the OutputStream. It uses a buffer to read and write data in chunks instead of byte by byte, which is more efficient. The size of the buffer is 1024 bytes, but you can adjust it according to your needs.\n\nThe function first skips the start bytes if the start is greater than 0. Then it enters a loop where it reads from the InputStream into the buffer and writes from the buffer to the OutputStream. The number of bytes to read at each iteration is the minimum of the buffer size and the remaining bytes to read (end - totalBytesRead). The loop continues until it has read and written the desired number of bytes (end) or there are no more bytes to read (is.read returns -1)."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 167,
+        "completion_tokens": 357,
+        "total_tokens": 524
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java copy part of InputStream to OutputStream: :I have a file with 3236000 bytes and I want to read 2936000 from start and write to an OutputStreamInputStream is = new FileInputStream(file1);OutputStream os = new FileOutputStream(file2);AFunctionToCopy(is,os,0,2936000); /* a function or sourcecode to write input stream 0to2936000 bytes */I can read and write byte by byte, but it's to slow (i think) from buffered readingHow can do I copy it?\nPlease using this api: InputStream.read.\nAnswer:"
+}

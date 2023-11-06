@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7luvTU78D5tiS27JswwLRKDff38yo",
+    "object": "chat.completion",
+    "created": 1691654595,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \nval in = socket.getInputStream()\nval size = in.read()\nval payload = new Array[Byte](size)\nin.read(payload)\nin.close()\n\n<<<explanation>>>: \nIn this code, we first obtain the input stream from the socket using `socket.getInputStream()`. Then, we read the size of the payload using `in.read()`, which reads a single byte from the input stream. We create a byte array called `payload` with the size obtained from the previous step.\n\nNext, we use `in.read(payload)` to read the binary payload into the `payload` byte array. This method reads bytes from the input stream and stores them into the byte array. Finally, we close the input stream using `in.close()` to release any resources associated with it."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 309,
+        "completion_tokens": 166,
+        "total_tokens": 475
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Getting a HTTP POST binary payload to a byte array in Scala: :I have a socket which will persist for long. Client will keep streaming data requests to my server app through the socket. Request is a POST with a binary payload which needs to be copied to a byte array which i need to use to get the protocol buffer class.POST / HTTP/1.1Host: 127.0.0.1:80Accept-Encoding: identityContent-Length: 423Content-type: application/octet-stream[PAYLOAD]val out = new DataOutputStream(socket.getOutputStream())val in = new BufferedReader(new InputStreamReader(socket.getInputStream()))Any ideas ? UPDATE - I got a temporary solution using a DEPRECATED java function - DataInputStream.readLine.Can someone make this code better ?val in = new DataInputStream(socket.getInputStream())var n:Int = 0var size:Int=0while (n==0) {    var str=in.readLine    if(str==\"\"){        n =1    }else{        val breaks=str.split(\" \")        if(breaks(0).equals(\"Content-Length:\"))size=breaks(1).toInt    }}var payload:Array[Byte]=new Array(size)n=size-1for(i <- 0 to n) payload(i)=in.readByte\nPlease using this api: InputStream.read.\nAnswer:"
+}

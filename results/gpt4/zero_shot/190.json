@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2Z9Ib7tN7ub7lPJSXi6owgbrEXq",
+    "object": "chat.completion",
+    "created": 1691683963,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\nprivate void readZip(InputStream is) throws IOException {\n    ZipInputStream zis = new ZipInputStream(is);\n    ZipEntry entry = zis.getNextEntry();\n    while (entry != null) {\n        if (entry.getName().endsWith(\".xml\")) {\n            // READ THE STREAM\n            int data;\n            while((data = zis.read()) != -1) {\n                // process data\n            }\n        }\n        entry = zis.getNextEntry();\n    }\n}\n```\n<<<explanation>>>: The InputStream.read method reads the next byte of data from the input stream. The value byte is returned as an int in the range 0 to 255. If no byte is available because the end of the stream has been reached, the value -1 is returned. This method blocks until input data is available, the end of the stream is detected, or an exception is thrown. In the provided code, we are using this method to read the data from each XML file in the zip file. The read method is called in a loop until it returns -1, indicating the end of the file. The read data is then processed as needed."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 433,
+        "completion_tokens": 246,
+        "total_tokens": 679
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java create InputStream from ZipInputStream entry: :I would like to write a method that read several XML files inside a ZIP, from a single InputStream.The method would open a ZipInputStream, and on each xml file, get the corresponding InputStream, and give it to my XML parser. Here is the skeleton of the method : private void readZip(InputStream is) throws IOException {    ZipInputStream zis = new ZipInputStream(is);    ZipEntry entry = zis.getNextEntry();    while (entry != null) {        if (entry.getName().endsWith(\".xml\")) {            // READ THE STREAM        }        entry = zis.getNextEntry();    }}The problematic part is the \"// READ THE STREAM\". I have a working solution, which consist to create a ByteArrayInputStream, and feed my parser with it. But it uses a buffer, and for large files I get an OutOfMemoryError. Here is the code, if someone is still interested :int count;byte buffer[] = new byte[2048];ByteArrayOutputStream out = new ByteArrayOutputStream();while ((count = zis.read(buffer)) != -1) { out.write(buffer, 0, count); }       InputStream is = new ByteArrayInputStream(out.toByteArray());The ideal solution would be to feed the parser with the original ZipInputStream. It should works, because it works if I just print the entry content with a Scanner :Scanner sc = new Scanner(zis);while (sc.hasNextLine()){    System.out.println(sc.nextLine());}But... The parser I'm currently using (jdom2, but I also tried with javax.xml.parsers.DocumentBuilderFactory) closes the stream after parsing the data :/ . So I'm unable to get the next entry and continue.So finally the question is :Does anybody know a DOM parser that doesn't close its stream ?Is there another way to have an InputStream from a ZipEntry ?Thanks.\nPlease using this api: InputStream.read.\nAnswer:"
+}

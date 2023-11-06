@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7luXqT0hkuXc00NmDt1ztlCtKJflr",
+    "object": "chat.completion",
+    "created": 1691653130,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \n```\nresponse.setHeader(\"Transfer-Encoding\", \"chunked\");\nresponse.setHeader(\"Trailer\", \"SomeTrailer\");\n\nServletOutputStream outputStream = response.getOutputStream();\noutputStream.write(\"Some data\".getBytes());\noutputStream.flush();\n\nresponse.addHeader(\"SomeTrailer\", \"value\");\noutputStream.close();\n```\n<<<explanation>>>: To send Http trailers/footers in a chunked response from within a Java servlet, you can use the `DataOutputStream.write` method. \n\nFirst, set the response headers `Transfer-Encoding` to \"chunked\" and `Trailer` to the name of the trailer you want to send. \n\nThen, obtain the `ServletOutputStream` from the response and write the data to it using the `write` method. \n\nAfter writing the data, add the trailer to the response headers using `response.addHeader`. \n\nFinally, close the output stream to complete the response."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 200,
+        "completion_tokens": 195,
+        "total_tokens": 395
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How do I send Http trailers/footers in a chunked response from within a java servlet?: :Basically my response headers containTransfer-encoding=chunked,Trailer=[some trailer I want to send say e.g \"SomeTrailer\"]Once I'm done writing the data to the Servlet outputstream, I'm writing the trailer\"SomeTrailer:[value]\", but this is not being parsed by the httpclient correctly. The httpclient considers the whole of inputstream (including the trailer) as a singlechunk.   I've also tried writing the trailer in a response header after the data has been written to the outputstream but without success.Please helpI haven't found any good sources on this. \nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

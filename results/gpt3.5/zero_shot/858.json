@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lx5qk45GayyLZUy6I43m0UNjhHmv",
+    "object": "chat.completion",
+    "created": 1691662926,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: RandomAccessFile.read\n<<<code>>>:\nint n = 4;\nRandomAccessFile inputFile = new RandomAccessFile(\"file.csv\", \"r\");\nlong fileSize = inputFile.length();\nlong chunkSize = fileSize / n;\nlong remainingBytes = fileSize % n;\n\nfor (int i = 0; i < n; i++) {\n    String outputFileName = \"output\" + i + \".csv\";\n    RandomAccessFile outputFile = new RandomAccessFile(outputFileName, \"rw\");\n    \n    long bytesToRead = chunkSize;\n    if (i == n - 1) {\n        bytesToRead += remainingBytes;\n    }\n    \n    byte[] buffer = new byte[(int) bytesToRead];\n    inputFile.read(buffer);\n    outputFile.write(buffer);\n    \n    outputFile.close();\n}\n\ninputFile.close();\n<<<explanation>>>: \n1. We first calculate the size of the input file using `inputFile.length()`.\n2. Then we calculate the chunk size by dividing the file size by the number of output files.\n3. We also calculate the remaining bytes that cannot be evenly divided among the output files.\n4. We iterate over the number of output files and create a new `RandomAccessFile` for each output file.\n5. We calculate the number of bytes to read from the input file based on the chunk size and remaining bytes.\n6. We create a byte array buffer with the size of bytes to read.\n7. We read the bytes from the input file using `inputFile.read(buffer)`.\n8. We write the bytes to the output file using `outputFile.write(buffer)`.\n9. We close the output file after writing.\n10. Finally, we close the input file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 201,
+        "completion_tokens": 349,
+        "total_tokens": 550
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Read file and split into multiple files: :I have a file which I would like to read in Java and split this file into n (user input) output files. Here is how I read the file:int n = 4;BufferedReader br = new BufferedReader(new FileReader(\"file.csv\"));try {    String line = br.readLine();    while (line != null) {        line = br.readLine();    }} finally {    br.close();}How do I split the file - file.csv into n files?Note - Since the number of entries in the file are of the order of 100k, I can't store the file content into an array and then split it and save into multiple files.\nPlease using this api: RandomAccessFile.read.\nAnswer:"
+}

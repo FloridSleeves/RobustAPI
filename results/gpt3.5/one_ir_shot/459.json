@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCxanhllYyrKLtwlVrYgG5nSGgev",
+    "object": "chat.completion",
+    "created": 1691962246,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: String query = \"MATCH (n) RETURN n\";\ntry (Session session = driver.session()) {\n    Result result = session.run(query);\n    while (result.hasNext()) {\n        Record record = result.next();\n        Node node = record.get(\"n\").asNode();\n        Map<String, Object> properties = node.asMap();\n        for (Map.Entry<String, Object> entry : properties.entrySet()) {\n            String propertyName = entry.getKey();\n            Object propertyValue = entry.getValue();\n            System.out.println(propertyName + \": \" + propertyValue);\n        }\n    }\n}\n<<<explanation>>>: The code executes a Cypher query to match all nodes in the database and returns them as a result. It then iterates over each record in the result and retrieves the node object. The node's properties are then accessed using the asMap() method, which returns a map of property names and values. The code then iterates over the map entries and prints the property name and value."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 310,
+        "completion_tokens": 207,
+        "total_tokens": 517
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to return all properties of a node with their name and their value using Cypher: :I saw here : How can I return all properties for a node using Cypher? that somebody already asked this question, but 1 year ago.So i need to ask it now : is there a way, today, to return all properties of a node using cypher? i need to do it for a translation system where previous developpers have created it as 1 node per language, with contains all of the properties with their name in the desired language. I need to get it for a Java application.Example:node FR contains: \"Salut_01\" : \"Bonjour\"node UK contains: \"Salut_01\" : \"Hello\"etc...\nPlease using this api: Iterator.next.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lyNL0xdxq5PIUrTbLl7f8t5xDPwy",
+    "object": "chat.completion",
+    "created": 1691667855,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: BufferedReader.readLine\n<<<code>>>: public static Map<String, String> getPropertiesFromFile(String filePath) {\n    Map<String, String> properties = new HashMap<>();\n    try {\n        FileReader fileReader = new FileReader(filePath);\n        BufferedReader bufferedReader = new BufferedReader(fileReader);\n        String line;\n        while ((line = bufferedReader.readLine()) != null) {\n            if (!line.startsWith(\"#\")) {\n                String[] keyValue = line.split(\"=\");\n                if (keyValue.length == 2) {\n                    String key = keyValue[0].trim();\n                    String value = keyValue[1].trim();\n                    properties.put(key, value);\n                }\n            }\n        }\n        bufferedReader.close();\n    } catch (IOException e) {\n        e.printStackTrace();\n    }\n    return properties;\n}\n<<<explanation>>>: The code reads each line from the file using BufferedReader.readLine(). It checks if the line starts with \"#\" to ignore commented lines. It then splits the line by \"=\" to get the key and value. If the line has exactly two parts, it trims the key and value and adds them to the properties map. Finally, it returns the map of properties."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 469,
+        "completion_tokens": 236,
+        "total_tokens": 705
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: I am trying to read lines of text from the console. The number of lines is not known in advance. The BufferedReader.readLine() method reads a line but after the last line it waits for input from the console. What should be done in order to avoid this?\nPlease using this api: BufferedReader.readLine.\nAnswer:<<<api>>>: BufferedReader.readLine\n<<<code>>>: public static String[] getLinesFromConsole() {\n    String strLine = \"\";\n    try {\n    // Get the object of DataInputStream\n    InputStreamReader isr = new InputStreamReader(System.in);\n    BufferedReader br = new BufferedReader(isr);\n    String line = \"\";\n    while ((line = br.readLine()) != null && !line.equals(\"exit\") )\n        strLine += br.readLine() + \"~\";\n        isr.close();                                                        \n    } catch (IOException ioe) {\n        ioe.printStackTrace();                                \n    }\n    return strLine.split(\"~\");\n}\n<<<explanation>>>: The below code might fix, replace text exit with your requirement specific string.\nQuestion: Read file and get key=value without using java.util.Properties: :I'm building a RMI game and the client would load a file that has some keys and values which are going to be used on several different objects. It is a save game file but I can't use java.util.Properties for this (it is under the specification). I have to read the entire file and ignore commented lines and the keys that are not relevant in some classes. These properties are unique but they may be sorted in any order. My file current file looks like this:# BioplayerOrigin=NewlandsplayerClass=Warlock# ArmorplayerHelmet=emptyplayerUpperArmor=armor900playerBottomArmor=armor457playerBoots=boot109etcThese properties are going to be written and placed according to the player's progress and the filereader would have to reach the end of file and get only the matched keys. I've tried different approaches but so far nothing came close to the results that I would had using java.util.Properties. Any idea?\nPlease using this api: BufferedReader.readLine.\nAnswer:"
+}

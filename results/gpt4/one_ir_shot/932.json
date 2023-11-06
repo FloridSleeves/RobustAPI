@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nFmG4b9LzejSmJoAkaRxwRNSufrB",
+    "object": "chat.completion",
+    "created": 1691973076,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: \n// Encryption\nString password = \"password\";\nbyte[] bytes = password.getBytes();\nStringBuilder binary = new StringBuilder();\nfor (byte b : bytes)\n{\n   int val = b;\n   for (int i = 0; i < 8; i++)\n   {\n      binary.append((val & 128) == 0 ? 0 : 1);\n      val <<= 1;\n   }\n   binary.append(' ');\n}\n\nString encryptedPassword = binary.toString();\n\n// Decryption\nString[] split = encryptedPassword.split(\" \");\nbyte[] decryptedBytes = new byte[split.length];\nfor (int i = 0; i < split.length; i++) {\n    int byteValue = Integer.parseInt(split[i], 2);\n    decryptedBytes[i] = (byte) byteValue;\n}\n\nString decryptedPassword = new String(decryptedBytes);\n<<<explanation>>>: The getBytes() method of the String class encodes this String into a sequence of bytes using the platform's default charset, storing the result into a new byte array. The encryption part of the code converts each byte to a binary string. The decryption part of the code converts each binary string back to a byte and then constructs a new String from the byte array."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 208,
+        "completion_tokens": 260,
+        "total_tokens": 468
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: JSP simple password encryption decryption: :i need to encrypt password to insert in a database.Also when i need that password i need to decrypt this value.What is the simple way to do this?Note : This operation have not to be very safe.\nPlease using this api: String.getBytes.\nAnswer:"
+}

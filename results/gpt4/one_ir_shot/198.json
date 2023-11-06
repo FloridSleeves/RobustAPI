@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD2Jlhtj8YwmpsSHOW75234f8I07",
+    "object": "chat.completion",
+    "created": 1691962539,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \ntry {\n    File file = new File(\"path_to_your_file\");\n    InputStream is = new FileInputStream(file);\n    byte[] buffer = new byte[10]; // adjust size if needed\n    int bytesRead;\n    StringBuilder sb = new StringBuilder();\n    while ((bytesRead = is.read(buffer)) != -1) {\n        sb.append(new String(buffer, 0, bytesRead));\n    }\n    String[] docs = sb.toString().split(\"</DOC>\");\n    for (String doc : docs) {\n        doc = doc + \"</DOC>\"; // add back the closing tag\n        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();\n        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();\n        Document document = dBuilder.parse(new InputSource(new StringReader(doc)));\n        document.getDocumentElement().normalize();\n        NodeList nList = document.getElementsByTagName(\"TEXT\");\n        for (int temp = 0; temp < nList.getLength(); temp++) {\n            Node nNode = nList.item(temp);\n            if (nNode.getNodeType() == Node.ELEMENT_NODE) {\n                Element eElement = (Element) nNode;\n                System.out.println(eElement.getTextContent());\n            }\n        }\n    }\n} catch (Exception e) {\n    e.printStackTrace();\n}\n<<<explanation>>>: This code reads the file into a string using InputStream.read, then splits the string into separate documents using the \"</DOC>\" delimiter. For each document, it adds back the closing tag, parses it into a Document object using a DocumentBuilder, normalizes the document, and gets a NodeList of all the \"TEXT\" elements. It then iterates over the NodeList and prints the text content of each \"TEXT\" element."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 313,
+        "completion_tokens": 351,
+        "total_tokens": 664
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to parse multiple, consecutive xml files in one document?: :I have a big text file that is a sequence of XML-valid documents that looks something like this:<DOC>   <TEXT> ... </TEXT>    ...</DOC><DOC>    <TEXT> ... </TEXT>    ...</DOC>etc. There is no <?xml version=\"1.0\">, the <DOC></DOC> delimits each separate xml. What's the best way to parse this in Java and get the values under <TEXT> in each <DOC>?If I pass the whole thing to a DocumentBuilder, I get an error saying the document is not well formed. Is there a better solution than simply traversing through, a building a string for each <DOC>?\nPlease using this api: InputStream.read.\nAnswer:"
+}

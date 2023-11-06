@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m7jqmF2aTpFqtdwDfD3HZiNVK4vE",
+    "object": "chat.completion",
+    "created": 1691703846,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: RandomAccessFile.write\n<<<code>>>: \n```java\nimport java.io.*;\nimport java.security.*;\nimport javax.crypto.*;\nimport javax.crypto.spec.*;\n\npublic class AppendToEncryptedFile {\n    public static void main(String[] args) throws Exception {\n        String key = \"1234567890123456\"; // 128 bit key\n        String initVector = \"RandomInitVector\"; // 16 bytes IV\n\n        appendToFile(\"test.enc\", \"Hello World\", key, initVector);\n        appendToFile(\"test.enc\", \"Hello Again\", key, initVector);\n    }\n\n    public static void appendToFile(String fileName, String value, String key, String initVector) throws Exception {\n        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(\"UTF-8\"));\n        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(\"UTF-8\"), \"AES\");\n\n        Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");\n        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);\n\n        byte[] encrypted = cipher.doFinal(value.getBytes());\n\n        RandomAccessFile raf = new RandomAccessFile(fileName, \"rw\");\n        raf.seek(raf.length());\n        raf.write(encrypted);\n        raf.close();\n    }\n}\n```\n<<<explanation>>>: This code uses the AES encryption algorithm with CBC mode and PKCS5 padding. It first creates an `IvParameterSpec` and a `SecretKeySpec` from the provided initialization vector and key. Then it initializes a `Cipher` for encryption with the key and IV. It encrypts the input string and writes the encrypted bytes to the end of the file specified by `fileName`. The `RandomAccessFile` class is used to write to the file. The `seek` method is used to move the file pointer to the end of the file before writing, effectively appending the encrypted data to the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 197,
+        "completion_tokens": 393,
+        "total_tokens": 590
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to append to AES encrypted file: :I'm writing some kind of logger that produces encrypted log-file. Unfortunately, cryptography is not my strong side. Now I can write to file several messages and then close file. Then i can open it, append some messages, close again and after decryption I see padding bytes in the middle of file. Is there any way to work with encrypted file without having to decrypt it every time I want to append some messages?EDIT: little more details. Current implementation utlizes CipherOutputStream. As i understand there's no way to seek using it.Can i use 'NoPadding' option if i will control that output data size is divisible by block size?\nPlease using this api: RandomAccessFile.write.\nAnswer:"
+}

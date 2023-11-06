@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCUojCpQ1gspuUJD5qU6OG6DNDXN",
+    "object": "chat.completion",
+    "created": 1691960462,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: FileChannel.write\n<<<code>>>: private static void write(byte[] data) throws IOException {\n    File file = new File(\"C:/temp/file.json\");\n    int length = data.length;\n    RandomAccessFile raf = new RandomAccessFile(file, \"rw\");\n    FileChannel fc = raf.getChannel();\n    ByteBuffer buffer = ByteBuffer.wrap(data);\n    fc.write(buffer);\n    fc.close();\n    raf.close();\n}\n<<<explanation>>>: The issue you are facing is likely due to the size of the byte array being too large to be mapped into memory using MappedByteBuffer. Instead, you can use the write() method from the FileChannel class to write the byte array directly to the file. This method writes a sequence of bytes to this channel from the given buffer. After writing, the position of the buffer is updated with the number of bytes written. Finally, make sure to close the FileChannel and RandomAccessFile objects to release system resources."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 313,
+        "completion_tokens": 199,
+        "total_tokens": 512
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: IOException when writing byte array: :I am getting IOException: Map Failed when trying to write a large byte array. I use the method below to write a byte array to a fileprivate static void write(byte[] data) throws Exception {        File file = new File(\"C:/temp/file.json\");        int length = data.length;        RandomAccessFile raf = new RandomAccessFile(file, \"rw\");        FileChannel fc = raf.getChannel();        MappedByteBuffer buffer = fc.map(FileChannel.MapMode.READ_WRITE, 0, length);        for (int i = 0; i < length; i++) {            buffer.put(data[i]);        }}The byte array is about 270mb. Can anyone explain what I am doing wrong? Thanks.\nPlease using this api: FileChannel.write.\nAnswer:"
+}

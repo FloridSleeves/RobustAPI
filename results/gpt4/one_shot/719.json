@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEFYdBGDMXo5pvjaSFiGW4FtcdyH",
+    "object": "chat.completion",
+    "created": 1691728876,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n@Override\nprotected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {\n    createEngine(request);\n    processRequest(request, response);\n}\n\nprivate void createEngine(HttpServletRequest request){\n    int boardSize = Integer.parseInt(request.getParameter(\"boardSize\"));\n    int numberOfPlayers = Integer.parseInt(request.getParameter(\"numberOfPlayers\"));\n    m_Engine = new Engine(boardSize, numberOfPlayers );\n    response.setContentType(\"text/html\");\n    PrintWriter out = response.getWriter();\n    out.write(\"<html><body><script type='text/javascript'>var boardSize = \" + boardSize + \";</script></body></html>\");\n}\n<<<explanation>>>: In your servlet, after you have parsed the board size, you can write it out as a JavaScript variable in the HTML response. This will make the board size available to any JavaScript running on the page. The PrintWriter.write method is used to send the HTML response back to the client. The board size is embedded in a script tag as a JavaScript variable."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 539,
+        "completion_tokens": 209,
+        "total_tokens": 748
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: How to pass parameters from servlet to JavaScript: :I am working on a board game with dynamic board size of 5x5,...,8x8This should be a game that runs on a web.  I am working with NetBeans and tomcat as the server for testing. I have the GameSettings.html which the user choose the board size and press submit.  The data is being sent to servlet named: GameSettingsServlet.java  There I pull out the boardSize and parse it to an integer:  @Overrideprotected void doGet(HttpServletRequest request, HttpServletResponse response)        throws ServletException, IOException {   createEngine(request);   processRequest(request, response);}private void createEngine(HttpServletRequest request){    int boardSize = Integer.parseInt(request.getParameter(\"boardSize\"));    int numberOfPlayers = Integer.parseInt(request.getParameter(\"numberOfPlayers\"));    m_Engine = new Engine(boardSize, numberOfPlayers );}I want to create the board with javaScript so I need to send the boardSize parameter to the   javaScript (which should run on BoardGame.html)  in order to know how much rows and columns to create.How can I pass the boardSize to the javaScript or HTML ?I searched on the web but I found only about JSP and I need it on HTML.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

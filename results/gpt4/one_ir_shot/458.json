@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nE5UzWiPMriDkRJDE14wDIfxPu5W",
+    "object": "chat.completion",
+    "created": 1691966580,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: public class FooIterator<E extends Bar> implements Iterator<E> {\n  private Iterator<E> innerIterator;\n\n  public FooIterator(Collection<E> bars) {\n    this.innerIterator = bars.iterator();\n  }\n\n  @Override\n  public boolean hasNext() {\n    return innerIterator.hasNext();\n  }\n\n  @Override\n  public E next() {\n    return innerIterator.next();\n  }\n\n  @Override\n  public void remove() {\n    throw new UnsupportedOperationException(\"Don't remove from FooIterator!\");\n  }\n}\n<<<explanation>>>: In this code, we have defined a class FooIterator that implements the Iterator interface. We have specified that the type parameter E extends Bar, which means that E is a subclass of Bar. This ensures that we can only use this iterator with classes that are subclasses of Bar. The next() method of the Iterator interface returns the next element in the iteration. If the iteration has no more elements, it throws a NoSuchElementException."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 400,
+        "completion_tokens": 202,
+        "total_tokens": 602
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Making assumptions about type parameters?: :I want to subclass Iterator into what I'll call FooIterator. My code looks something like this:public class FooIterator<E> implements Iterator<E> {  public FooIterator(Collection<Bar> bars) {    innerIterator = bars.iterator();  }  @Override  public boolean hasNext() {    return innerIterator.hasNext();  }  @SuppressWarnings(\"unchecked\")  @Override  public E next() {    Bar bar = innerIterator.next();    return new E(bar);  }  @Override  public void remove() {    throw new UnsupportedOperationException(\"Don't remove from FooIterator!\");  }  private Iterator<Bar> innerIterator;}...except, of course, this doesn't work because I can't instantiate a new E from a Bar.I would only ever use this with an E that has a constructor that takes a Bar. Is there any way to \"prove\" that to the compiler, or to just throw a runtime error if E doesn't have an appropriate constructor?Or perhaps I'm just not using the right design pattern here? I've been doing a lot of C++ recently, and I feel like I might be approaching this the wrong way.\nPlease using this api: Iterator.next.\nAnswer:"
+}

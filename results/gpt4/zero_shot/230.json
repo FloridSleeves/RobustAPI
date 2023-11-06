@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2vsZfkwRQwmu4t2KajeZewRo8Go",
+    "object": "chat.completion",
+    "created": 1691685372,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \n```java\nInputStream inputStream = socket.getInputStream();\nBufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));\nString line;\nStringBuilder payload = new StringBuilder();\n\nwhile ((line = reader.readLine()) != null && !line.isEmpty()) {\n    System.out.println(line);\n}\n\nint contentLength = Integer.parseInt(headers.get(\"Content-Length\"));\nfor (int i = 0; i < contentLength; i++) {\n    payload.append((char) inputStream.read());\n}\n\nSystem.out.println(\"Payload data: \" + payload.toString());\n```\n\n<<<explanation>>>: The InputStream.read() method is used to read the next byte of data from the input stream. In the context of a HTTP POST request, after reading the headers, you need to read the body of the request which contains the data being sent. The 'Content-Length' header tells you how many bytes of data are in the body of the request. You can use a loop to read this many bytes from the input stream and append them to your payload. This way, you can ensure that you read all the data sent in the POST request, and the BufferedReader won't hang."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 166,
+        "completion_tokens": 235,
+        "total_tokens": 401
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Buffered Reader HTTP POST: :Looking for a bit of help, I have currently written a HTTP server. It currently handles GET requests fine. However, whilst using POST the buffered reader seems to hang. When the request is stopped the rest of the input stream is read via the buffered reader. I have found a few things on google. I have tried changing the CRLF and the protocol version from 1.1 to 1.0 (browsers automatically make requests as 1.1) Any ideas or help would be appreciated. Thanks\nPlease using this api: InputStream.read.\nAnswer:"
+}

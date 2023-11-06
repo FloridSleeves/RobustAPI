@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDymYRMf5JyeGJd6NmDIWl4bsjuu",
+    "object": "chat.completion",
+    "created": 1691966164,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: try {\n    FileReader fr = new FileReader(file);\n    BufferedReader br = new BufferedReader(fr);\n    String line = br.readLine();\n    String id = new String();\n    while(line != null){\n        StringTokenizer st = new StringTokenizer(line, \",\");\n        while(st.hasMoreTokens() && !id.equals(args[0])){\n            id = st.nextToken();\n        }\n        line = br.readLine();\n    }\n} catch (FileNotFoundException e) {\n    System.out.println(\"file not found\");\n} catch (IOException e) {\n    System.out.println(\"not a string\");\n}\n<<<explanation>>>: The issue with your code is that you are creating the StringTokenizer object outside of the loop, so it is only tokenizing the first line of the file. By moving the creation of the StringTokenizer inside the loop, it will tokenize each line separately. Additionally, you need to check if there are more tokens available using the hasMoreTokens() method before calling nextToken()."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 407,
+        "completion_tokens": 199,
+        "total_tokens": 606
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: looping through text file to find string with strinkTokenizer: :I am trying to loop through a text file, and according to my logic it is supposed to loop though while, line is not null, and then in another while loop inside of that loop, its supposed to loop through the line while a variable does not equal one of my command line arguments and then its supposed to take the first token of the line and add it to that variable. But every time I run the code I get no such element exception, i don't understand why?try {        FileReader fr = new FileReader(file);        BufferedReader br = new BufferedReader(fr);        String line = br.readLine();        String id = new String();        StringTokenizer st = new StringTokenizer(line, \",\");        while(line != null){            while(!id.equals(args[0])){                line = br.readLine();                id = st.nextToken();            }        }    } catch (FileNotFoundException e) {        System.out.println(\"file not found\");    } catch (IOException e) {        System.out.println(\"not a string\");    }The file looks something like this:line1: 118, s, m, pline2: 111, s, m, c\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxGTfmTBX6Nx2eHOiSfrjDpdZn4L",
+    "object": "chat.completion",
+    "created": 1691663585,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes()\n<<<code>>>: \nimport java.security.MessageDigest;\nimport java.security.NoSuchAlgorithmException;\n\npublic class PasswordHashing {\n    public static void main(String[] args) {\n        String password = \"password123\";\n        String hashedPassword = hashPassword(password);\n        System.out.println(\"Hashed password: \" + hashedPassword);\n    }\n\n    public static String hashPassword(String password) {\n        try {\n            MessageDigest md = MessageDigest.getInstance(\"SHA-512\");\n            byte[] passwordBytes = password.getBytes();\n            byte[] hashedBytes = md.digest(passwordBytes);\n            StringBuilder sb = new StringBuilder();\n            for (byte b : hashedBytes) {\n                sb.append(String.format(\"%02x\", b));\n            }\n            return sb.toString();\n        } catch (NoSuchAlgorithmException e) {\n            e.printStackTrace();\n        }\n        return null;\n    }\n}\n\n<<<explanation>>>: The equivalent Java code for hashing a password using SHA-512 algorithm is shown above. The code uses the MessageDigest class from the java.security package to perform the hashing. The password is converted to bytes using the getBytes() method of the String class. The MessageDigest instance is created with the algorithm \"SHA-512\". The password bytes are then hashed using the digest() method of the MessageDigest class. The hashed bytes are converted to a hexadecimal string representation using a StringBuilder. Finally, the hashed password is returned as a string."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 197,
+        "completion_tokens": 288,
+        "total_tokens": 485
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Hashing a password before form submission on Server: :Below function use in JavaScript(forms.js include) for hashing a password.Whats is the equivalent in JAVA,function formhash(form, password) {      console.log(\"Hashing form\");      // Create a new element input, this will be our hashed password field.      var p = document.createElement(\"input\");      // Add the new element to our form.      form.appendChild(p);      p.name = \"p\";      p.type = \"hidden\"      p.value = hex_sha512(password.value);      // Make sure the plaintext password doesn't get sent.      password.value = \"\";      // Finally submit the form.      form.submit();    }\nPlease using this api: String.getBytes.\nAnswer:"
+}

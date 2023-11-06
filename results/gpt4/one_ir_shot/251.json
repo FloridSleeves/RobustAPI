@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDOC672cBAuQAftgVgtOJO3DepH5",
+    "object": "chat.completion",
+    "created": 1691963896,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n// Java side\npublic native void passInputStream(InputStream is);\n\n// C++ side\nJNIEXPORT void JNICALL Java_ClassName_passInputStream(JNIEnv *env, jobject obj, jobject is) {\n    jclass isClass = env->GetObjectClass(is);\n    jmethodID readMethod = env->GetMethodID(isClass, \"read\", \"([B)I\");\n\n    jbyteArray buffer = env->NewByteArray(1024);\n    int len;\n    while ((len = env->CallIntMethod(is, readMethod, buffer)) != -1) {\n        jbyte *bytes = env->GetByteArrayElements(buffer, NULL);\n        // Now you have a char* (bytes) with len number of bytes. You can copy it to your own char*.\n        // Don't forget to release it\n        env->ReleaseByteArrayElements(buffer, bytes, 0);\n    }\n}\n<<<explanation>>>: In the Java side, you declare a native method that accepts an InputStream. In the C++ side, you get the class of the InputStream and the method ID of the read method. Then, you create a byte array buffer and read from the InputStream into the buffer until there's no more data. Each time you read, you get a pointer to the byte array's elements, which you can treat as a char*. After you're done with the data, you release the byte array's elements."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 201,
+        "completion_tokens": 294,
+        "total_tokens": 495
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to move data from java InputStream to a char * in c++ with jni?: :How can I move the data stored in a java InputStream to a char * in c++ using JNI?Thanks,Carlos.\nPlease using this api: InputStream.read.\nAnswer:"
+}

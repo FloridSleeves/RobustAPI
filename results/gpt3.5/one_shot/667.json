@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lzYU3yMEOBGNboD34iqOmlfpp5zH",
+    "object": "chat.completion",
+    "created": 1691672390,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: In your Sinatra server code, you can receive the data sent by the Java client using the params hash. Here's an example:\n\npost '/hello' do\n  text = params[:text]\n  puts text\nend\n\nThis code will receive the 'text' parameter sent by the Java client and print it to the console. You can then use the 'text' variable in your Sinatra code as needed.\n<<<explanation>>>: The params hash in Sinatra allows you to access the parameters sent in the request. In this case, the 'text' parameter sent by the Java client can be accessed using params[:text]."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 467,
+        "completion_tokens": 136,
+        "total_tokens": 603
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: Receiving Data On Sinatra Server: :I am able to send data to a sinatra server (Strings) but I'm not sure about how to actually receive it in the sinatra code. Could anyone help?Java client (what i'm using to send data) code:private static void contactServer() {    try {        String text = \"This is a text please work\";        Socket sock = new Socket(\"localhost\", 4567);        OutputStream os = sock.getOutputStream();        URL url = new URL(\"http://localhost:4567/hello\");        PrintWriter writer = new PrintWriter(os);        writer.flush();        writer.write(text);        url.openStream();        System.out.println(\"done\");        String strTemp = \"\";        /*while(null != (strTemp = br.readLine())){            System.out.println(strTemp);        }*/    } catch (Exception e) {        e.printStackTrace();    }}\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

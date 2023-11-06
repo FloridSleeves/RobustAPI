@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nGLfYsr6M69q7xLB2Mrq79rEkwLm",
+    "object": "chat.completion",
+    "created": 1691975271,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: private String getPartialIssueList() {\n    String listFromProperties = getPropertyValue(\"propagateList\");\n    StringTokenizer token = new StringTokenizer(listFromProperties, \",\");\n    StringBuilder partialListString = new StringBuilder();\n    partialListString.append(\" AND (key=\");\n    while (token.hasMoreTokens()) {\n        partialListString.append(token.nextToken());\n        if (token.hasMoreTokens()) {\n            partialListString.append(\" OR key=\");\n        }\n    }\n    partialListString.append(\")\");\n    return partialListString.toString();\n}\n<<<explanation>>>: The nextToken() method of the StringTokenizer class returns the next token from this string tokenizer's string. If there are more tokens available in the string after the current token, nextToken() can be called again to get the next token. If there are no more tokens, it will not append \" OR key=\" to the string. The closing bracket is added after the while loop to close the condition."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 584,
+        "completion_tokens": 199,
+        "total_tokens": 783
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Conditionally Adding String in StringTokenizer: :I am currently stuck with a very simple yet confusing issue while using StringTokenizer. What I am trying to achieve is below:I have a URL String as:http://xxx:port/jira/rest/api/2/search?jql=project='TP' AND(status='Ready for INT Deployment' or status = 'Ready for UAT Deployment')Above is the base string. Now I want to dynamically add more query parameters to the above URL as below: \"AND (key=NN-1234 OR key=NN-4321 OR key=NN-65343.....)\"Here is my code:private String getPartialIssueList() {    String listFromProperties = getPropertyValue(\"propagateList\");    StringTokenizer token = new StringTokenizer(listFromProperties, \",\");    StringBuilder partialListString = new StringBuilder();    partialListString.append(\" AND key=\");    while (token.hasMoreElements()) {        partialListString.append(token.nextElement() + \" OR key=\" + token.nextElement());    }    return partialListString.toString();}Somehow this only works if I have 2 inputs. What I want is, after the base url an \"AND\" should be added followed by opening brackets \"(\" and then key=\"value from properties\", value 2 from properties, value 3 from properties, then closing brace \")\". Irrespective of how many JIRA ID's I have in properties file, it should keep on adding \"OR key=NN-5432 OR key=\"NN-9875\" and so on..This is the output I am looking for:http://xxx:port/jira/rest/api/2/search?jql=project='TP' AND (status='Ready for INT Deployment' or status = 'Ready for UAT Deployment') AND (key=NN-09876 OR key=NN-09873 OR key=NN-09376 OR key=NN-02876)Currently values for propagateList in the properties file ispropagateList=\"NN-09876\",\"NN-65432\",\"NN-65430\"Can someone please help out on this?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

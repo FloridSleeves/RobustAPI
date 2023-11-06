@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nE6789fA4e8uxdvpewqpahr2y9C6",
+    "object": "chat.completion",
+    "created": 1691966619,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \nFileInputStream fis = new FileInputStream(new File(\"your excel file path\"));\nWorkbook workbook = new XSSFWorkbook(fis);\nSheet sheet = workbook.getSheetAt(0);\nIterator<Row> rowIterator = sheet.iterator();\n\nwhile(rowIterator.hasNext()) {\n    Row row = rowIterator.next();\n    // Assuming the data is in the first five columns\n    int id = (int) row.getCell(0).getNumericCellValue();\n    String ip1 = row.getCell(1).getStringCellValue();\n    String ip2 = row.getCell(2).getStringCellValue();\n    String user = row.getCell(3).getStringCellValue();\n    int tktno = (int) row.getCell(4).getNumericCellValue();\n\n    // Insert into database\n    String sql = \"INSERT INTO your_table_name (ID, IP1, IP2, USER, TKTNO) VALUES (?, ?, ?, ?, ?)\";\n    PreparedStatement pstmt = conn.prepareStatement(sql);\n    pstmt.setInt(1, id);\n    pstmt.setString(2, ip1);\n    pstmt.setString(3, ip2);\n    pstmt.setString(4, user);\n    pstmt.setInt(5, tktno);\n    pstmt.executeUpdate();\n}\nfis.close();\n<<<explanation>>>: This code reads an Excel file using the Apache POI library. It uses an Iterator to iterate over each row in the first sheet of the workbook. For each row, it retrieves the data from the first five cells and inserts that data into a database using a PreparedStatement. The Iterator.next() method is used to get the next row from the iterator."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 252,
+        "completion_tokens": 327,
+        "total_tokens": 579
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: how to read excel file and insert those data into database using java and poi or any other libraray?: :i am using servlet and trying to read the user uploaded excel file and insert into database.my excel is in this format:ID IP1 IP2 USER TKTNO(these are headings in excel & database table as well)under those heading i have data in excel file which i have to read and insert into database.please desperately need help....thank you\nPlease using this api: Iterator.next.\nAnswer:"
+}

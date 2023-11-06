@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7luWdWKry1iwIVK3sApFppErZbioM",
+    "object": "chat.completion",
+    "created": 1691653055,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \nClient code:\nDataOutputStream dos = new DataOutputStream(s.getOutputStream());\ndos.write(b);\n\nServer code:\nDataInputStream dis = new DataInputStream(s.getInputStream());\nbyte[] receivedBytes = new byte[b.length];\ndis.readFully(receivedBytes, 0, receivedBytes.length);\nString receivedString = byteArrayToHexString(receivedBytes);\nSystem.out.println(\"client sent: \" + receivedString);\n\nprivate static String byteArrayToHexString(byte[] bytes) {\n    StringBuilder sb = new StringBuilder();\n    for (byte b : bytes) {\n        sb.append(String.format(\"%02X \", b));\n    }\n    return sb.toString().trim();\n}\n\n<<<explanation>>>: \nIn the client code, we use DataOutputStream.write to send the byte array to the server. This method writes the entire byte array to the output stream.\n\nIn the server code, we use DataInputStream.readFully to read the entire byte array from the input stream. This method ensures that all bytes are read before returning. We then convert the received byte array to a hexadecimal string using the byteArrayToHexString method, which formats each byte as a two-digit hexadecimal number. Finally, we print the received string."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 221,
+        "completion_tokens": 245,
+        "total_tokens": 466
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Transferring byte[] over sockets: :I have a byte array that has to be sent to the server.byte[] b=new byte[]{(byte)0xFE,0x01,0x01,0x32,0x00,0x00,(byte)0xFD};My client code for sending isPrintStream pw=new PrintStream(s.getOuputStream());pw.Println(b);My server code for receiving is InputStreamReader in=new InputStreamreader();BufferedReader br=new BufferedReader(in);String s=br.readline();System.out.println(\"client sent :\" + s);when server receives and prints the output i am getting the output as client sent:[B@1f4917a7I want the output same as what is sent: FE 01 01 32 00 00 FD\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

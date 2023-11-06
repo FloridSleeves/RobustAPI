@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mA1qCKT2G6eJihIYAo6phxdRBzDb",
+    "object": "chat.completion",
+    "created": 1691712650,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\nimport java.util.StringTokenizer;\n\npublic class Main {\n    public static void main(String[] args) {\n        String html = \"<html><body><style>body{background:#FFC}p{background:red}body, p{font-weight:bold}</style><p>...</p></body></html>\";\n        StringTokenizer st = new StringTokenizer(html, \"<>{}\", true);\n\n        while (st.hasMoreTokens()) {\n            String token = st.nextToken();\n            if (token.equals(\"<style>\")) {\n                while (!token.equals(\"</style>\")) {\n                    token = st.nextToken();\n                    // Here you can parse the style and apply it inline\n                }\n            }\n        }\n    }\n}\n```\n<<<explanation>>>: The StringTokenizer.nextToken API is used to break a string into tokens. In this case, the string is the HTML code and the delimiters are \"<\", \">\", and \"{}\". The while loop goes through each token. If the token is \"<style>\", it enters another loop that continues until it finds the closing \"</style>\" tag. Inside this loop, you can parse the style and apply it inline. However, this is a very basic example and doesn't handle all cases. For a complete solution, you would need a full HTML parser."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 221,
+        "completion_tokens": 268,
+        "total_tokens": 489
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Automatically convert Style Sheets to inline style: :Don't have to worry about linked style or hover style.I want to automatically convert files like this<html><body><style>body{background:#FFC}p{background:red}body, p{font-weight:bold}</style><p>...</p></body></html>to files like this<html><body style=\"background:red;font-weight:bold\"><p style=\"background:#FFC;font-weight:bold\">...</p></body></html>I would be even more interested if there was an HTML parser that would do this.The reason I want to do this is so I can display emails that use global style sheets without their style sheets messing up the rest of my web page. I also would like to send the resulting style to web based rich text editor for reply and original message.\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

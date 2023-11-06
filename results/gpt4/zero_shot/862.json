@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m7idwMeTIG6ZlbpombubECQ1g9CX",
+    "object": "chat.completion",
+    "created": 1691703771,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: RandomAccessFile.write\n\n<<<code>>>: \n```java\nimport java.io.*;\nimport java.security.*;\nimport javax.crypto.*;\nimport javax.crypto.spec.*;\n\npublic class AppendToEncryptedFile {\n    public static void main(String[] args) throws Exception {\n        String key = \"1234567890123456\"; // 128 bit key\n        SecretKeySpec aesKey = new SecretKeySpec(key.getBytes(), \"AES\");\n        Cipher cipher = Cipher.getInstance(\"AES/ECB/NoPadding\");\n        cipher.init(Cipher.ENCRYPT_MODE, aesKey);\n\n        RandomAccessFile raf = new RandomAccessFile(\"encrypted.txt\", \"rw\");\n        byte[] text = \"Hello, World!\".getBytes();\n        byte[] encrypted = cipher.doFinal(text);\n\n        raf.seek(raf.length()); // move to the end of the file\n        raf.write(encrypted);\n        raf.close();\n    }\n}\n```\n\n<<<explanation>>>: In this code, we are using the `RandomAccessFile.write` method to append to an AES encrypted file. We first create a `SecretKeySpec` with a 128 bit key and initialize a `Cipher` instance with \"AES/ECB/NoPadding\". We then create a `RandomAccessFile` instance in \"rw\" mode, which allows us to read and write to the file. We encrypt the text \"Hello, World!\" using the `Cipher.doFinal` method and then seek to the end of the file using `RandomAccessFile.seek` method. Finally, we write the encrypted text to the file using `RandomAccessFile.write` method and close the file. Note that this code uses \"NoPadding\" and assumes that the output data size is divisible by the block size."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 197,
+        "completion_tokens": 355,
+        "total_tokens": 552
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to append to AES encrypted file: :I'm writing some kind of logger that produces encrypted log-file. Unfortunately, cryptography is not my strong side. Now I can write to file several messages and then close file. Then i can open it, append some messages, close again and after decryption I see padding bytes in the middle of file. Is there any way to work with encrypted file without having to decrypt it every time I want to append some messages?EDIT: little more details. Current implementation utlizes CipherOutputStream. As i understand there's no way to seek using it.Can i use 'NoPadding' option if i will control that output data size is divisible by block size?\nPlease using this api: RandomAccessFile.write.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mA0Y4NlbrI5gQqPJirLGkQtyfsSx",
+    "object": "chat.completion",
+    "created": 1691712570,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\ntry {        \n    FileReader fr = new FileReader(file);        \n    BufferedReader br = new BufferedReader(fr);        \n    String line = br.readLine();        \n    String id = new String();        \n    StringTokenizer st = new StringTokenizer(line, \",\");        \n    while(line != null){            \n        while(!id.equals(args[0])){                \n            if(st.hasMoreTokens()){\n                id = st.nextToken();\n            } else {\n                line = br.readLine();\n                if(line != null){\n                    st = new StringTokenizer(line, \",\");\n                } else {\n                    break;\n                }\n            }            \n        }        \n    }    \n} catch (FileNotFoundException e) {        \n    System.out.println(\"file not found\");    \n} catch (IOException e) {        \n    System.out.println(\"not a string\");    \n}\n```\n<<<explanation>>>: The NoSuchElementException is thrown because you are trying to call nextToken() on the StringTokenizer object when there are no more tokens in the current line. To avoid this, you should check if there are more tokens in the current line before calling nextToken() using the hasMoreTokens() method. If there are no more tokens, you should read the next line and create a new StringTokenizer for that line. If the next line is null, you should break the loop."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 306,
+        "completion_tokens": 271,
+        "total_tokens": 577
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: looping through text file to find string with strinkTokenizer: :I am trying to loop through a text file, and according to my logic it is supposed to loop though while, line is not null, and then in another while loop inside of that loop, its supposed to loop through the line while a variable does not equal one of my command line arguments and then its supposed to take the first token of the line and add it to that variable. But every time I run the code I get no such element exception, i don't understand why?try {        FileReader fr = new FileReader(file);        BufferedReader br = new BufferedReader(fr);        String line = br.readLine();        String id = new String();        StringTokenizer st = new StringTokenizer(line, \",\");        while(line != null){            while(!id.equals(args[0])){                line = br.readLine();                id = st.nextToken();            }        }    } catch (FileNotFoundException e) {        System.out.println(\"file not found\");    } catch (IOException e) {        System.out.println(\"not a string\");    }The file looks something like this:line1: 118, s, m, pline2: 111, s, m, c\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

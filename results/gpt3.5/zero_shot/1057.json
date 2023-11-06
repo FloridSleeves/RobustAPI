@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lxaUvIL9YzlEH6jybXyIw2Q0Wt7R",
+    "object": "chat.completion",
+    "created": 1691664826,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\nStringTokenizer st = new StringTokenizer(line, \";\");\nString tempLine = st.nextToken();\nString windLine = st.nextToken();\nString[] tempData = tempLine.trim().split(\" \");\nString[] windData = windLine.trim().split(\" \");\n```\n<<<explanation>>>: \nThe code above uses the `StringTokenizer` class to split the `line` string into two parts using the delimiter \";\". The `nextToken()` method is used to retrieve the next token from the `StringTokenizer` object. The first token is assigned to `tempLine` and the second token is assigned to `windLine`. Then, the `trim()` method is used to remove any leading or trailing whitespace from the `tempLine` and `windLine` strings. Finally, the `split()` method is used to split the `tempLine` and `windLine` strings into arrays of strings using the delimiter \" \"."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 618,
+        "completion_tokens": 198,
+        "total_tokens": 816
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Parse string with delimiter \";\" (java): :I have a string = \"1.515 53.11 612.1 95.1 ; 0 0 0 0\"I'm tring to parse it via this code:public class SendThread implements Runnable {    public void run()     {        socket = null;        BufferedReader in;        while (true)        {            // Loop until connected to server            while (socket == null){                try{                    socket = new Socket (\"192.168.137.1\", 808);                         }                catch (Exception e) {                    socket = null;                    //Log.d(\"Connection:\", \"Trying to connect...\");                }                try {                Thread.sleep(30);                } catch (Exception e) {}            }            // Get from the server               try {                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));                Log.d(\"Connection: \", \"connected\");                String line = null;                while ((line = in.readLine()) != null) {                    Log.d(\"Socket:\", line);                    NumberFormat nf = new DecimalFormat (\"990,0\");                    String[] tokens = null;                    String[] tempData = null;                    String[] windData = null;                    try {                         tokens = line.split(\";\");                         tempData = tokens[0].trim().split(\" \");                         windData = tokens[1].trim().split(\" \");                       } catch (Exception error)                    {                         Log.d(\"Parsing error:\", error+\"\");                    }                    for (int i = 0; i < currentTemp.length; i++)                        currentTemp[i] = (Double) nf.parse(tempData[i]);                    for (int i = 0; i < currentWind.length; i++)                        currentWind[i] = (Double) nf.parse(windData[i]);                    //Toast.makeText(getApplicationContext(), \"Received data:\", duration)                    for (int i = 0; i < currentTemp.length; i++){                        Log.d(\"Converted data: currentTemp[\"+i+\"] = \", currentTemp[i]+\"\");                    }                    for (int i = 0; i < currentWind.length; i++){                        Log.d(\"Converted data: currentWind[\"+i+\"] = \", currentWind[i]+\"\");                    }                }                socket = null;                Log.d(\"Connection: \", \"lost.\");            }             catch (Exception e) {                    socket = null;                    Log.d(\"Connection: \", \"lost.\");                    Log.d(\"Connection:\", e+\"\");            }        }    }}Bad code :( But I don't know better way to hold the socket connection :)I always get \"java.text.ParseException: Unparseable number\". How to fix it?tokens, tempData, windData are String[]\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

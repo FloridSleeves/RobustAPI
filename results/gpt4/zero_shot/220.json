@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2pkSZj4unJ5JIC7MhChioLpOtc0",
+    "object": "chat.completion",
+    "created": 1691684992,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\npublic void run() {\n    StringBuilder input = new StringBuilder();\n    try {\n        int data;\n        while (!isInterrupted()) {\n            while (in.available() > 0 && !isInterrupted()) {\n                data = in.read();\n                input.append(Integer.toHexString(data));\n            }\n            if (input.length() > 0) {\n                handleInput(input.toString());\n                input.setLength(0); // clear the StringBuilder\n            }\n            try {\n                sleep(500);\n            } catch (InterruptedException e) {\n                break;\n            }\n        }\n        socket.close();\n    } catch (IOException e) {\n        main.log(\"Connection lost...\");\n        main.log(e.toString());\n        main.stopBTCommunication();\n        main.startBTServer();\n    }\n}\n```\n<<<explanation>>>: \nThe InputStream.read() method is a blocking method, which means it will block the thread until there is some data to read. To make it non-blocking, you can use the InputStream.available() method, which returns the number of bytes that can be read without blocking. If this number is greater than 0, you can safely call the read() method without blocking the thread. \n\nIn your case, you want to read all available data into a String, and then handle this String with the handleInput() method. To do this, you can use a StringBuilder to append all read data. After handling the input, you can clear the StringBuilder by calling its setLength(0) method. \n\nPlease note that this solution assumes that the handleInput() method can handle partial commands. If this is not the case, you will need to implement some logic to buffer the input until a complete command is received."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 500,
+        "completion_tokens": 356,
+        "total_tokens": 856
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Reading and Handling Streams: :I want to read and handle a stream of String containing single OR multiple commands in one line.I am currently using InputStream in = socket.getInputStream(); for my inputstream.Also for handling the input a typical Thread:public void run() {    String input = \"\";    try {        int data = 0;        while (!isInterrupted()) {            while ((data = in.read()) != -1 && !isInterrupted()) {                input += Integer.toHexString(data);                handleInput(input);            }            try {                sleep(500);            } catch (InterruptedException e) {                break;            }        }        socket.close();        return;    } catch (IOException e) {        main.log(\"Connection lost...\");        main.log(e.toString());        main.stopBTCommunication();        main.startBTServer();    }}handleInput() is designed to handle any String given to it and response correctly. The problem with this implementation would be, that handleInput() is called with every byte read from in.read(). I know, that i could use BufferedReader.readLine(), but that would require every incomming command to have \"\\n\" appended to it, which is NOT the case and can't be changed. I know that         while (!isInterrupted()) {            while ((data = in.read()) != -1 && !isInterrupted()) { is kind of nuisance, but basically it want the Thread to read until nothing new is read, then handle that input and then read again...EDIT:So basically, what i need is a non-blocking read().EDIT2:How can incoming commands and commandchains look like:Select Command: \"s\"ReadLine Command: \"rlXX\" whereby X is a Hex DigitWriteLine Command: \"wlXXSSSSSSSS\" whereby X and S are Hex DigitsSo a commandschain may look like one of the following:\"s\"\"srlff\" = \"s\" + \"rlff\"\"rlffwlbb2e2e2e2erlbb\" = \"s\" + \"rlff\" + \"wlbb2e2e2e2e\" + \"rlbb\"\nPlease using this api: InputStream.read.\nAnswer:"
+}

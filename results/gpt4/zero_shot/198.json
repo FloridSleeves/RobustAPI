@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2ddAlHNHXIjS7sGhXUvaMiJXFRi",
+    "object": "chat.completion",
+    "created": 1691684241,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\nimport java.io.*;\nimport javax.xml.parsers.*;\nimport org.w3c.dom.*;\nimport org.xml.sax.InputSource;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        String xml = \"<DOC><TEXT>Text1</TEXT></DOC><DOC><TEXT>Text2</TEXT></DOC>\";\n        InputStream stream = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));\n        byte[] buffer = new byte[1024];\n        int count;\n        StringBuilder doc = new StringBuilder();\n        while ((count = stream.read(buffer)) != -1) {\n            doc.append(new String(buffer, 0, count));\n            if (doc.toString().endsWith(\"</DOC>\")) {\n                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();\n                DocumentBuilder builder = factory.newDocumentBuilder();\n                Document document = builder.parse(new InputSource(new StringReader(doc.toString())));\n                Element root = document.getDocumentElement();\n                System.out.println(root.getElementsByTagName(\"TEXT\").item(0).getTextContent());\n                doc = new StringBuilder();\n            }\n        }\n    }\n}\n```\n<<<explanation>>>: This code reads the XML string from an InputStream, 1024 bytes at a time. It appends the read bytes to a StringBuilder until it encounters the end of a <DOC> element. Then it creates a DocumentBuilder and parses the <DOC> element to a Document. It gets the <TEXT> element from the Document and prints its content. After that, it resets the StringBuilder and continues with the next <DOC> element."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 212,
+        "completion_tokens": 322,
+        "total_tokens": 534
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to parse multiple, consecutive xml files in one document?: :I have a big text file that is a sequence of XML-valid documents that looks something like this:<DOC>   <TEXT> ... </TEXT>    ...</DOC><DOC>    <TEXT> ... </TEXT>    ...</DOC>etc. There is no <?xml version=\"1.0\">, the <DOC></DOC> delimits each separate xml. What's the best way to parse this in Java and get the values under <TEXT> in each <DOC>?If I pass the whole thing to a DocumentBuilder, I get an error saying the document is not well formed. Is there a better solution than simply traversing through, a building a string for each <DOC>?\nPlease using this api: InputStream.read.\nAnswer:"
+}

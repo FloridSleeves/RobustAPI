@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lv2UhmwvjgeA9Rj2Lse5HP2d8y1p",
+    "object": "chat.completion",
+    "created": 1691655030,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\nimport com.jcraft.jsch.*;\n\npublic class SSHCommandRunner {\n    public static void main(String[] args) {\n        try {\n            JSch jsch = new JSch();\n            Session session = jsch.getSession(\"username\", \"hostname\", 22);\n            session.setPassword(\"password\");\n            session.setConfig(\"StrictHostKeyChecking\", \"no\");\n            session.connect();\n\n            ChannelExec channel = (ChannelExec) session.openChannel(\"exec\");\n            channel.setCommand(\"your_command_here\");\n            channel.connect();\n\n            InputStream in = channel.getInputStream();\n            byte[] buffer = new byte[1024];\n            int bytesRead;\n            StringBuilder output = new StringBuilder();\n\n            while ((bytesRead = in.read(buffer)) != -1) {\n                output.append(new String(buffer, 0, bytesRead));\n            }\n\n            System.out.println(output.toString());\n\n            channel.disconnect();\n            session.disconnect();\n        } catch (JSchException | IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n\n<<<explanation>>>: \nThis code demonstrates how to run a command over SSH using JSch and handle the output stream. It creates a JSch object and establishes an SSH session with the specified username, hostname, and password. The `StrictHostKeyChecking` configuration is set to \"no\" to avoid checking host keys.\n\nA `ChannelExec` is opened and the command to be executed is set using the `setCommand` method. The channel is then connected.\n\nAn `InputStream` is obtained from the channel to read the output of the command. A buffer of size 1024 is created to read the data from the stream. The `read` method is used to read data into the buffer, and the number of bytes read is stored in the `bytesRead` variable. The data is then appended to a `StringBuilder` object.\n\nThe loop continues until the `read` method returns -1, indicating the end of the stream. The output is then printed to the console.\n\nFinally, the channel and session are disconnected.\n\nNote: Replace \"username\", \"hostname\", \"password\", and \"your_command_here\" with the appropriate values for your SSH connection and command."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 129,
+        "completion_tokens": 452,
+        "total_tokens": 581
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Run a command over SSH with JSch: :I'm trying to run a command over SSH with JSch, but JSch has virtually no documentation and the examples I've found are terrible. For example, this one doesn't show code for handling the output stream. And, this one uses an ugly hack to know when to stop reading from the output stream.\nPlease using this api: InputStream.read.\nAnswer:"
+}

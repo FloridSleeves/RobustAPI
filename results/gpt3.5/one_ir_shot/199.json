@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCaPlKHCSKf5atoCcghBQLMibo82",
+    "object": "chat.completion",
+    "created": 1691960809,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: ChannelExec channel = (ChannelExec) session.openChannel(\"exec\");\nchannel.setCommand(\"your command here\");\nchannel.connect();\n\nInputStream inputStream = channel.getInputStream();\nbyte[] buffer = new byte[1024];\nStringBuilder output = new StringBuilder();\n\nwhile (true) {\n    int bytesRead = inputStream.read(buffer);\n    if (bytesRead == -1) {\n        break;\n    }\n    output.append(new String(buffer, 0, bytesRead));\n}\n\nString result = output.toString();\n\nchannel.disconnect();\nsession.disconnect();\n<<<explanation>>>: The read() method of the InputStream class reads the next byte of data from the input stream. It returns -1 if the end of the stream is reached. In this code, we create an InputStream from the output stream of the SSH channel and read the data into a buffer. We then append the data to a StringBuilder until the end of the stream is reached. Finally, we convert the StringBuilder to a String and close the channel and session."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 230,
+        "completion_tokens": 205,
+        "total_tokens": 435
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Run a command over SSH with JSch: :I'm trying to run a command over SSH with JSch, but JSch has virtually no documentation and the examples I've found are terrible. For example, this one doesn't show code for handling the output stream. And, this one uses an ugly hack to know when to stop reading from the output stream.\nPlease using this api: InputStream.read.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m9euFK1YnBfdAylE9noolwrqeQ2b",
+    "object": "chat.completion",
+    "created": 1691711228,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \n```java\nStringTokenizer st = new StringTokenizer(line,\",\");\nString VIN = st.nextToken();\nString carMake = st.nextToken();\nString carModel = st.nextToken();\nint carYear = Integer.parseInt(st.nextToken());\n```\n<<<explanation>>>: The StringTokenizer.nextToken method is used to return the next token from this string tokenizer's string. In your code, you are using it to parse a line of text from a file, which is separated by commas. Each call to nextToken() returns the next segment of the string, up until the next comma. \n\nThe NoSuchElementException is thrown by the nextToken method of the StringTokenizer class if there are no more tokens in this tokenizer's string. This means that you are trying to call nextToken() more times than there are segments in your string. \n\nTo avoid this, you should always check if there are more tokens available before calling nextToken() by using the hasMoreTokens() method. This method returns a boolean indicating whether there are more tokens available in the string. \n\nHere is how you can modify your code to avoid the NoSuchElementException:\n\n```java\nStringTokenizer st = new StringTokenizer(line,\",\");\nString VIN = st.hasMoreTokens() ? st.nextToken() : \"\";\nString carMake = st.hasMoreTokens() ? st.nextToken() : \"\";\nString carModel = st.hasMoreTokens() ? st.nextToken() : \"\";\nint carYear = st.hasMoreTokens() ? Integer.parseInt(st.nextToken()) : 0;\n```"
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 309,
+        "completion_tokens": 300,
+        "total_tokens": 609
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: StringTokenizer NoSuchElementExecption error: :I get a NoSuchElementException, now debugging this I noticed that the Car and Carmap are created properly and the values stored appropriately so I'm not sure exactly which next token the ST isn't seeing? Or whether it's stopping when is sees that there are no more tokens. Thanks to any and all for input.    Carmap = new HashMap<String,Car>();    //Change file path accordingly    File f = new File(\"C:\\\\XXX\\\\XXX\\\\XXX\\\\CarFaxDB.txt\");    //Check to see if file exists, else create file    if (f.exists()){        String data[] = readFile(f);        for (int i =0; i<data.length; i++){            if (data[i] != null){                if (i>0){                    String line = data[i];                    StringTokenizer st = new StringTokenizer(line,\",\");                    String VIN = st.nextToken();                    String carMake = st.nextToken();                    String carModel = st.nextToken();                    int carYear = Integer.parseInt(st.nextToken());                    data[i]= line;                    Car car = new Car(VIN, carMake, carModel, carYear);                    Carmap.put(car.getVIN(), car);                }            }        }    }\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

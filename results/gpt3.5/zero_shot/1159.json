@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7ly8U4b92UuPHbOoc87Of7n43TPFJ",
+    "object": "chat.completion",
+    "created": 1691666934,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: \nTo solve the NumberFormatException, you can add a check before parsing the tokens to integers. You can use the hasMoreTokens() method of the StringTokenizer class to check if there are more tokens available before parsing them.\n\nHere's an updated version of your code with the check added:\n\npublic void initInventory() throws FileNotFoundException, IOException {\n    BufferedReader readInventory = new BufferedReader(new FileReader(\"E:\\\\Semester 3\\\\PointOfSale2\\\\Inventory.csv\"));\n    String line = readInventory.readLine();\n    StringTokenizer nextItem;\n    while (line != null) {\n        nextItem = new StringTokenizer(line, \",\");\n        while (nextItem.hasMoreTokens()) {\n            String token = nextItem.nextToken();\n            if (token.matches(\"\\\\d+\")) { // check if the token is a number\n                int productID = Integer.parseInt(token);\n                int quantity = Integer.parseInt(nextItem.nextToken());\n                Inventory inventory = new Inventory(productID, quantity);\n                inStock.add(inventory);\n            }\n        }\n        line = readInventory.readLine();\n    }\n    readInventory.close();\n}\n\n<<<explanation>>>: \nIn the updated code, before parsing each token to an integer, we first check if the token is a number using the matches() method with a regular expression \"\\\\d+\". This regular expression matches any sequence of digits. If the token is a number, we can safely parse it to an integer. If it is not a number, we skip it and move to the next token. This prevents the NumberFormatException from occurring when trying to parse non-numeric tokens."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 287,
+        "completion_tokens": 323,
+        "total_tokens": 610
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Reading csv file resulting in number format exception: :I am writing a csv file using csvwriter and then calling its method writeAll.After writing i am reading the same file using buffered reader which is resulting in number format exception.How can i solve it?public static void writeInventoryToUpdate(List<String[]> data)throws IOException {    String csv = \"E:\\\\Semester 3\\\\PointOfSale2\\\\Inventory.csv\";    CSVWriter writer = new CSVWriter(new FileWriter(csv));    writer.writeAll(data);    writer.close();        }public void initInventory() throws FileNotFoundException, IOException {    BufferedReader readInventory=new BufferedReader(new FileReader(\"E:\\\\Semester 3\\\\PointOfSale2\\\\Inventory.csv\"));    String line=readInventory.readLine();    StringTokenizer nextItem;    while(line!=null){        nextItem=new StringTokenizer(line, \",\");        while(nextItem.hasMoreTokens()){            int productID=Integer.parseInt(nextItem.nextToken()); //Exception occuring here            int quantity=Integer.parseInt(nextItem.nextToken());            Inventory inventory=new Inventory(productID, quantity);            inStock.add(inventory);            line=readInventory.readLine();        }    }    readInventory.close();}\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDfcgP2a6fC6xOZ834zujwIXCMZq",
+    "object": "chat.completion",
+    "created": 1691964976,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: String.getBytes\n<<<code>>>: import javax.crypto.Mac;\nimport javax.crypto.spec.SecretKeySpec;\nimport java.security.InvalidKeyException;\nimport java.security.NoSuchAlgorithmException;\n\npublic class HMACWebService {\n    public static void main(String[] args) {\n        String message = \"Hello World\";\n        String secretKey = \"mySecretKey\";\n\n        try {\n            Mac hmac = Mac.getInstance(\"HmacSHA256\");\n            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), \"HmacSHA256\");\n            hmac.init(secretKeySpec);\n            byte[] hmacBytes = hmac.doFinal(message.getBytes());\n\n            StringBuilder sb = new StringBuilder();\n            for (byte b : hmacBytes) {\n                sb.append(String.format(\"%02x\", b));\n            }\n\n            String hmacString = sb.toString();\n            System.out.println(\"HMAC: \" + hmacString);\n        } catch (NoSuchAlgorithmException | InvalidKeyException e) {\n            e.printStackTrace();\n        }\n    }\n}\n<<<explanation>>>: The code above demonstrates how to write HMAC in a web service using Java. It uses the HmacSHA256 algorithm to generate the HMAC. The message and secret key are converted to byte arrays using the getBytes() method. The Mac class is used to initialize the HMAC with the secret key and compute the HMAC value. The resulting HMAC is then converted to a hexadecimal string representation."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 191,
+        "completion_tokens": 276,
+        "total_tokens": 467
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: what is keyed-HMAC (Hash Message Authentication Code): :what is keyed-HMAC (Hash Message Authentication Code)? And how to write HMAC in web service using java?\nPlease using this api: String.getBytes.\nAnswer:"
+}

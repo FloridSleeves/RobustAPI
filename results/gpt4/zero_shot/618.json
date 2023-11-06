@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m62Zn22konFOIxbyORBJwZgI5xT7",
+    "object": "chat.completion",
+    "created": 1691697319,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Map.get\n<<<code>>>: \n```java\nMap<String, Object> postsMap = (Map<String, Object>) user.getProperty(\"posts\");\nPost post = null;\nif (postsMap != null && !postsMap.isEmpty()) {\n    post = (Post) postsMap.get(\"key\");\n}\nif (post == null) {\n    Log.d(\"Problems\", \"post is null\");\n}\n```\n<<<explanation>>>: The `Map.get(Object key)` method is used to return the value to which the specified key is mapped, or null if this map contains no mapping for the key. In your case, you are trying to retrieve a Post object from the \"posts\" property of a BackendlessUser. The \"posts\" property is a Map where the key is the objectId of the Post and the value is the Post object itself. So, you need to know the objectId of the Post you want to retrieve. If the Post object is not found in the Map, it means that the user does not have a post with that objectId, and the method will return null."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 583,
+        "completion_tokens": 224,
+        "total_tokens": 807
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: getting zero objects from BackendlessUser getProperty(): :I've setup Backendless app, with User table having row name posts, which is data object relationship between User and Post tables, data relation is 1 to many. When I try to retrieve it using BackendlessUser.getProperty(\"key\"), it returns zero objects. Once it even returned HashMap. I used the way mentioned in the  the docs, but get null because the size of the Object[] is zero. I have data in that row for sure, wrote <uses-permission> for internet.public class MainActivity extends AppCompatActivity {    BackendlessUser user = null;    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_main);        Backendless.initApp(this, \"app_id\", \"android_key\", \"v1\");        Backendless.UserService.login(\"username\", \"password\", new AsyncCallback<BackendlessUser>() {            @Override            public void handleResponse(BackendlessUser response) {                user = response;                doStuff();            }            @Override            public void handleFault(BackendlessFault fault) {                Log.e(\"Error logging in\", \"message: \" + fault.getMessage());            }        });    }    //important    private void doStuff() {        Object[] postObjectArray = (Object[]) user.getProperty(\"posts\");        Post[] posts = null;        if (postObjectArray != null && postObjectArray.length > 0)            posts = (Post[])postObjectArray;        if (posts == null)        {            Log.d(\"Problems\", \"posts is null\");        }    }}Post class:public class Post extends Object{    private BackendlessUser user;    private String file;    private String message;    private String objectId;    public String getObjectId() {        return objectId;    }    public void setObjectId(String objectId) {        this.objectId = objectId;    }    public Post() {    }    public Post(BackendlessUser user, String file, String message) {        this.user = user;        this.file = file;        this.message = message;    }    public BackendlessUser getUser() {        return user;    }    public void setUser(BackendlessUser user) {        this.user = user;    }    public String getFile() {        return file;    }    public void setFile(String file) {        this.file = file;    }    public String getMessage() {        return message;    }    public void setMessage(String message) {        this.message = message;    }}\nPlease using this api: Map.get.\nAnswer:"
+}

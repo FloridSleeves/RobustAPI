@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lwmWAzBozzhBlaELuRzM7NgKU6Xz",
+    "object": "chat.completion",
+    "created": 1691661728,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```\nimport java.io.File;\nimport java.io.FileOutputStream;\nimport java.io.IOException;\nimport java.io.PrintWriter;\nimport com.itextpdf.text.Document;\nimport com.itextpdf.text.pdf.BaseFont;\nimport com.itextpdf.text.pdf.PdfReader;\n\npublic class CheckEmbeddedFonts {\n    public static void main(String[] args) {\n        try {\n            // Read the existing PDF file\n            PdfReader reader = new PdfReader(\"input.pdf\");\n            \n            // Create a new text file to write the results\n            PrintWriter writer = new PrintWriter(new FileOutputStream(\"output.txt\"));\n            \n            // Iterate through each page of the PDF\n            int numPages = reader.getNumberOfPages();\n            for (int i = 1; i <= numPages; i++) {\n                // Get the fonts used in the current page\n                BaseFont[] fonts = reader.getPageN(i).getAsArray(PdfName.RESOURCES).getAsArray(PdfName.FONT);\n                \n                // Check if any fonts are embedded\n                boolean embeddedFonts = false;\n                for (BaseFont font : fonts) {\n                    if (!font.getFontType().equals(BaseFont.FONT_TYPE_TTUNI)) {\n                        embeddedFonts = true;\n                        break;\n                    }\n                }\n                \n                // Write the result to the text file\n                writer.write(\"Page \" + i + \": \" + (embeddedFonts ? \"Fonts are embedded\" : \"Fonts are not embedded\") + \"\\n\");\n            }\n            \n            // Close the writer\n            writer.close();\n            \n            System.out.println(\"Fonts embedded check completed. Results written to output.txt\");\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n<<<explanation>>>: The code above uses the iText library to read an existing PDF file and check if the fonts are embedded or not. It creates a new text file called \"output.txt\" and writes the results in the format \"Page X: Fonts are embedded\" or \"Page X: Fonts are not embedded\" for each page of the PDF. The PrintWriter.write method is used to write the results to the text file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 167,
+        "completion_tokens": 440,
+        "total_tokens": 607
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Check if fonts are embedded in an existing PDF?: :How can I check if the fonts are embedded in an existing PDF?That is, read an existing PDF and list out the results in a .txt fileI went through the following example:http://itextpdf.com/examples/iia.php?id=287The above example tries to create a new PDF, but I want to read a PDF file and check if the fonts are embedded or not.I am more of a PHP guy so having a hard time to tweak the code. Any help would be appreciated\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCXHflqz28kYQK3lEp8m42zdMNeL",
+    "object": "chat.completion",
+    "created": 1691960615,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: val in = socket.getInputStream()\nval size = in.readLine().split(\" \")(1).toInt\nval payload = new Array[Byte](size)\nin.read(payload)\n<<<explanation>>>: The read() method of the InputStream class reads the next byte of data from the input stream. It returns -1 if the end of the stream is reached. In this case, we can use it to read the binary payload from the input stream into a byte array."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 410,
+        "completion_tokens": 103,
+        "total_tokens": 513
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Getting a HTTP POST binary payload to a byte array in Scala: :I have a socket which will persist for long. Client will keep streaming data requests to my server app through the socket. Request is a POST with a binary payload which needs to be copied to a byte array which i need to use to get the protocol buffer class.POST / HTTP/1.1Host: 127.0.0.1:80Accept-Encoding: identityContent-Length: 423Content-type: application/octet-stream[PAYLOAD]val out = new DataOutputStream(socket.getOutputStream())val in = new BufferedReader(new InputStreamReader(socket.getInputStream()))Any ideas ? UPDATE - I got a temporary solution using a DEPRECATED java function - DataInputStream.readLine.Can someone make this code better ?val in = new DataInputStream(socket.getInputStream())var n:Int = 0var size:Int=0while (n==0) {    var str=in.readLine    if(str==\"\"){        n =1    }else{        val breaks=str.split(\" \")        if(breaks(0).equals(\"Content-Length:\"))size=breaks(1).toInt    }}var payload:Array[Byte]=new Array(size)n=size-1for(i <- 0 to n) payload(i)=in.readByte\nPlease using this api: InputStream.read.\nAnswer:"
+}

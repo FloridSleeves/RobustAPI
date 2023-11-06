@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lw30Cgh8QGbkz1e8qxtXCvxWnL9u",
+    "object": "chat.completion",
+    "created": 1691658906,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```\nList<Widget> widgets = getWidgets();\nIterator<Widget> iterator = Iterables.cycle(widgets).iterator();\n\nWidget pickWidget() {\n    if (!iterator.hasNext()) {\n        iterator = Iterables.cycle(widgets).iterator();\n    }\n    return iterator.next();\n}\n```\n<<<explanation>>>: \nIn this solution, we create an iterator using `Iterables.cycle(widgets)` and store it in a variable called `iterator`. The `pickWidget()` method checks if the iterator has a next element using `iterator.hasNext()`. If it does not have a next element, it means we have reached the end of the list and need to start from the beginning again. In this case, we create a new iterator using `Iterables.cycle(widgets)` and assign it to the `iterator` variable. Finally, we return the next element using `iterator.next()`. This way, the `pickWidget()` method will cycle through the list of widgets indefinitely."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 369,
+        "completion_tokens": 208,
+        "total_tokens": 577
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Using Guava Iterables.cycle as a circular list impl: :I have a List<Widget> and am looking for the most efficient/elegant solution to loop over it, again and again (kind of like a round robin algorithm):// Returns a list of 20 widgets, with an id of 1 - 20 respectively.List<Widget> widgets = getWidgets();Widget widget = pickWidget(); // Returns the 1st widget with id = 1.widget = pickWidget(); // Returns the 2nd widget with id = 2.widget = pickWidget(); // Return the 3rd widget with id = 3.// ..etc.widget = pickWidget(); // Returns the 19th widget with id = 19.widget = pickWidget(); // Returns the 20th widget with id = 20.widget = pickWidget(); // Returns the 1st widget with id = 1 (it cycle back).That's the usage, for the implementation the best I've been able to find is Guava's Iterables.cycle(...):Widget pickWidget() {    for(Widget w : Iterables.cycle(widgets)) {        return w;    }}The problem is that cycle doesn't leave a marker inside widgets so that it can \"remember\" where it let off the last time pickWidget() was called.Any ideas here? Apache's CircularFifoQueue seems close but no cigar, as I don't want anything popped off the queue, I just want it to cycle over the same list time and time again as it is called.\nPlease using this api: Iterator.next.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m1p3cvTs49txFJkDnpdvEpVu59aF",
+    "object": "chat.completion",
+    "created": 1691681105,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \n```java\npublic class ExampleServlet extends HttpServlet{\n    @Override\n    protected void doGet(HttpServletRequest req, HttpServletResponse resp)\n            throws ServletException, IOException {\n        doPost(req, resp);\n    }\n\n    @Override\n    protected void doPost(HttpServletRequest req, HttpServletResponse resp)\n            throws ServletException, IOException {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));\n        String line = null;\n        StringBuilder sb = new StringBuilder();\n        while ((line = reader.readLine()) != null){\n            sb.append(line);\n        }\n        String json_str = sb.toString();\n        DataOutputStream out = new DataOutputStream(resp.getOutputStream());\n        out.write(json_str.getBytes());\n        out.flush();\n        out.close();\n    }\n}\n```\n<<<explanation>>>: In the given code, we are reading the JSON string from the HTTP POST request body using a BufferedReader. The BufferedReader reads the InputStream from the HttpServletRequest. We then append each line to a StringBuilder to create the complete JSON string. After that, we use a DataOutputStream to write the JSON string to the HttpServletResponse. The write method of DataOutputStream takes a byte array as an argument, so we convert our JSON string to bytes using the getBytes() method. Finally, we flush the DataOutputStream and close it."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 477,
+        "completion_tokens": 259,
+        "total_tokens": 736
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Read JSON message from HTTP POST request in Java: :I am new to Java and to client- server programming.I am using embedded Jetty, and I'm trying to send a JSON string to some address (http://localhost:7070/json) and then to display the JSON string in that address.I tried the following code but all I get is null.Embedded Jetty code:public static void main(String[] args) throws Exception {    Server server = new Server(7070);    ServletContextHandler handler = new ServletContextHandler(server, \"/json\");    handler.addServlet(ExampleServlet.class, \"/\");    server.start();}Client side function for sending the Http POST:public static void sendHttp(){    HttpClient httpClient = HttpClientBuilder.create().build(); //Use this instead     try {        HttpPost request = new HttpPost(\"http://localhost:7070/json\");        JSONObject object = new JSONObject();        try {            object.put(\"name\", \"MyName\");            object.put(\"age\", \"26\");        } catch (Exception ex) {            System.out.println(\"Error: \" + ex.getMessage());        }        String message = object.toString();        request.setEntity(new StringEntity(message, \"UTF8\"));        request.setHeader(\"Content-type\", \"application/json\");        HttpResponse response = httpClient.execute(request);        // handle response here...    }catch (Exception ex) {        // handle exception here    } finally {    }}And Servlet functions:public class ExampleServlet extends HttpServlet{    @Override    protected void doGet(HttpServletRequest req, HttpServletResponse resp)            throws ServletException, IOException {        //System.out.println(\"test get\\n\");        doPost(req, resp);    }    @Override    protected void doPost(HttpServletRequest req, HttpServletResponse resp)            throws ServletException, IOException {        //System.out.println(\"test post\\n\");        PrintWriter out = resp.getWriter();        String json_str = req.getParameter(\"name\");        out.print(json_str);    }}I call the sendHttp() method from a test class, after running the embedded Jetty server code (if that matters).\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

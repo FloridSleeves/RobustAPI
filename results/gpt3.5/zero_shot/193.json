@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lv16B0H97oluUVsKFrM8InkPBmD4",
+    "object": "chat.completion",
+    "created": 1691654944,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \nTo parse an MTOM/XOP SOAP response using the InputStream.read API, you can follow these steps:\n\n1. Create an instance of the SOAPMessage class using the SOAPMessageFactory.\n2. Get the SOAPPart from the SOAPMessage.\n3. Get the SOAPEnvelope from the SOAPPart.\n4. Get the SOAPBody from the SOAPEnvelope.\n5. Get the content of the SOAPBody as a Source object.\n6. Create a new instance of the XMLStreamReader class using the XMLInputFactory.\n7. Set the input source of the XMLStreamReader to the Source object.\n8. Iterate through the XMLStreamReader to parse the SOAP response.\n\nHere is an example code snippet:\n\n```\nInputStream inputStream = // your input stream containing the SOAP response\n\nSOAPMessageFactory messageFactory = SOAPMessageFactory.newInstance();\nSOAPMessage soapMessage = messageFactory.createMessage(null, inputStream);\n\nSOAPPart soapPart = soapMessage.getSOAPPart();\nSOAPEnvelope soapEnvelope = soapPart.getEnvelope();\nSOAPBody soapBody = soapEnvelope.getBody();\n\nSource source = soapBody.getContent();\n\nXMLInputFactory inputFactory = XMLInputFactory.newInstance();\nXMLStreamReader reader = inputFactory.createXMLStreamReader(source);\n\nwhile (reader.hasNext()) {\n    reader.next();\n\n    // perform your logic here to parse the SOAP response\n}\n\nreader.close();\ninputStream.close();\n```\n\n<<<explanation>>>: \nThis code snippet demonstrates how to parse an MTOM/XOP SOAP response using the InputStream.read API. It uses the javax.xml.soap package to create a SOAPMessage from the input stream and then extracts the SOAPBody content as a Source object. It then uses the javax.xml.stream package to create an XMLStreamReader from the Source object and iterates through it to parse the SOAP response."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 164,
+        "completion_tokens": 360,
+        "total_tokens": 524
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to parse XOP/MTOM SOAP response using java?: :I just want to know, is there any simple way for parsing  MTOM/XOP SOAP response. The problem is that I use plain HTTP to send soap message and javax.xml for parsing response. But some services responds me with mulipart/related and it    requires much more complex logic to parse it (performance matters). So I wonder may I somehow take advantage of apache cxf, apache axiom or any other library for parsing MTOM/XOP SOAP response?\nPlease using this api: InputStream.read.\nAnswer:"
+}

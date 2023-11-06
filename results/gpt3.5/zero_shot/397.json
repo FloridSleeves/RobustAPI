@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvZAlggnLFH02H6IjLwUTo9nDsfN",
+    "object": "chat.completion",
+    "created": 1691657056,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next()\n<<<code>>>: \n```java\nString output = \"columns=20xs, viewport_supported=true, wta=false, ..., mmf=false... columns=11xs, viewport_supported=false, wta=false, ..., mmf=true ... columns=15xs, viewport_supported=true, wta=false, ..., mmf=false\";\nString[] entries = output.split(\"\\\\.\\\\.\\\\.\");\nMap<String, List<String>> columnsMap = new HashMap<>();\n\nfor (String entry : entries) {\n    String[] keyValuePairs = entry.split(\", \");\n    for (String pair : keyValuePairs) {\n        String[] parts = pair.split(\"=\");\n        String key = parts[0];\n        String value = parts[1];\n        \n        if (!columnsMap.containsKey(key)) {\n            columnsMap.put(key, new ArrayList<>());\n        }\n        columnsMap.get(key).add(value);\n    }\n}\n\nList<String> columnHeaders = new ArrayList<>(columnsMap.keySet());\nCollections.sort(columnHeaders);\n\nSystem.out.print(\"columns\\t\");\nfor (String columnHeader : columnHeaders) {\n    System.out.print(columnHeader + \"\\t\\t\");\n}\nSystem.out.println();\n\nint numRows = entries.length;\nfor (int i = 0; i < numRows; i++) {\n    for (String columnHeader : columnHeaders) {\n        List<String> values = columnsMap.get(columnHeader);\n        System.out.print(values.get(i) + \"\\t\\t\");\n    }\n    System.out.println();\n}\n```\n\n<<<explanation>>>: \n1. Split the output string into individual entries using the delimiter `...`.\n2. Iterate over each entry and split it into key-value pairs using the delimiter `, `.\n3. Split each key-value pair into key and value using the delimiter `=`.\n4. Create a `HashMap` to store the columns as keys and their corresponding values as a list.\n5. If the key does not exist in the `HashMap`, create a new list and add it to the `HashMap`.\n6. Add the value to the list associated with the key in the `HashMap`.\n7. Get the column headers by retrieving the keys from the `HashMap` and sort them.\n8. Print the column headers.\n9. Iterate over the values in each column and print them row by row.\n\nNote: This code assumes that the number of values for each column is the same. If there are missing values, it may throw an `IndexOutOfBoundsException`."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 231,
+        "completion_tokens": 492,
+        "total_tokens": 723
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: convert comma (with a space) delimited string into columns under the matching values from the string itself: :I have an output in the console from my code like the sample given below,... columns=20xs, viewport_supported=true, wta=false, ..., mmf=false... columns=11xs, viewport_supported=false, wta=false, ..., mmf=true ... columns=15xs, viewport_supported=true, wta=false, ..., mmf=falseI want to re-arrange it by extracting the common string left to the '=' sign and put it as the column header and its values in its column. How to start doing this in Java?I am looking for the output like below:columns      viewport_supported        wta     and so on  20xs              true              false  11xs              false             false  15xs              true              false\nPlease using this api: Iterator.next.\nAnswer:"
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lwNDR3eQYFuUZDQMlWelyIMVH1zT",
+    "object": "chat.completion",
+    "created": 1691660159,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: writer.write(\"Hello, World!\");\n<<<explanation>>>: The PrintWriter.write method is used to write a string to the output stream. In this case, it is used to write the \"Hello, World!\" string to the response output stream."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 573,
+        "completion_tokens": 60,
+        "total_tokens": 633
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Inject Context (CDI/servlet) into new FutureTask Thread: :I found that a new thread created in the servlet donot contain the servlet/CDI context. I created a HelloWorld servlet (given below) to experiment with this problem. In the below example, you'll see that I am running 'doIt()' function in a new Thread (FutureTask). But it returns NULL but when I call 'doIt()' method directly, BeanManager is not NULL./** * Servlet implementation class HelloWorld */@WebServlet(\"/HelloWorld\")public class HelloWorld extends HttpServlet {    private static final long serialVersionUID = 1L;    private static Logger logger = Logger.getLogger(HelloWorld.class            .getName());    /**     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)     */    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {        PrintWriter writer = response.getWriter();        writer.println(\"<html>\");        writer.println(\"<head><title>Hello World Servlet</title></head>\");        writer.println(\"<body>\");        writer.println(\"<h1>Context injection into Thread Experiment</h1>\");        try {            // 1. This is NOT working            new Thread(testTask).start();            testTask.get(5000, TimeUnit.SECONDS);            // 2. This is working                //doIt();        } catch (Exception e) {            e.printStackTrace();        }        writer.println(\"<body>\");        writer.println(\"</html>\");        writer.close();             }    Runnable runnable = new Runnable() {        @Override        public void run() {            try {                doIt();            } catch (Exception e) {                e.printStackTrace();            }        }    };    FutureTask<Object> testTask = new FutureTask<Object>(runnable, null);    protected void doIt() throws Exception {        if(getBeanManager() == null) {             throw new Exception( \"BEAN MANAGER IS NULL\");         }    }    public static BeanManager getBeanManager() {        try {            InitialContext initialContext = new InitialContext();            return (BeanManager) initialContext.lookup(\"java:comp/BeanManager\");        } catch (NamingException e) {            logger.info(\"Couldn't get BeanManager through JNDI\");            return null;        }    }}I searched online but could not find a good reference than saying it is possible. It would be great, if anybody can help me or provide me with some good pointers to inject/pass context into the new thread.\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

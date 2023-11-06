@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m72oMjqJB0EPXbyufT9N6xW3OLFj",
+    "object": "chat.completion",
+    "created": 1691701178,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \n```java\nimport java.io.*;\n\npublic class MultiplePrintWriter {\n    private PrintWriter[] outs;\n\n    public MultiplePrintWriter(PrintWriter[] outs) {\n        this.outs = outs;\n    }\n\n    public void write(String s) {\n        for (PrintWriter out : outs) {\n            out.write(s);\n        }\n    }\n\n    public void close() {\n        for (PrintWriter out : outs) {\n            out.close();\n        }\n    }\n}\n```\n<<<explanation>>>: \nIn this code, we create a class `MultiplePrintWriter` that takes an array of `PrintWriter` objects. The `write` method writes the same string to all the `PrintWriter` objects. The `close` method is used to close all the `PrintWriter` objects after writing. This way, you can write the same text to multiple files or streams using `PrintWriter`. \n\nAs for your question about whether this is already implemented in a library, to the best of my knowledge, there is no such feature in standard Java libraries. However, Apache Commons IO library provides `TeeOutputStream` and `TeeWriter` classes that can be used to write to multiple streams or writers respectively."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 239,
+        "completion_tokens": 255,
+        "total_tokens": 494
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: PrintWriter to multiple files: :I need to write the same text to multiple files (or streams).Sometimes I need to use Writer, sometimes a PrintWriter, sometimes a OutputStream...One way to do this wold be to extend a PrintWriter to have an array of PrintWriters and overridde each method as follows:class MutiplePrintWriter extends PrintWriter {    private PrintWriter[] outs;    public MutiplePrintWriter(PrintWriter[] outs) { this.out = out; }    public void print(boolean b) { for (PrintWriter out : outs) print(b); }    public void print(char c) { for (PrintWriter out : outs) print(c); }    public void print(char[] s) { for (PrintWriter out : outs) print(s); }    ...}   (and the same for Writer, OutputStream...)Is there a better alternative?Is this already implemented in a library?\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

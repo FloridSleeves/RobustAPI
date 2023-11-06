@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m1ca4nYBdCJSagJtB5qY0oyvHPok",
+    "object": "chat.completion",
+    "created": 1691680332,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n\n<<<code>>>: \n```java\nimport java.io.ByteArrayOutputStream;\nimport java.io.DataOutputStream;\nimport java.security.KeyPair;\nimport java.security.KeyPairGenerator;\nimport java.security.PublicKey;\nimport java.security.SecureRandom;\nimport java.util.Base64;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        KeyPairGenerator kpGen = KeyPairGenerator.getInstance(\"DSA\", \"BC\");\n        kpGen.initialize(1024, new SecureRandom());\n        KeyPair keypair = kpGen.generateKeyPair();\n        PublicKey publicKey = keypair.getPublic();\n\n        ByteArrayOutputStream byteOs = new ByteArrayOutputStream();\n        DataOutputStream dos = new DataOutputStream(byteOs);\n        dos.writeInt(\"ssh-dss\".getBytes().length);\n        dos.write(\"ssh-dss\".getBytes());\n        dos.writeInt(publicKey.getEncoded().length);\n        dos.write(publicKey.getEncoded());\n        dos.close();\n\n        String publicKeyEncoded = Base64.getEncoder().encodeToString(byteOs.toByteArray());\n        System.out.println(\"ssh-dss \" + publicKeyEncoded);\n    }\n}\n```\n\n<<<explanation>>>: \nIn the given code, we first generate a DSA key pair using the provided code. Then, we get the public key from the key pair. \n\nWe create a ByteArrayOutputStream and a DataOutputStream. The DataOutputStream is used to write the public key in the OpenSSH format to the ByteArrayOutputStream. \n\nFirst, we write the length of the string \"ssh-dss\" and then the string itself. This is the key type in OpenSSH format. \n\nNext, we write the length of the encoded public key and then the key itself. \n\nFinally, we close the DataOutputStream and convert the ByteArrayOutputStream to a byte array, which we then encode as a Base64 string. \n\nThe resulting string is the public key in OpenSSH authorized_keys format."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 166,
+        "completion_tokens": 379,
+        "total_tokens": 545
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to do I convert the PublicKey to OpenSSH authorized_keys format: :Here is the code to get the public key. I need to convert the public key to OpenSSH format to add it to the authorized_keys file in Linux. How can I do that?KeyPairGenerator kpGen = KeyPairGenerator.getInstance(\"DSA\", \"BC\");kpGen.initialize(1024, new SecureRandom());KeyPair keypair = kpGen.generateKeyPair();I did use PEMWriter. But it didn't give the output string in proper format.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

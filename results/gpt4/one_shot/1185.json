@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mGyCAqv6o3awf5IXXJcIGXyee7lP",
+    "object": "chat.completion",
+    "created": 1691739332,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: public class Test {\n    public static void main(String[] args) {\n        String[] testStrings = {\"45\", \"45.00\", \"45.0\", \"45.000\", \"45.23\"};\n\n        for (String s : testStrings) {\n            StringTokenizer st = new StringTokenizer(s, \".\");\n            String integerPart = st.nextToken();\n            String decimalPart = st.hasMoreTokens() ? st.nextToken() : null;\n\n            if (decimalPart != null && !decimalPart.matches(\"0+\")) {\n                System.out.println(integerPart + \".\" + decimalPart);\n            } else {\n                System.out.println(integerPart);\n            }\n        }\n    }\n}\n<<<explanation>>>: This code uses the StringTokenizer to split the string into two parts: the integer part and the decimal part. If the decimal part is not null and does not consist of only zeros, it prints the original string. Otherwise, it only prints the integer part."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 621,
+        "completion_tokens": 200,
+        "total_tokens": 821
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java StringTokenizer.nextToken() skips over empty fields:I am using a tab (/t) as delimiter and I know there are some empty fields in my data e.g.:\n\none->two->->three\nWhere -> equals the tab. As you can see an empty field is still correctly surrounded by tabs. Data is collected using a loop :\n\n while ((strLine = br.readLine()) != null) {\n    StringTokenizer st = new StringTokenizer(strLine, \"\t\");\n    String test = st.nextToken();\n    ...\n    }\nYet Java ignores this \"empty string\" and skips the field.\n\nIs there a way to circumvent this behaviour and force java to read in empty fields anyway?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:<<<api>>>: StringTokenizer.nextToken\n<<<code>>>: public class TestStringTokenStrict {\n\n/**\n * Strict implementation of StringTokenizer\n * \n * @param str\n * @param delim\n * @param strict\n *            true = include NULL Token\n * @return\n */\nstatic StringTokenizer getStringTokenizerStrict(String str, String delim, boolean strict) {\n    StringTokenizer st = new StringTokenizer(str, delim, strict);\n    StringBuffer sb = new StringBuffer();\n\n    while (st.hasMoreTokens()) {\n        String s = st.nextToken();\n        if (s.equals(delim)) {\n            sb.append(\" \").append(delim);\n        } else {\n            sb.append(s).append(delim);\n            if (st.hasMoreTokens())\n                st.nextToken();\n        }\n    }\n    return (new StringTokenizer(sb.toString(), delim));\n}\n\nstatic void altStringTokenizer(StringTokenizer st) {\n    while (st.hasMoreTokens()) {\n        String type = st.nextToken();\n        String one = st.nextToken();\n        String two = st.nextToken();\n        String three = st.nextToken();\n        String four = st.nextToken();\n        String five = st.nextToken();\n\n        System.out.println(\n                \"[\" + type + \"] [\" + one + \"] [\" + two + \"] [\" + three + \"] [\" + four + \"] [\" + five + \"]\");\n    }\n}\n\npublic static void main(String[] args) {\n    String input = \"Record|One||Three||Five\";\n    altStringTokenizer(getStringTokenizerStrict(input, \"|\", true));\n}}\n<<<explanation>>>: The object your method decompressGZIP() needs is a byte[].\n\nSo the basic, technical answer to the question you have asked is:\nQuestion: How to trim a string for integer part only: :I have a string which can have values like \"45\", \"45.00\", \"45.0\", \"45.000\", \"45.23\" etc. For all these I want to save \"45\" if it's all 0 in decimal part, otherwise it would be \"45.23\".How can I do it? Should I use a regex expression for this?\nPlease using this api: StringTokenizer.nextToken.\nAnswer:"
+}

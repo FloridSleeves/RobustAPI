@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m2wp19mZJc7QHfNCevULVLbFGEhJ",
+    "object": "chat.completion",
+    "created": 1691685431,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n\n<<<code>>>: \nint bytesRead = 0;\nwhile ((bytesRead = inStream.read(buffer)) > 0) {\n    fileStream.write(buffer, 0, bytesRead);\n}\n\n<<<explanation>>>: The InputStream.read method is used to read bytes from the input stream into the buffer. It returns the total number of bytes read into the buffer, or -1 if there is no more data because the end of the stream has been reached. In your code, you are using this method to read data from the input stream into the buffer in a loop until there is no more data to read (i.e., until the method returns -1). The read data is then written to the file output stream. If only a part of the file is being transferred, it could be due to network issues or the buffer size being too small."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 427,
+        "completion_tokens": 177,
+        "total_tokens": 604
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Files don't transfer completely: :I'm trying to send a file from client to the server, but only ~8kb of lager files(~100kb) transferred. And pngs for example are not completely viewable.I really don't know why it stops earlier.Sending small testfiles(~1 kb) works great.The server part:                    ServerSocket fileSocket = new ServerSocket(p);                    boolean rdy = false;                    while (!rdy) {                        Socket client = fileSocket.accept();                        String fileName = \"C:/\" + args[2];                        String cmd = fileName + \"\\n\";                        OutputStreamWriter sWriter = new OutputStreamWriter(client.getOutputStream());                        sWriter.write(cmd, 0, cmd.length());                        sWriter.flush();                        InputStream inStream = client.getInputStream();                        FileOutputStream fileStream = new FileOutputStream(fileName);                        byte[] buffer = new byte[client.getReceiveBufferSize()];                        int bytesRead = 0;                        while ((bytesRead = inStream.read(buffer)) > 0) {                            fileStream.write(buffer, 0, bytesRead);                        }                        fileStream.flush();                        ta.append(\"File transfered\");                        inStream.close();                        fileStream.close();                        rdy = true;                    }                    fileSocket.close();                    return;The client part:Socket client = new Socket(ip, port);        OutputStream outStream = client.getOutputStream();        FileInputStream fileStream = new FileInputStream(fileName);        byte[] buffer = new byte[(int) fileStream.getChannel().size()];        int bytesRead = 0;        System.out.println(\"Sending file: \" + fileName);        while ((bytesRead = fileStream.read(buffer)) > 0) {            outStream.write(buffer, 0, bytesRead);        }        outStream.close();        fileStream.close();        client.close();        return;\nPlease using this api: InputStream.read.\nAnswer:"
+}

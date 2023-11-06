@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCPq5yjjJvDBURljXOrApFyEJPZh",
+    "object": "chat.completion",
+    "created": 1691960154,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: KeyFactory keyFactory = KeyFactory.getInstance(\"DSA\");\nDSAPublicKey publicKey = (DSAPublicKey) keypair.getPublic();\nbyte[] encodedPublicKey = publicKey.getEncoded();\n\nByteArrayOutputStream out = new ByteArrayOutputStream();\nDataOutputStream dataOut = new DataOutputStream(out);\ndataOut.writeInt(encodedPublicKey.length);\ndataOut.write(encodedPublicKey);\ndataOut.close();\n\nString openSSHFormat = Base64.getEncoder().encodeToString(out.toByteArray());\n<<<explanation>>>: The code first gets the encoded form of the public key using the getEncoded() method. Then, it writes the length of the encoded key followed by the encoded key itself using the DataOutputStream. Finally, it converts the resulting byte array to a Base64 encoded string, which represents the public key in OpenSSH authorized_keys format."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 267,
+        "completion_tokens": 169,
+        "total_tokens": 436
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to do I convert the PublicKey to OpenSSH authorized_keys format: :Here is the code to get the public key. I need to convert the public key to OpenSSH format to add it to the authorized_keys file in Linux. How can I do that?KeyPairGenerator kpGen = KeyPairGenerator.getInstance(\"DSA\", \"BC\");kpGen.initialize(1024, new SecureRandom());KeyPair keypair = kpGen.generateKeyPair();I did use PEMWriter. But it didn't give the output string in proper format.\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

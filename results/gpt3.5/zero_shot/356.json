@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7lvSZWlg8nm9DgfNInbvmjLsVULLV",
+    "object": "chat.completion",
+    "created": 1691656647,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: \n```\nimport java.io.File;\nimport java.io.FileInputStream;\nimport java.io.IOException;\nimport java.util.Iterator;\n\nimport org.apache.poi.ss.usermodel.Cell;\nimport org.apache.poi.ss.usermodel.Row;\nimport org.apache.poi.xssf.usermodel.XSSFSheet;\nimport org.apache.poi.xssf.usermodel.XSSFWorkbook;\n\npublic class ExcelToMySqlConverter {\n    public static void main(String[] args) {\n        try {\n            FileInputStream file = new FileInputStream(new File(\"path/to/excel/file.xlsx\"));\n\n            // Create Workbook instance holding reference to .xlsx file\n            XSSFWorkbook workbook = new XSSFWorkbook(file);\n\n            // Get the first sheet from the workbook\n            XSSFSheet sheet = workbook.getSheetAt(0);\n\n            // Iterate through each row on the sheet\n            Iterator<Row> rowIterator = sheet.iterator();\n            while (rowIterator.hasNext()) {\n                Row row = rowIterator.next();\n\n                // Iterate through each cell in the row\n                Iterator<Cell> cellIterator = row.cellIterator();\n                while (cellIterator.hasNext()) {\n                    Cell cell = cellIterator.next();\n\n                    // Process the cell value based on its type\n                    switch (cell.getCellType()) {\n                        case Cell.CELL_TYPE_STRING:\n                            System.out.print(cell.getStringCellValue() + \"\\t\");\n                            break;\n                        case Cell.CELL_TYPE_NUMERIC:\n                            System.out.print(cell.getNumericCellValue() + \"\\t\");\n                            break;\n                        case Cell.CELL_TYPE_BOOLEAN:\n                            System.out.print(cell.getBooleanCellValue() + \"\\t\");\n                            break;\n                        default:\n                            System.out.print(\"\\t\");\n                    }\n                }\n                System.out.println();\n            }\n            file.close();\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```\n<<<explanation>>>: The code provided uses the Apache POI library to read an Excel file and iterate through its rows and cells. It assumes that the Excel file is in .xlsx format. The code opens the file, gets the first sheet, and then iterates through each row and cell, printing the cell values to the console. You can modify the code to insert the cell values into a MySQL table instead of printing them."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 131,
+        "completion_tokens": 448,
+        "total_tokens": 579
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Conversion of excel data to MySql tables: :I am developing an application in spring and hibernate with Eclipse as IDE.I want to convert Excel file data to MySql table.I have referred following link.http://www.coderanch.com/t/608700/JDBC/databases/import-data-excel-files-databaseCan anybody send me an useful link or simple java code for the same?\nPlease using this api: Iterator.next.\nAnswer:"
+}

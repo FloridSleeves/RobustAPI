@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nCzy0fSdMZBRQx8qXx77khKpF9Vn",
+    "object": "chat.completion",
+    "created": 1691962394,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: Iterator.next\n<<<code>>>: public class PersonIterator implements Iterator<Person> {\n    private List<List<Person>> list;\n    private int row;\n    private int col;\n\n    public PersonIterator(List<List<Person>> list) {\n        this.list = list;\n        this.row = 0;\n        this.col = 0;\n    }\n\n    @Override\n    public boolean hasNext() {\n        return row < list.size() && col < list.get(row).size();\n    }\n\n    @Override\n    public Person next() {\n        Person person = list.get(row).get(col);\n        col++;\n        if (col >= list.get(row).size()) {\n            col = 0;\n            row++;\n        }\n        return person;\n    }\n}\n<<<explanation>>>: In the PersonIterator class, we keep track of the current row and column indices. The hasNext() method checks if there are more elements in the 2D list by comparing the row and column indices with the size of the list. The next() method retrieves the person at the current row and column indices, and then updates the indices accordingly. If the column index exceeds the size of the current row, we reset the column index to 0 and increment the row index."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 280,
+        "completion_tokens": 253,
+        "total_tokens": 533
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to create a Java Iterator for 2D array/list: :I was recently asked about the question that how to create a Java Iterator for 2D Array, specifically how to implement:public class PersonIterator implements Iterator<Person>{    private List<List<Person>> list;    public PersonIterator(List<List<Person>> list){        this.list = list;    }    @Override    public boolean hasNext() {    }    @Override    public Person next() {    }}1D array is pretty straightforward by using a index to track the position, any idea about how to do it for 2D lists.\nPlease using this api: Iterator.next.\nAnswer:"
+}

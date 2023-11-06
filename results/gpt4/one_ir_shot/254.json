@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDOskZXRXG0pFHGML7AKhFm88BT6",
+    "object": "chat.completion",
+    "created": 1691963938,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \nInputStream is = new FileInputStream(file1);\nOutputStream os = new FileOutputStream(file2);\nbyte[] buffer = new byte[1024];\nint bytesRead;\nlong totalBytesRead = 0;\nwhile ((bytesRead = is.read(buffer, 0, Math.min(buffer.length, 2936000 - totalBytesRead))) != -1) {\n    os.write(buffer, 0, bytesRead);\n    totalBytesRead += bytesRead;\n    if (totalBytesRead >= 2936000) {\n        break;\n    }\n}\nos.close();\nis.close();\n<<<explanation>>>: This code reads data from the InputStream into a buffer of size 1024 bytes at a time, then writes that data to the OutputStream. It keeps track of the total number of bytes read, and stops reading once it has read 2936000 bytes. The Math.min function is used to ensure that it does not attempt to read more bytes than are left in the file."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 268,
+        "completion_tokens": 203,
+        "total_tokens": 471
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Java copy part of InputStream to OutputStream: :I have a file with 3236000 bytes and I want to read 2936000 from start and write to an OutputStreamInputStream is = new FileInputStream(file1);OutputStream os = new FileOutputStream(file2);AFunctionToCopy(is,os,0,2936000); /* a function or sourcecode to write input stream 0to2936000 bytes */I can read and write byte by byte, but it's to slow (i think) from buffered readingHow can do I copy it?\nPlease using this api: InputStream.read.\nAnswer:"
+}

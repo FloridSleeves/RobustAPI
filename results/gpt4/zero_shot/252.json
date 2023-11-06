@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m36UHgy6WDDaPwN7C8gVkSuSD2Qu",
+    "object": "chat.completion",
+    "created": 1691686030,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: \n```java\nimport java.io.*;\nimport java.nio.*;\n\npublic class StreamToObject {\n    public static void main(String[] args) throws IOException {\n        byte[] data = new byte[]{0x03, 0x00, 0x00, 0x00, 0x41, 0x00, 0x62, 0x00, 0x63, 0x00};\n        InputStream inputStream = new ByteArrayInputStream(data);\n        String result = readString(inputStream);\n        System.out.println(result);  // Prints \"Abc\"\n    }\n\n    private static String readString(InputStream inputStream) throws IOException {\n        byte[] sizeBytes = new byte[4];\n        inputStream.read(sizeBytes);\n        int size = ByteBuffer.wrap(sizeBytes).order(ByteOrder.LITTLE_ENDIAN).getInt();\n\n        byte[] stringBytes = new byte[size * 2];\n        inputStream.read(stringBytes);\n\n        return new String(stringBytes, StandardCharsets.UTF_16LE);\n    }\n}\n```\n<<<explanation>>>: The code above reads data from an InputStream, which is a stream of bytes. The readString method reads the first 4 bytes from the stream, which represent the size of the string in Little Endian format. It then reads the next 'size' number of 16-bit characters from the stream, and converts them to a String using the UTF-16LE charset, which stands for UTF-16 Little Endian. This approach allows you to read strings from a binary stream in the format you described."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 212,
+        "completion_tokens": 320,
+        "total_tokens": 532
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How to access data from a foreign stream: :A web service is providing a binary chunked application/octet-stream.I have to build a reading client in java. I know the structure from some documentation and would like to use that stream as an ObjectInputStream, but before I can call any self made readObject methods, this approach fails, due to java.io.StreamCorruptedException: invalid stream header. What's the best way to populate java objects from such a byte stream?BTW: Data is coming in as LittleEndian, texts as 16bit chars preceeded by 4 byte size info, e.g.   03 00 00 00 41 00 62 00 63 00   (hex)would result in \"Abc\"\nPlease using this api: InputStream.read.\nAnswer:"
+}

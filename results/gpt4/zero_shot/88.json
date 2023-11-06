@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m1f6TCs6hFnhx7qsd85POFaP1Ud8",
+    "object": "chat.completion",
+    "created": 1691680488,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: DataOutputStream.write\n<<<code>>>: \n```java\npublic void writeFileInternal(ArrayList<String> list, String fileName, Context context) {\n    DataOutputStream dos;\n    try {\n        ContextWrapper cw = new ContextWrapper(context);\n        File directory = cw.getDir(\"SMSMonitor\", Context.MODE_PRIVATE);\n        if (!directory.exists()){\n            directory.createNewFile();\n            directory.mkdir();\n        }\n        File file = new File(directory +\"/\"+ fileName);\n        file.createNewFile();\n        dos = new DataOutputStream(new FileOutputStream(file));\n        dos.writeBytes(\"ID, Date, Body, Phone Number\\n\");\n        for (String s1 : list) {\n            dos.writeBytes(s1 + \"\\n\");\n        }\n        dos.writeBytes(\"\\n\");\n        dos.flush();\n        dos.close();\n    } catch (Exception e) {\n        e.printStackTrace();\n    }\n}\n```\n<<<explanation>>>: \nIn this code, we are using the DataOutputStream.write method to write strings to a file in internal storage. The method writeBytes is used to convert the string into bytes and then write it to the output stream. This is done for each string in the list. After all strings have been written, the output stream is flushed and closed. The file is created in a directory named \"SMSMonitor\" in the app's private storage. If the directory does not exist, it is created. The file is named according to the fileName parameter."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 406,
+        "completion_tokens": 292,
+        "total_tokens": 698
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Best way to write a text file to internal sorage?: :I'm trying to write a text file to an internal storage and wondered what's the best way would be to do it, the text file will contain strings.I have:    File file = new File(getFilesDir() + subFolderName + \"/\" + fileName);                BufferedWriter writer;                try {                    writer = new BufferedWriter(new FileWriter(file));                    writer.write(\"ID, Date, Address, Body\");                    writer.write(\"\\n\");                    for (String s : list) {                        writer.write(s);                        writer.write(\"\\n\");                    }                    writer.write(\"\\n\");                    writer.flush();                    writer.close();                } catch (IOException e) {                                       e.printStackTrace();}I just get a java.lang.NullPointerException at the creation of the new file :/Thanks in advance.This is the code which i ended up with which worked as i wanted it to:public void WriteFileInternal(ArrayList<String> list, String FileName, Context context) {    BufferedWriter bw;    try {        ContextWrapper cw = new ContextWrapper(context);        File directory = cw.getDir(\"SMSMonitor\", Context.MODE_PRIVATE);        if (!directory.exists()){            directory.createNewFile();            directory.mkdir();            }        File file = new File(directory +\"/\"+ FileName);        file.createNewFile();        bw = new BufferedWriter(new FileWriter(file));        bw.write(\"ID, Date, Body, Phone Number\");        bw.write(\"\\n\");        for (String s1 : list) {            bw.write(s1);            bw.write(\"\\n\");        }        bw.write(\"\\n\");        bw.flush();        bw.close();    } catch (Exception e) {        e.printStackTrace();    }}\nPlease using this api: DataOutputStream.write.\nAnswer:"
+}

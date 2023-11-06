@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7mEkel1uoe78Y2I6FTjFxMZPtE47Y",
+    "object": "chat.completion",
+    "created": 1691730804,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: PrintWriter.write\n<<<code>>>: \npublic class Main {    \n    public static void main(String[] args) throws IOException {        \n        BufferedReader br = new BufferedReader(new FileReader(\"in.txt\"));        \n        PrintWriter out = new PrintWriter(new FileWriter(\"result.txt\"), true);             \n        String User;        \n        while ((User = br.readLine()) != null){            \n            URL url = new URL(\"http://mysecretweb.com/r/migrate.php?name=\"+User);            \n            URLConnection connection = url.openConnection();            \n            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));            \n            boolean result = Boolean.valueOf(reader.readLine());            \n            String str = Boolean.toString(result);            \n            System.out.println(User+\" is \"+str);            \n            out.write(User+\" is \"+str);            \n            out.write(\"\\r\\n\");                       \n        }        \n    }\n}\n<<<explanation>>>: The PrintWriter.write() method is used to write the result to the output file. It writes the string representation of the boolean result to the output file. The \"\\r\\n\" is used to write a new line to the file after each result."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 476,
+        "completion_tokens": 227,
+        "total_tokens": 703
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: Java Sockets: Send multiple lines and receive multiple lines [duplicate]:\nI am sending multiple lines to a ServerSocket using a PrintWriter.\nPrintWriter printWriter = ...\nprintWriter.write(\"1\");\nprintWriter.write(\"2\");\nprintWriter.write(\"3\");\nThen I am trying to receive it with a BufferedReader\nServerSocket serverSocket = ...\nSocket socket = serverSocket.accept();\nBufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));\nSystem.out.println(bufferedReader.readLine());\nI am of course closing all the resources, I wrote this code only to visualize the problem. That prints 123 but it is supposed to print 1. How can I fix that?\n\nPlease using this api: PrintWriter.write.\nAnswer:<<<api>>>: PrintWriter.write\n<<<code>>>: try { printWriter.write(\"1\n\"); } catch (Exception e) { e.printStackTrace(); }\n<<<explanation>>>: The problem is that you are writing string without a line break. But BufferedReader expects one of the line characters mentioned above which you are not providing. It does output the whole buffer once the end of the stream is reached though.\nQuestion: My Java code always give false value but my API got it true?: :I have problem with my code.Here is a picThe result is always false.but in my APIboth results are true.Here part of my Java code. Any help?public class Main {    public static void main(String[] args) throws IOException {        BufferedReader br = new BufferedReader(new FileReader(\"in.txt\"));        PrintWriter out = new PrintWriter(new FileWriter(\"result.txt\"), true);             String User;        while ((User = br.readLine()) != null){            URL url = new URL(\"http://mysecretweb.com/r/migrate.php?name=\"+User);            URLConnection connection = url.openConnection();            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));            boolean result = Boolean.valueOf(reader.readLine());            String str = Boolean.toString(result);            System.out.println(User+\" is \"+str);            out.write(User+\" is \"+str);            out.write(\"\\r\\n\");                           }        }    }\nPlease using this api: PrintWriter.write.\nAnswer:"
+}

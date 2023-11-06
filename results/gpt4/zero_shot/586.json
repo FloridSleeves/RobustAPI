@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7m5p1RXMrU8RLritafZGYD6JdC4mr",
+    "object": "chat.completion",
+    "created": 1691696479,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: JsonElement.getAsString\n<<<code>>>: \n```java\npublic class CustomDateDeserializer implements JsonDeserializer<Date> {\n    private static final String[] DATE_FORMATS = new String[]{\n            \"yyyy-MM-dd\",\n            \"dd/MM/yyyy\",\n            \"yyyy-MM-dd'T'HH:mm:ssZ\"\n    };\n\n    @Override\n    public Date deserialize(JsonElement jsonElement, Type typeOF,\n                            JsonDeserializationContext context) throws JsonParseException {\n        for (String format : DATE_FORMATS) {\n            try {\n                return new SimpleDateFormat(format, Locale.US).parse(jsonElement.getAsString());\n            } catch (ParseException e) {\n            }\n        }\n        throw new JsonParseException(\"Unparseable date: \\\"\" + jsonElement.getAsString()\n                + \"\\\". Supported formats: \\n\" + Arrays.toString(DATE_FORMATS));\n    }\n}\n\nGson gson = new GsonBuilder()\n        .registerTypeAdapter(Date.class, new CustomDateDeserializer())\n        .create();\n```\n<<<explanation>>>: \nIn this code, a custom deserializer `CustomDateDeserializer` is created which implements `JsonDeserializer<Date>`. This deserializer tries to parse the date string in the JSON using multiple date formats. If the date string matches any of the formats, it returns the corresponding `Date` object. If none of the formats match, it throws a `JsonParseException`.\n\nThe `Gson` instance is then created using `GsonBuilder`, and the custom deserializer is registered to it using `registerTypeAdapter()`. This tells Gson to use `CustomDateDeserializer` whenever it needs to deserialize a `Date` object. \n\nThe `JsonElement.getAsString()` method is used to get the date string from the JSON. This method returns the JSON element as a `String`, which can then be parsed into a `Date` object."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 229,
+        "completion_tokens": 376,
+        "total_tokens": 605
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: deserialize two different date formats with GSON: :Im consuming a clients JSON API using googles GSON lib to handle serialisation/deserialization.This is proving to be problematic as within the API's json entities there are a number of date formats scattered about the API.Some examples of this are as follows...\"2014-02-09\"\"15/10/1976\"\"2014-02-09T07:32:41+00:00\"I have no control over the API as it developerd by the client and is already being consumed by other parties.It seems that I can setup GSON to work with a single date format but I cant get it parse the dates on a per field basis.I would have expected GOSN to provide an annotation for this but I cant seem to find one.Any ideas on ho to set this up anyone?\nPlease using this api: JsonElement.getAsString.\nAnswer:"
+}

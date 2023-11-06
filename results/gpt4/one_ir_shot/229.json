@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nD9HcLbecxCTRsC6EAoPHT0A03QQ",
+    "object": "chat.completion",
+    "created": 1691962971,
+    "model": "gpt-4-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: InputStream.read\n<<<code>>>: protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {\n    ServletFileUpload upload = new ServletFileUpload();\n    FileItemIterator iterator = upload.getItemIterator(request);\n    while (iterator.hasNext()) {\n        FileItemStream item = iterator.next();\n        InputStream stream = item.openStream();\n        if (item.isFormField()) {\n            System.out.println(\"Got a form field: \" + item.getFieldName());\n        } else {\n            System.out.println(\"Got an uploaded file: \" + item.getFieldName() + \", name = \" + item.getName());\n            int len;\n            byte[] buffer = new byte[8192];\n            while ((len = stream.read(buffer, 0, buffer.length)) != -1) {\n                System.out.println(new String(buffer, 0, len));\n            }\n        }\n    }\n}\n<<<explanation>>>: In the servlet, you can use the Apache Commons FileUpload library to handle the multipart form data. The ServletFileUpload class provides the getItemIterator() method to iterate over all the parts in the request. For each part, you can get an InputStream to read its content. If the part is a form field, you can get its name with the getFieldName() method. If it's an uploaded file, you can get its field name with the getFieldName() method and its file name with the getName() method. The read() method of the InputStream class reads up to len bytes of data from the input stream into an array of bytes. It returns the total number of bytes read into the buffer, or -1 if there is no more data because the end of the stream has been reached."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 318,
+        "completion_tokens": 344,
+        "total_tokens": 662
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: How to get Entity at the servlet using MultipartEntity?: :If i Upload a file to my servlet like this:HttpClient httpclient = new DefaultHttpClient();HttpPost httppost = new HttpPost(\"http://www.tumblr.com/api/write\");try {    MultipartEntity entity = new MultipartEntity();    entity.addPart(\"type\", new StringBody(\"photo\"));    entity.addPart(\"data\", new FileBody(image));    httppost.setEntity(entity);    HttpResponse response = httpclient.execute(httppost);} catch (ClientProtocolException e) {} catch (IOException e) {}How can I retrieve the content at the servlet?protected void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException {     request.???}I'm using Google App Server as my Servlet API\nPlease using this api: InputStream.read.\nAnswer:"
+}

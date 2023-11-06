@@ -1,0 +1,22 @@
+{
+    "id": "chatcmpl-7nDZHNqBHU0s3H9exNGU5nIuTpQ3j",
+    "object": "chat.completion",
+    "created": 1691964583,
+    "model": "gpt-3.5-turbo-0613",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "<<<api>>>: SortedMap.firstKey\n<<<code>>>: Map<A, B> map = ...; // your map\nA leKey = ((SortedMap<A, B>) map).firstKey();\nB leValue = map.get(leKey);\n<<<explanation>>>: The firstKey() method of the SortedMap interface returns the first (lowest) key currently in this map. Since you mentioned that the map only contains one key-value pair, you can cast the map to a SortedMap and use the firstKey() method to get the key. Then, you can use the get() method to retrieve the corresponding value."
+            },
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 390,
+        "completion_tokens": 127,
+        "total_tokens": 517
+    },
+    "prompt": "Please answer my code questions using the given API following this format: <<<api>>>: $API\n<<<code>>>: $CODE\n<<<explanation>>>: $EXPLANATION.\nQuestion: How can I calculate the sum of an array in Java?\nPlease using this api: Arrays.stream.\nAnswer:<<<api>>>: Arrays.stream\n<<<code>>>: int[] array = {1, 2, 3, 4, 5};\nint sum = Arrays.stream(array).sum();\n<<<explanation>>>: The sum() method of the IntStream class returns the sum of elements in this stream. This is a special case of a reduction. This is a terminal operation.\nQuestion: Access to the key-value pair of a Map with one element in Java: :A method of mine returns a Map<A,B>. In some clearly identified cases, the map only contains one key-value pair, effectively only being a wrapper for the two objects.Is there an efficient / elegant / clear way to access both the key and the value? It seems overkill to iterate over the one-element entry set. I'm looking for somehing that would lower the brain power required for people who will maintain this, along the lines of:(...)// Only one result.else {    A leKey = map.getKey(whicheverYouWantThereIsOnlyOne); // Is there something like this?    B leValue = map.get(leKey); // This actually exists. Any Daft Punk reference was non-intentional.}Edit: I ended up going with @akoskm solution's below. In the end, the only satisfying way of doing this without iteration was with a TreeMap, and the overhead made that unreasonable. It turns out there is not always a silver bullet, especially as this would be a very small rabbit to kill with it.\nPlease using this api: SortedMap.firstKey.\nAnswer:"
+}
