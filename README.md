@@ -1,6 +1,6 @@
 # RobustAPI
 
-The official repo for the paper [Can ChatGPT replace StackOverflow? A Study on Robustness and Reliability of Large Language Model Code Generation].
+The official repo for the paper [Can ChatGPT replace StackOverflow? A Study on Robustness and Reliability of Large Language Model Code Generation](https://arxiv.org/abs/2308.10335) (AAAI'24). 
 
 ![Alt text](image.png)
 
