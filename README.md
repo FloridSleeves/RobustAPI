@@ -30,3 +30,16 @@ We acknowledge ICSE'18 paper [ExampleCheck](https://tianyi-zhang.github.io/files
 # Results of Evaluation
 The code responses are in `results/`. Each model has a directory, in which every json file corresponds to the response from the large language model to the Stack Overflow questions. The numbering follows the same numbering in `dataset/question.jsonl`.
 
+If you find our work useful, please cite the paper:
+```
+@misc{zhong2023chatgpt,
+      title={Can ChatGPT replace StackOverflow? A Study on Robustness and Reliability of Large Language Model Code Generation}, 
+      author={Li Zhong and Zilong Wang},
+      year={2023},
+      eprint={2308.10335},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
+
+
