@@ -169,7 +169,7 @@ def answerChecker(answer_dir, dataset_path, pattern_path, model, passk=1):
         ct.total_count += 1
         # Read the answer
         code_segments = loadCodeFromFile(fname, model)
-        ct.check(code_segments, pattern_path, passk)
+        ct.check(code_segments, pattern_path, int(passk))
     ct.print()
 
 

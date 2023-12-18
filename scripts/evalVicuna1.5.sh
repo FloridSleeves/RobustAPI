@@ -6,3 +6,5 @@ python eval/evaluator.py \
 --dataset_path=./dataset/question.jsonl \
 --model=vicuna \
 --passk=1
+
+rm .tmp*

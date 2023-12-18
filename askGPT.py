@@ -47,6 +47,7 @@ def main(
     top_p: float = 0.9,
     n_generations: int = 1,
     question: str = "./dataset/question.jsonl",
+    shot_type: str = "example"
 ):
     start_time = time.time()
     os.makedirs(result_dir, exist_ok=True)
@@ -67,11 +68,11 @@ def main(
             p = json.loads(p)
             shots = []
             try:
-                shots = generateShot(p['api'], number = shot_number)
+                shots = generateShot(p['api'], number = shot_number, type = shot_type)
             except:
                 print("ERROR: No shots for api", p['api'])
                 continue
-            prompt = generatePrompt(p['api'], p['question'], shots)
+            prompt = generatePrompt(p['api'], p['question'], shots, type = shot_type)
             samples.append((prompt, i, p['api']))
     print("Total samples:", len(samples))
        
