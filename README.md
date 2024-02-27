@@ -1,11 +1,11 @@
-# RobustAPI
+# RobustAPI 
 
 The official repo for the paper [Can ChatGPT replace StackOverflow? A Study on Robustness and Reliability of Large Language Model Code Generation](https://arxiv.org/abs/2308.10335) (AAAI'24). 
 
 ![Alt text](image.png)
 
 In this dataset, we collect 1208 coding questions (`dataset/question.jsonl`) from StackOverflow on 24 representative Java APIs (see the details in `dataset/api_list.txt`). We summarize the
-use patterns of these APIs (`eval/pat_list.txt`) and evaluate them on popular LLMs including GPT-3.5, GPT-4, Llama, PolyCoder and Vicuna.
+use patterns of these APIs (`eval/pat_list.txt`) and evaluate them on popular LLMs including GPT-3.5, GPT-4, Llama, PolyCoder and Vicuna. [Hugging Face](https://huggingface.co/datasets/LilyZZZ/RobustAPI)
 
 # Setup
 
